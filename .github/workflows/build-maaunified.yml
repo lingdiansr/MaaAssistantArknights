@@ -1,0 +1,90 @@
+name: Build MAAUnified & Publish Release
+
+# 每天 04:00 UTC 同步上游 dev-v2、构建 MAAUnified(Linux x86_64)、
+# 覆盖发布到本 fork 的 release(asset 匿名可下载)。
+# 主仓官方 ci.yml 构建了 MAAUnified 但只上传 Actions artifact(30 天过期、需登录),
+# 本 workflow 提供长期可匿名获取的产物。
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+
+      - name: Sync fork with upstream (keep this workflow)
+        # merge 而非 force push,保留 fork 自带的 workflow 文件
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git remote add upstream https://github.com/MaaAssistantArknights/MaaAssistantArknights.git
+          git fetch upstream dev-v2
+          if git merge --no-edit upstream/dev-v2; then
+            git push origin HEAD:dev-v2
+          else
+            echo "merge conflict, building upstream head without syncing fork"
+            git reset --hard upstream/dev-v2
+          fi
+
+      - name: Init MAAUnified submodule
+        run: git submodule update --init --depth 1 src/MAAUnified
+
+      - name: Relax SDK pin in global.json
+        # 官方要求 SDK 10.0.201 + rollForward=disable,与 runner 安装的 10.0.x 不匹配
+        run: |
+          sed -i \
+            -e 's/"version": "10.0.201"/"version": "10.0.110"/' \
+            -e 's/"rollForward": "disable"/"rollForward": "latestFeature"/' \
+            src/MAAUnified/global.json
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Download latest MaaCore runtime + resource
+        run: |
+          TAG=$(curl -s https://api.github.com/repos/MaaAssistantArknights/MaaAssistantArknights/releases/latest | jq -r .tag_name)
+          curl -fL --retry 3 -o maa-runtime.tar.gz \
+            "https://github.com/MaaAssistantArknights/MaaAssistantArknights/releases/download/${TAG}/MAA-${TAG#v}-linux-x86_64.tar.gz"
+          tar -xzf maa-runtime.tar.gz
+          echo "MAA_TAG=${TAG}" >> "$GITHUB_ENV"
+
+      - name: Publish MAAUnified (self-contained)
+        run: |
+          dotnet publish src/MAAUnified/App/MAAUnified.App.csproj \
+            -c Release -r linux-x64 --self-contained true -o publish
+
+      - name: Merge MaaCore runtime (same layout as upstream CI)
+        run: |
+          cp -a lib*.so* publish/
+          cp -a resource publish/
+          [ -d Python ] && cp -a Python publish/
+          test -f publish/libMaaCore.so
+          test -d publish/resource
+          test -f publish/MAAUnified
+
+      - name: Package
+        run: |
+          mkdir -p release
+          SHORT=$(git rev-parse --short HEAD)
+          tar -czf "release/MAAUnified-${MAA_TAG}-${SHORT}-linux-x64.tar.gz" -C publish .
+
+      - name: Publish release (replace)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete maaunified-linux-x64 --yes --cleanup-tag 2>/dev/null || true
+          gh release create maaunified-linux-x64 release/*.tar.gz \
+            --title "MAAUnified Linux x86_64" \
+            --notes "Upstream ${MAA_TAG} @ $(git rev-parse --short HEAD)"
