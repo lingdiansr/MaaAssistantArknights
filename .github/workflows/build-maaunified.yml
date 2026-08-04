@@ -84,7 +84,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release delete maaunified-linux-x64 --yes --cleanup-tag 2>/dev/null || true
-          gh release create maaunified-linux-x64 release/*.tar.gz \
+          gh release delete -R "${{ github.repository }}" maaunified-linux-x64 --yes --cleanup-tag 2>/dev/null || true
+          gh release create -R "${{ github.repository }}" maaunified-linux-x64 release/*.tar.gz \
             --title "MAAUnified Linux x86_64" \
             --notes "Upstream ${MAA_TAG} @ $(git rev-parse --short HEAD)"
