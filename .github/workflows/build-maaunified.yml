@@ -56,7 +56,7 @@ jobs:
         run: |
           TAG=$(curl -s https://api.github.com/repos/MaaAssistantArknights/MaaAssistantArknights/releases/latest | jq -r .tag_name)
           curl -fL --retry 3 -o maa-runtime.tar.gz \
-            "https://github.com/MaaAssistantArknights/MaaAssistantArknights/releases/download/${TAG}/MAA-${TAG#v}-linux-x86_64.tar.gz"
+            "https://github.com/MaaAssistantArknights/MaaAssistantArknights/releases/download/${TAG}/MAA-${TAG}-linux-x86_64.tar.gz"
           tar -xzf maa-runtime.tar.gz
           echo "MAA_TAG=${TAG}" >> "$GITHUB_ENV"
 
