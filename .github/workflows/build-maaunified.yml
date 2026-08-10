@@ -7,7 +7,7 @@ name: Build MAAUnified & Publish Release
 
 on:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -35,6 +35,8 @@ jobs:
           git remote add upstream https://github.com/MaaAssistantArknights/MaaAssistantArknights.git
           git fetch upstream dev-v2
           if git merge --no-edit upstream/dev-v2; then
+            # checkout 注入的 GITHUB_TOKEN extraheader 会覆盖 URL 中的 PAT 凭据,先清除
+            git config --local --unset-all http.https://github.com/.extraheader || true
             git push "https://x-access-token:${ACTIONS_PAT}@github.com/${GITHUB_REPOSITORY}.git" HEAD:dev-v2
           else
             echo "merge conflict, building upstream head without syncing fork"
