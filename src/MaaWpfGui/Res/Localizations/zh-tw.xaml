@@ -1092,6 +1092,36 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="MiniGame@SecretFront@Event3">詭影迷蹤</system:String>
     <system:String x:Key="MiniGame@SecretFront">隱秘戰線</system:String>
     <system:String x:Key="MiniGame@SecretFrontTip">在選擇小隊介面開始，如有存檔須手動刪除。&#10;第一次打請先看完教學後關閉。&#10;推薦勾選遊戲內 ｢繼承上一支隊伍發回的資料｣ 。</system:String>
+    <system:String x:Key="MiniGame@PixelPaint">像素畫自動填色</system:String>
+    <system:String x:Key="MiniGame@PixelPaintTip">請先手動進入遊戲內 24×24 像素畫編輯頁，再開始。&#10;中間預覽可拖移/滾輪取景；預設跳過白色。&#10;開始後參數鎖定，進度見右側日誌。</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DropHint">拖入圖片或點下方選圖</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@PickImage">選擇圖片</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ResetView">重置取景</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ResetParams">重置參數</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Fit">適配</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@FitCrop">裁切鋪滿</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@FitContain">完整裝入</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@FitStretch">拉伸</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Dither">抖動</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherNone">無</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherFS">Floyd-Steinberg</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherAtkinson">Atkinson</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Contrast">對比度</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Brightness">亮度</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Saturation">飽和度</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@PaintWhite">也畫白色</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Swipe">啟用滑動繪製</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@SwipeTip">同色同行的連續格用拖動一次畫完，可顯著加快畫圖速度。部分觸控模式下可能異常，如遇問題請關閉。</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@GridDelay">繪製間隔(ms)</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@GridDelayTip">每格額外等待時長：點擊後 sleep，拖動時長按格累加。各觸控方式自帶基礎間隔，預設 0 即可；某些低效能裝置可能出現問題，可按需調整。</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@LoadFailed">圖片載入失敗</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ConvertFailed">轉換失敗</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ReadyStatus">可畫 {0} 格 / {1} 色</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@NeedImage">請先導入圖片並生成預覽</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@StartLog">開始像素畫：{0} 格，{1} 色</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ProgressLog">像素畫 {0}/{1}</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DoneLog">像素畫完成</system:String>
+
     <system:String x:Key="MiniGameNameGreenTicketStore">綠票商店</system:String>
     <system:String x:Key="MiniGameNameGreenTicketStoreTip" xml:space="preserve">第 1 層全買。&#10;第 2 層買 ｢尋訪憑證｣ 和 ｢招聘許可｣ 。</system:String>
     <system:String x:Key="MiniGameNameYellowTicketStore">黃票商店</system:String>
@@ -1417,7 +1447,9 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="DrawCard">調配幹員</system:String>
     <system:String x:Key="CheckIfStartOver">檢查是否重開</system:String>
     <system:String x:Key="UnsupportedLevel">不支援的關卡，請檢查關卡名稱或前往 ｢{key=Settings} - {key=UpdateSettings} - {key=ResourceUpdate}｣ 嘗試更新資源版本！</system:String>
-    <system:String x:Key="UnsupportedSkill">{0} 不支援技能 {1}, 不再選擇技能</system:String>
+    <system:String x:Key="Copilot.UnsupportedSkill">{0} 不支援技能 {1}, 不再選擇技能</system:String>
+    <system:String x:Key="Copilot.EliteEmpty">{0} 未設定精英等級要求, 但其他屬性要求 精{1}, 已自動補全</system:String>
+    <system:String x:Key="Copilot.EliteAjust">{0} 設定為要求 精{1}, 但是其他屬性需求 精{2}, 已自動調整</system:String>
     <system:String x:Key="RecruitTagsDetected" xml:space="preserve">辨識結果：</system:String>
     <system:String x:Key="ConnectFailed">連線失敗</system:String>
     <system:String x:Key="TryToReconnectByAdb">正在嘗試重連</system:String>
@@ -2159,7 +2191,7 @@ DEBUG 目錄下儲存的圖片有數量限制，超出後會自動清理舊圖�
     <!--  BadModules  -->
     <system:String x:Key="BadModules.Warning.Heading">悲報</system:String>
     <system:String x:Key="BadModules.Warning.Prolog">偵測到以下第三方軟體向 MAA 注入了 DLL。這些注入的 DLL 會破壞 WPF 算繪和 ONNX/DML 推論，導致 MAA 閃退、介面算繪異常或 OCR 識別失敗：</system:String>
-    <system:String x:Key="BadModules.Warning.Epilog">如果您發現 MAA 存在相關問題，請嘗試將 MAA 加入相關軟體的排除名單，或解除安裝相關軟體後檢查問題是否仍然存在。</system:String>
+    <system:String x:Key="BadModules.Warning.Epilog" xml:space="preserve">建議透過 Windows 安全中心從系統層面阻止注入：應用程式與瀏覽器控制 → 入侵防護 → 入侵防護設定 → 程式設定 → 新增 MAA.exe → 將「停用擴充點」設為「覆寫系統設定 - 開啟」，啟用後重新啟動 MAA。&#x0a;&#x0a;您也可以嘗試將 MAA 加入相關軟體的排除名單，或解除安裝相關軟體後檢查問題是否仍然存在。</system:String>
     <system:String x:Key="BadModules.Warning.DoNotShowAgain">不再顯示此警告</system:String>
     <system:String x:Key="BadModules.Warning.Fallback">此外，系統的彈窗元件已被破壞並發生崩潰，MAA 的後續彈窗均可能無法正常顯示，其他系統功能也可能受到影響。點擊「是」下次不再提醒，點擊「否」僅本次關閉。</system:String>
     <system:String x:Key="BadModules.Confirmation.Heading">警告：效能影響</system:String>

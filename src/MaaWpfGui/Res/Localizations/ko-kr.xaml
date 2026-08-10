@@ -1093,6 +1093,36 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="MiniGame@SecretFront@Event3">수상한 그림자</system:String>
     <system:String x:Key="MiniGame@SecretFront">비밀 전선</system:String>
     <system:String x:Key="MiniGame@SecretFrontTip">소대 선택 화면에서 시작합니다. 기존 세이브 데이터가 있으면 수동으로 삭제해야 합니다.\n게임 내  ｢이전 소대의 데이터 전승받기｣  옵션을 체크하는 것을 권장합니다.</system:String>
+    <system:String x:Key="MiniGame@PixelPaint">픽셀 아트 자동 그리기</system:String>
+    <system:String x:Key="MiniGame@PixelPaintTip">게임 내 24×24 픽셀 아트 편집 페이지에 직접 들어간 뒤 시작하세요.&#10;미리보기는 드래그/휠로 구도 조정. 기본적으로 흰색은 건너뜀.&#10;시작 후 파라미터는 고정. 진행 상황은 오른쪽 로그 참조.</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DropHint">이미지를 드래그하거나 아래 버튼으로 선택</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@PickImage">이미지 선택</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ResetView">구도 초기화</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ResetParams">파라미터 초기화</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Fit">맞춤</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@FitCrop">크롭</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@FitContain">전체 표시</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@FitStretch">늘리기</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Dither">디더링</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherNone">없음</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherFS">Floyd-Steinberg</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherAtkinson">Atkinson</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Contrast">대비</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Brightness">밝기</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Saturation">채도</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@PaintWhite">흰색도 그리기</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@Swipe">스와이프 그리기 사용</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@SwipeTip">같은 색 연속 칸을 한 번의 드래그로 그려 속도를 크게 높입니다. 일부 터치 방식에서는 이상 동작이 있을 수 있습니다. 문제가 생기면 꺼주세요.</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@GridDelay">그리기 간격(ms)</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@GridDelayTip">칸당 추가 대기 시간. 클릭 후 대기와 드래그 시간에 모두 가산됩니다. 각 터치 방식에 기본 간격이 있어 기본 0으로 충분합니다. 저사양 기기에서는 문제가 있을 수 있으니 필요에 따라 조정하세요.</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@LoadFailed">이미지 로드 실패</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ConvertFailed">변환 실패</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ReadyStatus">그릴 수 있음 {0}칸 / {1}색</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@NeedImage">먼저 이미지를 불러와 미리보기를 생성하세요</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@StartLog">픽셀 아트 시작: {0}칸, {1}색</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@ProgressLog">픽셀 아트 {0}/{1}</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DoneLog">픽셀 아트 완료</system:String>
+
     <system:String x:Key="MiniGameNameGreenTicketStore">자격증명서 상점</system:String>
     <system:String x:Key="MiniGameNameGreenTicketStoreTip" xml:space="preserve">1단계는 전부 구매하고&#10;2단계는 헤드헌팅 허가증과 모집 허가증을 구매해요</system:String>
     <system:String x:Key="MiniGameNameYellowTicketStore">고급증명서 상점</system:String>
@@ -1418,7 +1448,9 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="DrawCard">오퍼레이터 배치</system:String>
     <system:String x:Key="CheckIfStartOver">재시작 여부 확인</system:String>
     <system:String x:Key="UnsupportedLevel">지원되지 않는 스테이지입니다. 스테이지 이름을 확인하거나 ｢{key=Settings} - {key=UpdateSettings} - {key=ResourceUpdate}｣ 로 이동하여 리소스 버전을 업데이트해 보세요!</system:String>
-    <system:String x:Key="UnsupportedSkill">{0}은 {1} 스킬을 지원하지 않으므로, 스킬이 선택되지 않음</system:String>
+    <system:String x:Key="Copilot.UnsupportedSkill">{0}은 {1} 스킬을 지원하지 않으므로, 스킬이 선택되지 않음</system:String>
+    <system:String x:Key="Copilot.EliteEmpty">{0} 엘리트 레벨 요구 사항이 설정되지 않았지만, 다른 속성에 대한 요구 사항은 엘리트 {1}입니다. 이 값은 자동으로 채워졌습니다.</system:String>
+    <system:String x:Key="Copilot.EliteAjust">{0} 엘리트 {1}을 요구하도록 설정되었지만, 다른 속성에 대한 요구 사항은 엘리트 {2}입니다. 이 값은 자동으로 조정되었습니다.</system:String>
     <system:String x:Key="RecruitTagsDetected" xml:space="preserve">인식 결과: </system:String>
     <system:String x:Key="ConnectFailed">연결 실패</system:String>
     <system:String x:Key="TryToReconnectByAdb">재접속을 시도하고 있습니다</system:String>
@@ -2159,7 +2191,7 @@ MAA를 독립된 새 폴더에 압축 해제하거나, MAA에 속하지 않는 D
     <!--  BadModules  -->
     <system:String x:Key="BadModules.Warning.Heading">호환성 경고</system:String>
     <system:String x:Key="BadModules.Warning.Prolog">다음 타사 소프트웨어가 MAA에 DLL을 주입했습니다. 이는 WPF 렌더링과 ONNX/DML 추론을 방해하여 MAA가 충돌하거나 UI 렌더링에 문제가 발생하거나 OCR 인식이 실패할 수 있습니다:</system:String>
-    <system:String x:Key="BadModules.Warning.Epilog">MAA에서 관련 문제가 발생하는 경우, 관련 소프트웨어의 제외 목록에 MAA를 추가하거나 관련 소프트웨어를 제거한 후 문제가 계속 발생하는지 확인하세요.</system:String>
+    <system:String x:Key="BadModules.Warning.Epilog" xml:space="preserve">Windows 보안을 통해 시스템 수준에서 인젝션을 차단하는 것을 권장합니다: 앱 및 브라우저 제어 → Exploit Protection → Exploit Protection 설정 → 프로그램 설정 → MAA.exe 추가 → "확장 지점 사용 안 함"을 "시스템 설정 재정의 - 켬"으로 설정한 후 활성화하고 MAA를 다시 시작하세요.&#x0a;&#x0a;또한 관련 소프트웨어의 제외 목록에 MAA를 추가하거나, 관련 소프트웨어를 제거한 후 문제가 계속 발생하는지 확인할 수도 있습니다.</system:String>
     <system:String x:Key="BadModules.Warning.DoNotShowAgain">이 경고를 다시 표시하지 않음</system:String>
     <system:String x:Key="BadModules.Warning.Fallback">또한 시스템의 대화 상자 구성 요소가 손상되어 충돌이 발생했으며, MAA의 후속 대화 상자가 모두 표시되지 않을 뿐만 아니라 다른 시스템 기능에도 영향이 있을 수 있습니다. "예"를 클릭하면 다시 표시하지 않고, "아니요"를 클릭하면 지금은 닫습니다.</system:String>
     <system:String x:Key="BadModules.Confirmation.Heading">경고: 성능 영향</system:String>
