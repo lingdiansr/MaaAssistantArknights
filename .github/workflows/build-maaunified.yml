@@ -25,13 +25,17 @@ jobs:
 
       - name: Sync fork with upstream (keep this workflow)
         # merge 而非 force push,保留 fork 自带的 workflow 文件
+        # push 必须用带 workflow+repo 权限的 PAT:GITHUB_TOKEN 无 workflows 权限,
+        # 推送含 .github/workflows 变更的 commit 会被 GitHub 拒绝
+        env:
+          ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           git remote add upstream https://github.com/MaaAssistantArknights/MaaAssistantArknights.git
           git fetch upstream dev-v2
           if git merge --no-edit upstream/dev-v2; then
-            git push origin HEAD:dev-v2
+            git push "https://x-access-token:${ACTIONS_PAT}@github.com/${GITHUB_REPOSITORY}.git" HEAD:dev-v2
           else
             echo "merge conflict, building upstream head without syncing fork"
             git reset --hard upstream/dev-v2
