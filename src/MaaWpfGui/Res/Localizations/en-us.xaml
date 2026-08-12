@@ -203,7 +203,7 @@ To customize rotation schedules, please use ｢{key=InfrastModeCustom}｣.</syst
     <system:String x:Key="Nox">Nox</system:String>
     <system:String x:Key="XYAZ">MEmu</system:String>
     <system:String x:Key="WSA">Old version of WSA</system:String>
-    <system:String x:Key="PC">PC Client</system:String>
+    <system:String x:Key="PC">Arknights PC Client (Community-maintained)</system:String>
     <system:String x:Key="MaaTouch">MaaTouch</system:String>
     <system:String x:Key="Compatible">Compatible Mode</system:String>
     <system:String x:Key="SecondResolution">2nd Resolution</system:String>
@@ -695,8 +695,8 @@ Only enable this option when the port changes frequently and you are certain onl
     <system:String x:Key="AccountSwitchManualRun">Switch now</system:String>
     <system:String x:Key="AccountSwitchTip" xml:space="preserve">Fill in the account that needs to be switched to, leave blank to close the account switching.
 Enter the content displayed on the login interface, such as ｢123****4567｣, you can enter ｢123****4567｣, ｢4567｣ or ｢23****45｣
-The Traditional Chinese server uses Email accounts, e.g. ｢ab****01@gmail.com｣. Entering the plain-text portion without asterisks is recommended, e.g. ｢01@gmail｣.
-Only supports Official(CN), Bilibili and Traditional Chinese servers. Third-party login methods are not supported.</system:String>
+The Traditional Chinese and YostarKR servers use Email accounts, e.g. ｢ab****01@gmail.com｣. Entering the plain-text portion without asterisks is recommended, e.g. ｢01@gmail｣.
+Only supports Official(CN), Bilibili, Traditional Chinese and YostarKR servers. Third-party login methods are not supported.</system:String>
     <system:String x:Key="AdbPath">ADB path</system:String>
     <system:String x:Key="AdbPathFileSelectionErrorPrompt">The selected file name does not contain ADB. Please check if you have chosen the wrong file or mistakenly selected the emulator itself.</system:String>
     <system:String x:Key="AdbPathFileSelectionErrorImSure">I'm sure I haven't selected the wrong one</system:String>
@@ -1102,9 +1102,10 @@ Only level rewards can be farmed; to get the Engraved Medal, all ｢Key Objectiv
     <system:String x:Key="MiniGame@PixelPaint@FitContain">Contain</system:String>
     <system:String x:Key="MiniGame@PixelPaint@FitStretch">Stretch</system:String>
     <system:String x:Key="MiniGame@PixelPaint@Dither">Dither</system:String>
-    <system:String x:Key="MiniGame@PixelPaint@DitherNone">None</system:String>
-    <system:String x:Key="MiniGame@PixelPaint@DitherFS">Floyd-Steinberg</system:String>
-    <system:String x:Key="MiniGame@PixelPaint@DitherAtkinson">Atkinson</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherNone">No dithering</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherFS">Dither - Photo</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherAtkinson">Dither - Soft</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@DitherIllustration">Illustration</system:String>
     <system:String x:Key="MiniGame@PixelPaint@Contrast">Contrast</system:String>
     <system:String x:Key="MiniGame@PixelPaint@Brightness">Brightness</system:String>
     <system:String x:Key="MiniGame@PixelPaint@Saturation">Saturation</system:String>
@@ -1464,16 +1465,21 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="RestartAsAdminFailed">Please run MAA as administrator manually.</system:String>
     <system:String x:Key="AttachWindowFailed">AttachWindow failed, please check screencap/input method settings</system:String>
     <system:String x:Key="UseAttachWindowTip">Use Win32 window binding for Arknights PC client instead of ADB connection for emulators or phones</system:String>
-    <system:String x:Key="UseAttachWindowWarning" xml:space="preserve">PC connection (experimental feature, stability not guaranteed)
-Due to limited development resources within the MAA Team, this feature is community-maintained and is not continuously supported by the MAA Team. Functionality and stability may fall short of expectations, and issues may not be fixed promptly.
-If you encounter problems that affect usability, we recommend switching to ADB mode with an Android emulator or mobile device for a more stable experience.
-We also always welcome Pull Requests from capable developers to help improve PC support.
+    <system:String x:Key="UseAttachWindowWarning" xml:space="preserve">Arknights PC Connection (Community-maintained)
 
-Before use, please ensure:
+Please note:
+1. The MAA Team only provides the connection feature for the Arknights PC client; ongoing maintenance and bug fixes are left to the community, and availability is not guaranteed.
+2. If you run into problems or unusable features, please open an issue on GitHub. Whether it gets resolved depends on whether a community developer is willing to follow up.
+3. Other channels such as QQ groups or video comment sections cannot resolve Arknights PC connection issues, so please do not ask about them there.
+
+If you don't strictly need it, we recommend using ADB to connect to an Android emulator or mobile device for a more stable experience.
+
+If you do need to use it, please ensure:
 1. MAA is launched with administrator privileges
 2. For some screencap methods, the game window cannot be minimized
 3. Arknights Settings → Game → UI Scaling is set to 100%
-4. Game resolution must be 16:9, recommended settings: 1280x720 or 1920x1080</system:String>
+4. Lower the mouse pointer scale in Arknights settings to reduce obstruction of recognition areas
+5. Game resolution must be 16:9; recommended settings: 1280x720 or 1920x1080</system:String>
     <system:String x:Key="AttachWindowScreencapMethod">Screencap Method</system:String>
     <system:String x:Key="AttachWindowMouseMethod">Mouse Input Method</system:String>
     <system:String x:Key="AttachWindowKeyboardMethod">Keyboard Input Method</system:String>
