@@ -491,11 +491,9 @@ Continue only after you have verified the directory layout and finished a manual
     <system:String x:Key="AddConfigSuccess">Configuration &lt;{0}&gt; added successfully</system:String>
     <system:String x:Key="ConfigExists">Configuration &lt;{0}&gt; already exists</system:String>
     <system:String x:Key="LaunchOnSystemStartup">Auto start with PC</system:String>
-    <system:String x:Key="LaunchOnSystemStartupWarning" xml:space="preserve">
-This feature modifies the registry to enable launching on system startup.
+    <system:String x:Key="LaunchOnSystemStartupWarning" xml:space="preserve">This feature modifies the registry to enable launching on system startup.
 Since MAA is a non-installed application, it does not remove registry entries automatically.
-If you are concerned about leftover entries, please disable this option before deleting the program.
-</system:String>
+If you are concerned about leftover entries, please disable this option before deleting the program.</system:String>
     <system:String x:Key="LaunchOnSystemStartupAdminPrompt">
         Administrator mode does not support startup on boot. It is not recommended to run MAA with administrator privileges for an extended period.\nIf necessary, please go to Control Panel &gt; Windows Tools &gt; Task Scheduler to create a custom task. When setting the trigger, make sure to check ｢Run with highest privileges｣
     </system:String>
@@ -515,6 +513,7 @@ If you choose ｢{key=ManualRestart}｣ and start MAA manually later, ｢{key=Ru
     <system:String x:Key="UseWeeklyScheduleTip">The day of week here is based on in-game time, not real-world time. For example, if the game resets at 4:00, then 3:59 is still counted as the previous day.</system:String>
     <system:String x:Key="HelpUsWithOverseasServersTip">The adaptation for Overseas clients is very difficult and we need your help! No programming knowledge is required.</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunch">Startup Emulator after launched</system:String>
+    <system:String x:Key="OpenEmulatorAfterLaunchTip">The emulator is only started once when MAA launches, not every time you click ｢{key=LinkStart}｣.\nIf you need that, check ｢{key=RetryOnDisconnected}｣ instead</system:String>
     <system:String x:Key="WaitForEmulator">Delay time (s)</system:String>
     <system:String x:Key="WaitForEmulatorFinish">End of wait</system:String>
     <system:String x:Key="EmulatorPath">Emulator path</system:String>
@@ -728,11 +727,12 @@ Note:
 2. If using network bridging, check the MuMu network bridging mode and manually enter the serial number.
     </system:String>
     <system:String x:Key="MuMu12EmulatorPath">MuMu Installation Path</system:String>
+    <system:String x:Key="MuMuEmulatorPathEmptyError">MuMu installation path is empty! The placeholder is only an example, please fill in the actual path in ｢{key=Settings} - {key=ConnectionSettings}｣</system:String>
     <system:String x:Key="MuMuBridgeConnection">MuMu Network Bridge Connection</system:String>
     <system:String x:Key="MuMuBridgeConnectionTip">Unless you know what you are doing, do not enable this option</system:String>
     <system:String x:Key="MuMu12Index">Instance Number</system:String>
     <system:String x:Key="MuMu12Display">Display Number</system:String>
-    <system:String x:Key="MuMuExtrasNotEnabledMessage">Mumu screenshot enhancement not enabled, please check related settings</system:String>
+    <system:String x:Key="MuMuExtrasNotEnabledMessage">MuMu screenshot enhancement is not working. Check the enhancement settings shown below in ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣</system:String>
     <system:String x:Key="MuMuEmulator12KeepAliveOn">MuMu emulator has ｢App Keep-Alive｣ enabled, but MAA touch enhancement is not working. Operations are not possible under app keep-alive. Please enable both ｢{key=MuMu12ExtrasEnabled}｣ and its sub-option ｢{key=MuMuExtrasTouchEnabled}｣ in MAA ｢{key=ConnectionSettings}｣; or if you don't want to use enhancement, disable ｢App Keep-Alive｣ in MuMu settings (some versions previously called it ｢Keep Alive in Background｣, ｢Keep running while AFK in background｣, etc.).</system:String>
     <system:String x:Key="MuMuEmulator12FullExtrasReady">Full MuMu enhancement online — screenshot &amp; touch dual-link engaged. Background keep-alive bows to our will!</system:String>
     <system:String x:Key="LdExtrasEnabled">Enable LD's screenshot enhancement mode</system:String>
@@ -755,9 +755,10 @@ The screenshot enhancement feature requires the emulator resolution to be set to
 If the game is launched in portrait mode and then switched to landscape, it may cause screen tearing or other issues.
     </system:String>
     <system:String x:Key="LdEmulatorPath">LD Emulator exec path</system:String>
+    <system:String x:Key="LdEmulatorPathEmptyError">LDPlayer installation path is empty! The placeholder is only an example, please fill in the actual path in ｢{key=Settings} - {key=ConnectionSettings}｣</system:String>
     <system:String x:Key="LdManualSetIndex">Manually enter ｢{key=LdIndex}｣</system:String>
     <system:String x:Key="LdIndex">Instance Index</system:String>
-    <system:String x:Key="LdExtrasNotEnabledMessage">LD screenshot enhancement not enabled, please check related settings</system:String>
+    <system:String x:Key="LdExtrasNotEnabledMessage">LD screenshot enhancement is not working. Check the enhancement settings shown below in ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣</system:String>
     <system:String x:Key="RetryOnDisconnected">Retry launching the emulator when ADB connection fails</system:String>
     <system:String x:Key="RetryOnDisconnectedTip">Try restarting the emulator after failed reconnect attempt, must be checked when using a background timed task and setting the task to close the emulator when finished</system:String>
     <system:String x:Key="RetryOnDisconnectedEmulatorPathEmptyError">Emulator path is empty! Please fill in ｢{key=Settings} - {key=StartupSettings} - {key=EmulatorPath}｣ and reselect.</system:String>
@@ -886,6 +887,7 @@ Do not adjust the proxy multiplier setting in the game</system:String>
     <system:String x:Key="DepotPlanNoStage">#{0}: stage not specified or is "Current/Last"</system:String>
     <system:String x:Key="DepotPlanInventoryEnough">#{0}: {1} sufficient {2}/{3}</system:String>
     <system:String x:Key="DepotPlanInventoryInsufficient">#{0}: {1} insufficient {2}/{3}, need {4}</system:String>
+    <system:String x:Key="DepotPlanSanityInsufficient">#{0}: Insufficient sanity ({1}, below stage cost {2}), skipped</system:String>
     <system:String x:Key="DepotPlanStageNotOpen">#{0}: stage '{1}' is not open</system:String>
     <system:String x:Key="DepotPlanAddTaskFailed">#{0}: add task failed</system:String>
     <system:String x:Key="DepotSkipDuringActivity">Skip during event</system:String>
@@ -898,6 +900,8 @@ Do not adjust the proxy multiplier setting in the game</system:String>
     <system:String x:Key="DepotEnableUseMedicine">Enable "{key=UseSanityPotion}" checkbox</system:String>
     <system:String x:Key="DepotEnableUseStone">Enable "{key=UseOriginitePrime}" checkbox</system:String>
     <system:String x:Key="DepotUseExpiringMedicine">Use expiring sanity potions (within 48 hours)</system:String>
+    <system:String x:Key="DepotPlanBudgetTip" xml:space="preserve">Per-stage limit of sanity potions/originite prime, independent for each plan.&#10;When checked with a count, this stage will not be skipped for insufficient sanity: it still enters the stage and uses up to this many potions/originite prime to keep fighting.&#10;Stages without a budget are skipped directly when sanity is insufficient, without entering the stage.</system:String>
+    <system:String x:Key="DepotUseExpiringMedicineTip" xml:space="preserve">Applies to all plans, including those without a potion budget.&#10;When enabled, plans without a budget will also try to use sanity potions expiring within 48 hours.&#10;Such plans are only skipped for insufficient sanity after some fight task in this queue run has ended due to insufficient sanity, with an expiring-medicine window not smaller than this setting (i.e., potions within this window are used up).</system:String>
     <system:String x:Key="DepotGroupTaskBehavior">Task Behavior</system:String>
     <system:String x:Key="DepotGroupStageAndBattle">Stage &amp; Battle</system:String>
     <system:String x:Key="DepotGroupSanityRecovery">Sanity Recovery</system:String>
@@ -1254,6 +1258,7 @@ Right-click to clear inactive jobs</system:String>
     <!--  !Copilot  -->
     <!--  ErrorView  -->
     <system:String x:Key="Error">Error</system:String>
+    <!--  ErrorCongratulations 与下方 ErrorSolutionMoveMaaExeOutOfFolder 修改时需同步 src/MaaAppHostStub/MaaAppHostStub.cpp，由 tools/CheckStubLocalization.py 校验  -->
     <system:String x:Key="ErrorCongratulations">Congratulations</system:String>
     <system:String x:Key="ErrorProlog">MAA has encountered an error</system:String>
     <system:String x:Key="ErrorDetails">Details</system:String>
@@ -1305,8 +1310,9 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="TouchModeNotAvailable">Touch mode is not available, please go to ｢{key=Settings} - {key=ConnectionSettings}｣ to switch to a different touch mode.</system:String>
     <system:String x:Key="ScreencapFailed">Screencap failed. If it happens repeatedly, try to restart or change the emulator!</system:String>
     <system:String x:Key="FastestWayToScreencap">Screenshot test tasks: {0}ms ({1})</system:String>
-    <system:String x:Key="FastestWayToScreencapWarningTip">Screencap takes a long time (avg: {0}ms) which may cause some abnormal behaviors using automatic combat functions (e.g. Auto I. S.). If using MuMu or LDPlayer, please try enabling screenshot enhancement</system:String>
-    <system:String x:Key="FastestWayToScreencapErrorTip">Screencap takes too long (avg: {0}ms), so automatic combat functions (e.g. Auto I. S.) may not run properly. It is recommended to try restarting or changing the emulator! If using MuMu or LDPlayer, please try enabling screenshot enhancement</system:String>
+    <system:String x:Key="FastestWayToScreencapInfoTip">Screencap takes {0}ms. For MuMu or LDPlayer, you can select your emulator in ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ and enable the screenshot enhancement shown below to reduce it</system:String>
+    <system:String x:Key="FastestWayToScreencapWarningTip">Screencap takes a long time (avg: {0}ms) which may cause some abnormal behaviors using automatic combat functions (e.g. Auto I. S.). For MuMu or LDPlayer, select your emulator in ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ and enable the screenshot enhancement shown below</system:String>
+    <system:String x:Key="FastestWayToScreencapErrorTip">Screencap takes too long (avg: {0}ms), so automatic combat functions (e.g. Auto I. S.) may not run properly. It is recommended to try restarting or changing the emulator! For MuMu or LDPlayer, select your emulator in ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ and enable the screenshot enhancement shown below</system:String>
     <system:String x:Key="EmulatorFpsWarningTip">Emulator refresh rate is set to {0} FPS, below the game's native frame rate (60 FPS). Background frame rate reduction may be enabled or the rate is set too low. It is recommended to set the emulator frame rate to 60 FPS</system:String>
     <system:String x:Key="EmulatorFpsErrorTip">Emulator refresh rate is set too low ({0} FPS), which may cause tasks to malfunction. Please turn off background frame rate reduction and set the frame rate to 60 FPS</system:String>
     <system:String x:Key="EmulatorFpsHighTip">Emulator refresh rate is set to {0} FPS, above the game's native frame rate cap (60 FPS). This may be the emulator's frame interpolation feature, which can cause visual artifacts or unstable recognition. It is recommended to disable frame interpolation and set the frame rate to 60 FPS</system:String>
@@ -1329,7 +1335,7 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="GiveUpUploadingPenguins">Abort upload to Penguin Statistics</system:String>
     <system:String x:Key="ReportSkippedForPcClient">The PC client cursor can obscure drop items and counts. This report was skipped to avoid polluting the data pool with inaccurate data</system:String>
     <system:String x:Key="TheEx">No bonus stage, stopped</system:String>
-    <system:String x:Key="MissingOperators">{key=Operator}s of the following {key=Operator} groups are missing:&#160;</system:String>
+    <system:String x:Key="MissingOperators">None of the {key=Operator}s in the following groups are owned (only one is needed per group):\n{0}｢Favourite｣ marks may affect {key=Operator} recognition; if the {key=Operator}s above are owned, remove the mark and retry. If not, use ｢{key=SupportUnitUsage}｣ when only one group is missing, or use another job when two or more are missing.</system:String>
     <system:String x:Key="RecruitSupportOperator">Add support unit: {0}</system:String>
     <system:String x:Key="StageQueue">Stage Queue:&#160;</system:String>
     <system:String x:Key="UnableToAgent">Unable to use PRTS</system:String>
@@ -1722,7 +1728,7 @@ If you want to run multiple MAA at the same time, please copy the whole MAA and 
 Current install directory: {0}
 Matched unsupported location: {1}
 
-These locations are too high-level and can lead to file overwrites, config write failures, or data confusion. Please move MAA into a dedicated folder such as D:\\MAA\\ before starting it again.</system:String>
+These directories are not suitable places to keep MAA; files there can be easily wiped or overwritten. Please move MAA into a dedicated folder such as D:\\MAA\\ before starting it again.</system:String>
     <!--  !Boot  -->
     <!--  SimpleEncryptionHelper  -->
     <system:String x:Key="EncryptionError">Encryption and decryption failed, please reconfigure the relevant settings, otherwise the encrypted content will be stored in plain text in the configuration file.</system:String>

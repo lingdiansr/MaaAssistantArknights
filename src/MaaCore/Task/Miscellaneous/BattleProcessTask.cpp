@@ -156,7 +156,9 @@ bool asst::BattleProcessTask::to_group()
     std::unordered_map<battle::OperNameTag, battle::OperNameTag> ungrouped;
     const auto& grouped_view = m_oper_in_group | std::views::values;
     for (const auto& tag : char_set) {
-        if (std::ranges::find(grouped_view, tag) != grouped_view.end()) {
+        if (std::ranges::find_if(grouped_view, [&](const battle::OperNameTag& oper) {
+                return (oper.role == battle::Role::Unknown || oper.role == tag.role) && oper.name == tag.name;
+            }) != grouped_view.end()) {
             continue;
         }
         ungrouped.emplace(tag, tag);
@@ -190,6 +192,7 @@ bool asst::BattleProcessTask::to_group()
         m_oper_in_group.emplace(tag, tag);
     }
 
+    // 对于实际编入战斗的干员, 从作业中读取技能用法并存入m_skill_usage和m_skill_times
     for (const auto& [group_tag, oper_tag] : m_oper_in_group) {
         const auto& group_it = std::ranges::find_if(get_combat_data().groups, [&](const OperUsageGroup& pair) {
             return pair.first == group_tag.name;
@@ -203,7 +206,7 @@ bool asst::BattleProcessTask::to_group()
         // https://github.com/MaaAssistantArknights/MaaAssistantArknights/actions/runs/3779762713/jobs/6425284487
         // const std::string& oper_name_for_lambda = oper_tag;
         auto iter = std::ranges::find_if(this_group, [&](const auto& oper) {
-            return oper.role == oper_tag.role && oper.name == oper_tag.name;
+            return (oper.role == battle::Role::Unknown || oper.role == oper_tag.role) && oper.name == oper_tag.name;
         });
         if (iter == this_group.end()) {
             continue;
@@ -299,13 +302,8 @@ bool asst::BattleProcessTask::do_action(const battle::copilot::Action& action, s
             break;
         }
         else if (location.empty()) {
-            auto tag_opt = get_oper_skill_tag({ role, name });
-            if (tag_opt) {
-                set_usage(*tag_opt, action.modify_usage, action.modify_times);
-            }
-            else {
-                LogError << __FUNCTION__ << "No oper" << enum_to_string(role) << name << "could not set skill usage";
-            }
+            auto tag_opt = get_oper_tag({ role, name });
+            set_usage(tag_opt, action.modify_usage, action.modify_times);
         }
         else {
             battle::Role _role;

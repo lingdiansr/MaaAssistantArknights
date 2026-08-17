@@ -491,11 +491,9 @@ D:\
     <system:String x:Key="AddConfigSuccess">配置 &lt;{0}&gt; 添加成功</system:String>
     <system:String x:Key="ConfigExists">配置 &lt;{0}&gt; 已存在</system:String>
     <system:String x:Key="LaunchOnSystemStartup">开机自动启动 MAA</system:String>
-    <system:String x:Key="LaunchOnSystemStartupWarning" xml:space="preserve">
-该功能通过修改注册表实现开机自启动。
+    <system:String x:Key="LaunchOnSystemStartupWarning" xml:space="preserve">该功能通过修改注册表实现开机自启动。
 由于 MAA 是非安装型软件，不会自动清理注册表项。
-如介意注册表残留，请在删除程序前取消启用此选项。
-</system:String>
+如介意注册表残留，请在删除程序前取消启用此选项。</system:String>
     <system:String x:Key="LaunchOnSystemStartupAdminPrompt">
         管理员权限启动不支持开机自启。不建议长期以管理员权限运行 MAA。\n如确有需要，请前往 控制面板 > Windows 工具 > 任务计划程序 创建自定义任务。设置触发器时，请确保勾选 ｢使用最高权限运行｣。
     </system:String>
@@ -515,6 +513,7 @@ D:\
     <system:String x:Key="UseWeeklyScheduleTip">此处星期根据游戏时间计算，并非现实时间。例如游戏在 4:00 刷新，则 3:59 仍算作前一天。</system:String>
     <system:String x:Key="HelpUsWithOverseasServersTip">外服适配滞销，帮帮我们！不会编程也可以。</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunch">启动 MAA 后自动开启模拟器</system:String>
+    <system:String x:Key="OpenEmulatorAfterLaunchTip">仅在启动 MAA 时开启一次模拟器，点击 ｢{key=LinkStart}｣ 时不会自动开启；\n如有此需求，请勾选 ｢{key=RetryOnDisconnected}｣</system:String>
     <system:String x:Key="WaitForEmulator">等待模拟器启动时间（秒）</system:String>
     <system:String x:Key="WaitForEmulatorFinish">等待结束</system:String>
     <system:String x:Key="EmulatorPath">模拟器路径</system:String>
@@ -729,11 +728,12 @@ C:\\Program Files\\Netease\\MuMuPlayer。\n
 2. 若正在使用网络桥接，则需勾选 MuMu 网络桥接模式并手动填写序号。
     </system:String>
     <system:String x:Key="MuMu12EmulatorPath">MuMu 安装路径</system:String>
+    <system:String x:Key="MuMuEmulatorPathEmptyError">MuMu 安装路径为空！占位符仅为示例，请在 ｢{key=Settings} - {key=ConnectionSettings}｣ 填写实际路径</system:String>
     <system:String x:Key="MuMuBridgeConnection">MuMu 网络桥接模式</system:String>
     <system:String x:Key="MuMuBridgeConnectionTip">除非你知道自己在做什么，否则不要启用此选项</system:String>
     <system:String x:Key="MuMu12Index">实例编号</system:String>
     <system:String x:Key="MuMu12Display">屏幕编号</system:String>
-    <system:String x:Key="MuMuExtrasNotEnabledMessage">Mumu 截图增强未生效，请检查相关设置</system:String>
+    <system:String x:Key="MuMuExtrasNotEnabledMessage">MuMu 截图增强未生效，请在 ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ 检查下方显示的截图增强设置</system:String>
     <system:String x:Key="MuMuEmulator12KeepAliveOn">检测到 MuMu 模拟器开启了 ｢应用保活｣，但 MAA 的触控增强未生效，在应用保活下无法操作。请在 MAA ｢{key=ConnectionSettings}｣ 中同时勾选 ｢{key=MuMu12ExtrasEnabled}｣ 及其下的 ｢{key=MuMuExtrasTouchEnabled}｣；或不想使用增强时，请在 MuMu 设置中关闭 ｢应用保活｣（部分版本曾称 ｢后台保活｣ ｢后台挂机时保活运行｣ 等）。</system:String>
     <system:String x:Key="MuMuEmulator12FullExtrasReady">完整 MuMu 增强已就位——截图与触控双核直连贯通，后台保活亦为我所用！</system:String>
     <system:String x:Key="LdExtrasEnabled">启用 LD 截图增强</system:String>
@@ -756,9 +756,10 @@ C:\\leidian\\LDPlayer9
 如在竖屏状态下启动游戏后切换为横屏，可能导致画面撕裂等问题。
     </system:String>
     <system:String x:Key="LdEmulatorPath">LD 安装路径</system:String>
+    <system:String x:Key="LdEmulatorPathEmptyError">雷电模拟器安装路径为空！占位符仅为示例，请在 ｢{key=Settings} - {key=ConnectionSettings}｣ 填写实际路径</system:String>
     <system:String x:Key="LdManualSetIndex">手动填写 ｢{key=LdIndex}｣</system:String>
     <system:String x:Key="LdIndex">实例编号</system:String>
-    <system:String x:Key="LdExtrasNotEnabledMessage">LD 截图增强未生效，请检查相关设置</system:String>
+    <system:String x:Key="LdExtrasNotEnabledMessage">LD 截图增强未生效，请在 ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ 检查下方显示的截图增强设置</system:String>
     <system:String x:Key="RetryOnDisconnected">ADB 连接失败时尝试启动模拟器</system:String>
     <system:String x:Key="RetryOnDisconnectedTip">重连失败后尝试重启模拟器，使用后台定时任务且设置任务完成关闭模拟器时请勾选</system:String>
     <system:String x:Key="RetryOnDisconnectedEmulatorPathEmptyError">模拟器路径为空！请填写 ｢{key=Settings} - {key=StartupSettings} - {key=EmulatorPath}｣ 后重新勾选。</system:String>
@@ -887,6 +888,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="DepotPlanNoStage">#{0}：关卡未指定或为 ｢当前/上次｣</system:String>
     <system:String x:Key="DepotPlanInventoryEnough">#{0}：{1} 已充足 {2}/{3}</system:String>
     <system:String x:Key="DepotPlanInventoryInsufficient">#{0}：{1} 不足 {2}/{3}，需刷取 {4}</system:String>
+    <system:String x:Key="DepotPlanSanityInsufficient">#{0}：理智不足（当前 {1}，低于关卡消耗 {2}），已跳过</system:String>
     <system:String x:Key="DepotPlanStageNotOpen">#{0}：关卡 ｢{1}｣ 未开放</system:String>
     <system:String x:Key="DepotPlanAddTaskFailed">#{0}：添加任务失败</system:String>
     <system:String x:Key="DepotSkipDuringActivity">活动期间跳过</system:String>
@@ -899,6 +901,8 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="DepotEnableUseMedicine">启用「{key=UseSanityPotion}」勾选框</system:String>
     <system:String x:Key="DepotEnableUseStone">启用「{key=UseOriginitePrime}」勾选框</system:String>
     <system:String x:Key="DepotUseExpiringMedicine">使用 48 小时内过期的理智药</system:String>
+    <system:String x:Key="DepotPlanBudgetTip" xml:space="preserve">本关的药剂/源石使用上限，各关卡独立计算。&#10;勾选并设置数量后，本关不会被理智不足跳过：理智不够时仍会进图，并按此数量使用药剂/源石继续作战。&#10;未设置预算的关卡在理智不足时会被直接跳过，不进图查看。</system:String>
+    <system:String x:Key="DepotUseExpiringMedicineTip" xml:space="preserve">对全部关卡生效，包括未设药剂预算的关卡。&#10;开启后，未设预算的关卡也会尝试使用 48 小时内过期的理智药。&#10;未设预算的关卡被理智不足跳过的前提：本轮任务队列中已有战斗任务因理智不足结束，且其临期药窗口不小于本设置（本窗口内的临期药已用完）。</system:String>
     <system:String x:Key="DepotGroupTaskBehavior">任务行为</system:String>
     <system:String x:Key="DepotGroupStageAndBattle">关卡与战斗</system:String>
     <system:String x:Key="DepotGroupSanityRecovery">理智恢复</system:String>
@@ -1255,6 +1259,7 @@ C:\\leidian\\LDPlayer9
     <!--  !自动战斗  -->
     <!--  ErrorDialogView  -->
     <system:String x:Key="Error">错误</system:String>
+    <!--  ErrorCongratulations 与下方 ErrorSolutionMoveMaaExeOutOfFolder 修改时需同步 src/MaaAppHostStub/MaaAppHostStub.cpp，由 tools/CheckStubLocalization.py 校验  -->
     <system:String x:Key="ErrorCongratulations">喜报</system:String>
     <system:String x:Key="ErrorProlog">MAA 遇到了问题</system:String>
     <system:String x:Key="ErrorDetails">详细信息</system:String>
@@ -1306,8 +1311,9 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="TouchModeNotAvailable">触控模式不可用。请进入 ｢{key=Settings} - {key=ConnectionSettings}｣ 切换其他触控模式。</system:String>
     <system:String x:Key="ScreencapFailed">截图失败，如反复出现请尝试重启或更换模拟器！</system:String>
     <system:String x:Key="FastestWayToScreencap">最快截图耗时: {0}ms ({1})</system:String>
-    <system:String x:Key="FastestWayToScreencapWarningTip">截图用时较长(平均: {0}ms)，自动战斗类功能（如自动肉鸽）可能表现异常。如使用 MuMu、雷电模拟器请尝试开启截图增强</system:String>
-    <system:String x:Key="FastestWayToScreencapErrorTip">截图用时过长(平均: {0}ms)，自动战斗类功能（如自动肉鸽）很可能无法正常运行，建议尝试重启或更换模拟器！如使用 MuMu、雷电模拟器请尝试开启截图增强</system:String>
+    <system:String x:Key="FastestWayToScreencapInfoTip">截图用时 {0}ms。如使用 MuMu、雷电模拟器，可在 ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ 选择对应模拟器，并开启下方显示的截图增强以降低耗时</system:String>
+    <system:String x:Key="FastestWayToScreencapWarningTip">截图用时较长(平均: {0}ms)，自动战斗类功能（如自动肉鸽）可能表现异常。如使用 MuMu、雷电模拟器，请在 ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ 选择对应模拟器，并开启下方显示的截图增强</system:String>
+    <system:String x:Key="FastestWayToScreencapErrorTip">截图用时过长(平均: {0}ms)，自动战斗类功能（如自动肉鸽）很可能无法正常运行，建议尝试重启或更换模拟器！如使用 MuMu、雷电模拟器，请在 ｢{key=Settings} - {key=ConnectionSettings} - {key=ConnectionPreset}｣ 选择对应模拟器，并开启下方显示的截图增强</system:String>
     <system:String x:Key="EmulatorFpsWarningTip">检测到模拟器设置帧率为 {0} FPS，低于游戏原生帧率（60 FPS），可能开启了后台降帧或帧率设置过低，建议将模拟器帧率设置为 60 FPS</system:String>
     <system:String x:Key="EmulatorFpsErrorTip">检测到模拟器设置帧率过低（{0} FPS），可能导致任务异常，请关闭模拟器后台降帧并将帧率设置为 60 FPS</system:String>
     <system:String x:Key="EmulatorFpsHighTip">检测到模拟器设置帧率为 {0} FPS，高于游戏原生帧率上限（60 FPS），可能是模拟器插帧功能，可能导致画面异常或识别不稳定，建议关闭插帧并将帧率设置为 60 FPS</system:String>
@@ -1330,7 +1336,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="GiveUpUploadingPenguins">放弃上传企鹅物流</system:String>
     <system:String x:Key="ReportSkippedForPcClient">PC 端鼠标为独立渲染，可能遮挡掉落物及数量识别。为避免错误数据污染数据池，已自动跳过本次上报</system:String>
     <system:String x:Key="TheEx">无奖励关卡，已停止</system:String>
-    <system:String x:Key="MissingOperators">缺少以下{key=Operator}组中的{key=Operator}：</system:String>
+    <system:String x:Key="MissingOperators">以下{key=Operator}组内的{key=Operator}均未拥有（每组只需其一）：\n{0}｢特别关注｣ 可能影响{key=Operator}识别，上述{key=Operator}若已拥有，请移除后重试；若未拥有，仅缺一组时可使用 ｢{key=SupportUnitUsage}｣，缺两组以上请更换作业。</system:String>
     <system:String x:Key="RecruitSupportOperator">编入助战{key=Operator}：{0}</system:String>
     <system:String x:Key="StageQueue">关卡队列:</system:String>
     <system:String x:Key="UnableToAgent">无法使用代理指挥</system:String>
@@ -1722,7 +1728,7 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
 当前安装目录：{0}
 命中的不支持位置：{1}
 
-这些位置层级过高，容易引发文件覆盖、配置写入异常或数据混乱。请先将 MAA 移动到独立文件夹中，例如 D:\\MAA\\，再重新启动。</system:String>
+这些目录不适合放置 MAA，文件容易被清理或覆盖。请先将 MAA 移动到独立文件夹中，例如 D:\\MAA\\，再重新启动。</system:String>
     <!--  !Boot  -->
     <!--  SimpleEncryptionHelper  -->
     <system:String x:Key="EncryptionError">加解密失败，请重新配置相关设置，否则加密内容将以明文形式存储在配置文件中。</system:String>

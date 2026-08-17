@@ -333,15 +333,19 @@ struct CharAllocationResult
         std::unordered_set<battle::OperNameTag> seen_candidates;
         seen_candidates.reserve(candidates.size());
 
-        for (const auto& candidate_name : candidates) {
-            if (!char_set.contains(candidate_name) || !seen_candidates.emplace(candidate_name).second) {
+        for (const auto& candidate_oper : candidates) {
+            const auto& it = std::ranges::find_if(char_set, [&](const battle::OperNameTag& tag) {
+                return (candidate_oper.role == battle::Role::Unknown || tag.role == candidate_oper.role) &&
+                       tag.name == candidate_oper.name;
+            });
+            if (it == char_set.cend() || !seen_candidates.emplace(candidate_oper).second) {
                 continue;
             }
 
             has_candidate = true;
-            const auto [char_it, inserted] = char_name_mapping.try_emplace(candidate_name, char_id_mapping.size());
+            const auto [char_it, inserted] = char_name_mapping.try_emplace(*it, char_id_mapping.size());
             if (inserted) {
-                char_id_mapping.emplace_back(candidate_name);
+                char_id_mapping.emplace_back(*it);
             }
             node_id_mapping.emplace_back(group_id, char_it->second);
         }
