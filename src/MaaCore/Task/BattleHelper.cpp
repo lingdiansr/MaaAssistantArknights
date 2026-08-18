@@ -402,44 +402,6 @@ bool asst::BattleHelper::update_cost(const cv::Mat& image, const cv::Mat& image_
     return true;
 }
 
-asst::battle::OperNameTag asst::BattleHelper::get_oper_tag(battle::Role role, const std::string& name)
-{
-    auto deployed_it = std::ranges::find_if(m_battlefield_opers, [&](const auto& pair) {
-        return (role == battle::Role::Unknown || pair.first.role == role) && pair.first.name == name;
-    });
-    if (deployed_it != m_battlefield_opers.cend()) {
-        return battle::OperNameTag { deployed_it->first.role, deployed_it->first.name };
-    }
-    auto it = std::ranges::find_if(m_cur_deployment_opers, [&](const auto& oper) {
-        return (role == battle::Role::Unknown || oper.role == role) && oper.name == name;
-    });
-    if (it != m_cur_deployment_opers.cend()) {
-        return battle::OperNameTag { it->role, it->name };
-    }
-    return battle::OperNameTag { role, name };
-}
-
-asst::battle::OperNameTag asst::BattleHelper::get_oper_tag(const battle::OperNameTag& tag)
-{
-    return get_oper_tag(tag.role, tag.name);
-}
-
-std::optional<asst::battle::OperNameTag> asst::BattleHelper::get_oper_skill_tag(const battle::OperNameTag& tag)
-{
-    auto it = std::ranges::find_if(m_cur_deployment_opers, [&](const auto& oper) {
-        return (tag.role == battle::Role::Unknown || oper.role == tag.role) && oper.name == tag.name;
-    });
-    if (it != m_cur_deployment_opers.cend()) {
-        return battle::OperNameTag { it->role, it->name };
-    }
-    it = std::ranges::find_if(m_cur_deployment_opers, [&](const auto& oper) { return oper.name == tag.name; });
-    if (it != m_cur_deployment_opers.cend()) {
-        return battle::OperNameTag { it->role, it->name };
-    }
-    LogError << __FUNCTION__ << "No oper" << tag;
-    return std::nullopt;
-}
-
 bool asst::BattleHelper::deploy_oper(const std::string& name, const Point& loc, DeployDirection direction)
 {
     return deploy_oper(battle::Role::Unknown, name, loc, direction);
@@ -641,12 +603,12 @@ bool asst::BattleHelper::is_skill_ready(battle::Role role, const std::string& na
     return is_skill_ready(oper_iter->second, reusable);
 }
 
-bool asst::BattleHelper::use_skill(const std::string& name, bool keep_waiting)
+bool asst::BattleHelper::use_skill(const std::string& name, int timeout_ms)
 {
-    return use_skill(battle::Role::Unknown, name, keep_waiting);
+    return use_skill(battle::Role::Unknown, name, timeout_ms);
 }
 
-bool asst::BattleHelper::use_skill(battle::Role role, const std::string& name, bool keep_waiting)
+bool asst::BattleHelper::use_skill(battle::Role role, const std::string& name, int timeout_ms)
 {
     LogTraceFunction;
 
@@ -658,14 +620,14 @@ bool asst::BattleHelper::use_skill(battle::Role role, const std::string& name, b
         return false;
     }
 
-    return use_skill(oper_iter->second, keep_waiting);
+    return use_skill(oper_iter->second, timeout_ms);
 }
 
-bool asst::BattleHelper::use_skill(const Point& loc, bool keep_waiting)
+bool asst::BattleHelper::use_skill(const Point& loc, int timeout_ms)
 {
     LogTraceFunction;
 
-    return click_oper_on_battlefield(loc) && click_skill(keep_waiting) && m_inst_helper.sleep(200);
+    return click_oper_on_battlefield(loc) && click_skill(timeout_ms) && m_inst_helper.sleep(200);
 }
 
 bool asst::BattleHelper::check_pause_button(const cv::Mat& reusable)
@@ -798,10 +760,20 @@ bool asst::BattleHelper::use_all_ready_skill(const cv::Mat& reusable)
     const auto now = std::chrono::steady_clock::now();
     const cv::Mat image = reusable.empty() ? m_inst_helper.ctrler()->get_image() : reusable;
     for (const auto& [oper_tag, loc] : m_battlefield_opers) {
-        const auto& skill_opt = get_oper_tag(oper_tag);
-        auto& usage = m_skill_usage[skill_opt];
-        auto& times = m_skill_times[skill_opt];
-        auto& retry = m_skill_error_count[oper_tag];
+        const auto& skill_it = std::ranges::find_if(m_skill_usage, [&](const auto& pair) {
+            return (oper_tag.role == battle::Role::Unknown || pair.first.role == oper_tag.role) &&
+                   pair.first.name == oper_tag.name;
+        });
+        battle::OperNameTag skill_tag;
+        if (skill_it == m_skill_usage.cend()) {
+            skill_tag = oper_tag;
+        }
+        else {
+            skill_tag = skill_it->first;
+        }
+        auto& usage = m_skill_usage[skill_tag];
+        auto& times = m_skill_times[skill_tag];
+        auto& retry = m_skill_error_count[skill_tag];
         auto& last_use_time = m_last_use_skill_time[oper_tag];
         if (usage != SkillUsage::Possibly && usage != SkillUsage::Times) {
             continue;
@@ -1007,25 +979,24 @@ bool asst::BattleHelper::click_retreat()
     return ret;
 }
 
-bool asst::BattleHelper::click_skill(bool keep_waiting)
+bool asst::BattleHelper::click_skill(int timeout_ms)
 {
     LogTraceFunction;
+    const auto start_time = std::chrono::steady_clock::now();
     bool deploy_with_pause =
         ControlFeat::support(m_inst_helper.ctrler()->support_features(), ControlFeat::SWIPE_WITH_PAUSE);
 
     bool pausing = false;
-    if (!keep_waiting && deploy_with_pause) {
+    if (timeout_ms == 0 && deploy_with_pause) {
         pausing = ProcessTask(this_task(), { "BattlePause" }).run();
     }
 
     cv::Mat top_view;
     cv::Mat image;
-    for (int retry = 0; retry < (keep_waiting ? 1000 : 5); ++retry) {
-        if (m_inst_helper.need_exit()) {
-            return false;
-        }
+    int retry = 0;
+    while (!m_inst_helper.need_exit()) {
         image = m_inst_helper.ctrler()->get_image();
-        if (keep_waiting && retry > 0 && (retry % 10 == 0) && !check_in_battle(image)) {
+        if (retry > 0 && (retry % 10 == 0) && !check_in_battle(image)) {
             return false;
         }
         top_view = get_top_view(image, true, m_has_multi_stages);
@@ -1039,7 +1010,16 @@ bool asst::BattleHelper::click_skill(bool keep_waiting)
             }
             return true;
         }
+        if (timeout_ms > -1) {
+            const auto elapsed_ms =
+                std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start_time)
+                    .count();
+            if (elapsed_ms >= timeout_ms) {
+                break;
+            }
+        }
         m_inst_helper.sleep(Config.get_options().task_delay);
+        ++retry;
     }
 
     // this means false positive in skill ready detection

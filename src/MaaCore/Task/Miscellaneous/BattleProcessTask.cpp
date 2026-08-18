@@ -110,7 +110,7 @@ bool asst::BattleProcessTask::to_group()
         }
     }
     // 补充剩余的干员
-    for (const auto& [group_name, oper_list] : get_combat_data().groups) {
+    for (const auto& [group_name, _, __, oper_list] : get_combat_data().groups) {
         if (groups.contains(battle::OperNameTag { battle::Role::Unknown, group_name })) {
             continue;
         }
@@ -195,13 +195,13 @@ bool asst::BattleProcessTask::to_group()
     // 对于实际编入战斗的干员, 从作业中读取技能用法并存入m_skill_usage和m_skill_times
     for (const auto& [group_tag, oper_tag] : m_oper_in_group) {
         const auto& group_it = std::ranges::find_if(get_combat_data().groups, [&](const OperUsageGroup& pair) {
-            return pair.first == group_tag.name;
+            return pair.name == group_tag.name;
         });
         if (group_it == get_combat_data().groups.end()) {
             LogError << __FUNCTION__ << "Group not found in combat data: " << group_tag.name;
             continue;
         }
-        const auto& this_group = group_it->second;
+        const auto& this_group = group_it->opers;
         // there is a build error on macOS
         // https://github.com/MaaAssistantArknights/MaaAssistantArknights/actions/runs/3779762713/jobs/6425284487
         // const std::string& oper_name_for_lambda = oper_tag;
@@ -248,7 +248,7 @@ bool asst::BattleProcessTask::do_action(const battle::copilot::Action& action, s
     }
 
     bool ret = false;
-    const auto& [role, name] = get_name_from_group(action.role, action.name);
+    const auto& [/*可unknown*/ role, name] = get_name_from_group(action.role, action.name);
     const auto& location = action.location;
 
     switch (action.type) {
@@ -268,9 +268,9 @@ bool asst::BattleProcessTask::do_action(const battle::copilot::Action& action, s
         break;
 
     case ActionType::UseSkill:
-        ret = m_in_bullet_time ? click_skill(!action.skip_if_not_ready)
-                               : (location.empty() ? use_skill(role, name, !action.skip_if_not_ready)
-                                                   : use_skill(location, !action.skip_if_not_ready));
+        ret = m_in_bullet_time ? click_skill(action.timeout_ms)
+                               : (location.empty() ? use_skill(role, name, action.timeout_ms)
+                                                   : use_skill(location, action.timeout_ms));
         if (ret) {
             m_in_bullet_time = false;
         }
@@ -301,11 +301,18 @@ bool asst::BattleProcessTask::do_action(const battle::copilot::Action& action, s
             LogError << "Both name and location are set for SkillUsage action. Skip this step.";
             break;
         }
-        else if (location.empty()) {
-            auto tag_opt = get_oper_tag({ role, name });
-            set_usage(tag_opt, action.modify_usage, action.modify_times);
+        else if (location.empty()) { // 坐标为空, 指定oper name
+            auto tag_it = std::ranges::find_if(m_skill_usage, [&](const auto& pair) {
+                return (role == battle::Role::Unknown || pair.first.role == role) && pair.first.name == name;
+            });
+            if (tag_it != m_skill_usage.end()) {
+                set_usage(tag_it->first, action.modify_usage, action.modify_times);
+            }
+            else {
+                set_usage({ role, name }, action.modify_usage, action.modify_times);
+            }
         }
-        else {
+        else { // oper name为空, 指定坐标
             battle::Role _role;
             std::string drone_name;
             if (auto it = m_used_tiles.find(location); it == m_used_tiles.end()) {
@@ -503,7 +510,7 @@ bool asst::BattleProcessTask::wait_condition(const Action& action)
 
     // 部署干员还要额外等待费用够或 CD 转好
     if (action.type == ActionType::Deploy) {
-        const auto& oper_tag = get_oper_tag(get_name_from_group(action.role, action.name));
+        const auto& action_oper = get_name_from_group(action.role, action.name);
         update_image_if_empty();
         while (!need_exit()) {
             if (!update_deployment(false, image)) {
@@ -511,7 +518,10 @@ bool asst::BattleProcessTask::wait_condition(const Action& action)
             }
             if (auto iter = std::ranges::find_if(
                     m_cur_deployment_opers,
-                    [&](const auto& oper) { return oper.role == oper_tag.role && oper.name == oper_tag.name; });
+                    [&](const auto& oper) {
+                        return (action_oper.role == battle::Role::Unknown || oper.role == action_oper.role) &&
+                               oper.name == action_oper.name;
+                    });
                 iter != m_cur_deployment_opers.end() && iter->available) {
                 break;
             }

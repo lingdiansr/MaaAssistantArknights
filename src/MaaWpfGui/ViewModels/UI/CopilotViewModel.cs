@@ -1193,7 +1193,7 @@ public partial class CopilotViewModel : Screen
             int eliteReq = Math.Max(skillElite, Math.Max(skilLevelElite, moduleElite));
             if (eliteReq > 0)
             {
-                if (oper.Requirements is null || oper.Requirements.Elite is null)
+                if (oper.Requirements is null)
                 {
                     oper.Requirements ??= new();
                     oper.Requirements.Elite = eliteReq;
@@ -1259,7 +1259,7 @@ public partial class CopilotViewModel : Screen
         {
             try
             {
-                var json = JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, });
+                var json = JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, });
                 await File.WriteAllTextAsync(TempCopilotFile, json);
             }
             catch
@@ -1312,7 +1312,7 @@ public partial class CopilotViewModel : Screen
         {
             try
             {
-                await File.WriteAllTextAsync(TempCopilotFile, JsonConvert.SerializeObject(copilot, Formatting.Indented));
+                await File.WriteAllTextAsync(TempCopilotFile, JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }));
             }
             catch
             {
@@ -1693,7 +1693,7 @@ public partial class CopilotViewModel : Screen
 
         try
         {
-            await File.WriteAllTextAsync(cachePath, JsonConvert.SerializeObject(copilot, Formatting.Indented));
+            await File.WriteAllTextAsync(cachePath, JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }));
         }
         catch
         {
@@ -1778,7 +1778,7 @@ public partial class CopilotViewModel : Screen
 
         try
         {
-            await File.WriteAllTextAsync(cachePath, JsonConvert.SerializeObject(copilot, Formatting.Indented));
+            await File.WriteAllTextAsync(cachePath, JsonConvert.SerializeObject(copilot, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }));
         }
         catch
         {
@@ -2072,7 +2072,7 @@ public partial class CopilotViewModel : Screen
         {
             try
             {
-                await File.WriteAllTextAsync(TempCopilotFile, JsonConvert.SerializeObject(_copilotCache, Formatting.Indented));
+                await File.WriteAllTextAsync(TempCopilotFile, JsonConvert.SerializeObject(_copilotCache, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, }));
             }
             catch
             {

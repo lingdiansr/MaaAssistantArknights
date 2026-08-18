@@ -392,7 +392,15 @@ using RoleCounts = std::unordered_map<Role, int>;
 
 namespace copilot
 {
-using OperUsageGroup = std::pair<std::string, std::vector<OperUsage>>;
+
+struct OperUsageGroup
+{
+    std::string name;  // 干员组名
+    int elite_min = 0; // 组内干员的最小精英化等级
+    int level_min = 0; // 组内干员的最小等级
+    std::vector<asst::battle::OperUsage> opers;
+};
+
 using OperUsageGroups = std::vector<OperUsageGroup>;
 
 enum class ActionType
@@ -430,13 +438,12 @@ struct Action
     int modify_times = 1; // 更改使用技能的次数，默认为 1，兼容曾经的作业
     int pre_delay = 0;
     int post_delay = 0;
-    int time_out = INT_MAX; // TODO
+    int timeout_ms = -1; // 动作超时时间, 单位ms
     std::string doc;
     std::string doc_color;
     RoleCounts role_counts;
     std::pair<double, double> distance;
-    bool skip_if_not_ready = false; // 跳过使用未准备好的技能，主要用于关闭技能的场景 (试验性功能)
-    int elapsed_time = 0;           // 全局计时条件 (试验性功能)
+    int elapsed_time = 0; // 全局计时条件 (试验性功能)
 };
 
 struct BasicInfo
