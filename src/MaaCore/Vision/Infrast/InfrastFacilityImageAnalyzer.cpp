@@ -8,6 +8,9 @@
 
 bool asst::InfrastFacilityImageAnalyzer::analyze()
 {
+    m_result.clear();
+    m_view_type = ViewType::Unknown;
+
     const static std::unordered_map<std::string, std::string> facility_task_name = {
         { "Dorm", "InfrastDorm" },           { "Control", "InfrastControl" },       { "Mfg", "InfrastMfg" },
         { "Trade", "InfrastTrade" },         { "Power", "InfrastPower" },           { "Office", "InfrastOffice" },
@@ -74,6 +77,10 @@ bool asst::InfrastFacilityImageAnalyzer::analyze()
         }
 #endif
         m_result.emplace(key, std::move(cur_facility_result));
+    }
+
+    if (cor_suffix_index >= 0) {
+        m_view_type = cor_suffix_index == 0 ? ViewType::Normal : ViewType::Mini;
     }
 
     return !m_result.empty();
