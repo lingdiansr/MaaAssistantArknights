@@ -1,4 +1,4 @@
-// <copyright file="ExtraConfig.cs" company="MaaAssistantArknights">
+// <copyright file="BaseExtra.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
 // Copyright (C) 2021-2025 MaaAssistantArknights Contributors
 //
@@ -10,11 +10,11 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 // </copyright>
-#nullable enable
-using Stylet;
 
-namespace MaaWpfGui.Models.EmulatorConnectionExtra;
+using MaaWpfGui.Models;
 
-public class ExtraConfig : PropertyChangedBase
+namespace MaaWpfGui.Configuration.Single.Settings.ConnectionExtra;
+
+public class BaseExtra : NotifyPropertyChangedWithValue
 {
 }

@@ -1,4 +1,4 @@
-// <copyright file="ExtraConfig.cs" company="MaaAssistantArknights">
+// <copyright file="UpdateSource.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
 // Copyright (C) 2021-2025 MaaAssistantArknights Contributors
 //
@@ -10,11 +10,23 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 // </copyright>
+
 #nullable enable
-using Stylet;
 
-namespace MaaWpfGui.Models.EmulatorConnectionExtra;
+namespace MaaWpfGui.Constants.Enums;
 
-public class ExtraConfig : PropertyChangedBase
+/// <summary>
+/// 更新源
+/// </summary>
+public enum UpdateSource
 {
+    /// <summary>
+    /// GitHub（海外源）
+    /// </summary>
+    GitHub,
+
+    /// <summary>
+    /// Mirror酱
+    /// </summary>
+    MirrorChyan,
 }
