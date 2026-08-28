@@ -1385,6 +1385,7 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="EmulatorFpsHighTip">에뮬레이터 설정 주사율이 {0} FPS로 게임의 기본 프레임 속도 상한(60 FPS)을 초과합니다. 이는 에뮬레이터의 프레임 보간 기능일 수 있으며, 화면 왜곡이나 인식 불안정을 유발할 수 있습니다. 프레임 보간을 비활성화하고 프레임 속도를 60 FPS로 설정하는 것을 권장합니다</system:String>
     <system:String x:Key="IdentifyTheMistakes">인식 오류</system:String>
     <system:String x:Key="TaskError" xml:space="preserve">작업 오류: </system:String>
+    <system:String x:Key="OutOfMemoryError">메모리 부족으로 {0} 작업이 중지되었습니다. 다른 프로그램을 종료하거나 MAA를 재시작한 후 다시 시도해 주세요</system:String>
     <system:String x:Key="CombatError">작전 오류</system:String>
     <system:String x:Key="StartTask" xml:space="preserve">작업 시작: </system:String>
     <system:String x:Key="CompleteTask" xml:space="preserve">작업 완료: </system:String>
@@ -1553,9 +1554,10 @@ C:\\leidian\\LDPlayer9
     <system:String x:Key="BlackFlowMilestoneBurnFloor2Final">2구역 험로의 끝 도달</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyCheckSeedShop">1구역 상점에서 종자 확인</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShop">1~3구역 신비한 상인에 들어가 종자 육성</system:String>
+    <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShopTransit">1~2구역 신비한 상인에서 종자를 육성한 뒤 출구로 이동</system:String>
+    <system:String x:Key="BlackFlowMilestoneBabyCultivateScrapShopFinal">3구역 신비한 상인에 들어가 종자 육성</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyExploreHidden">신비한 상인을 발견할 때까지 미지의 괴이를 최대한 개척</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyVisitIncident">가는 길에 우연한 만남 진입</system:String>
-    <system:String x:Key="BlackFlowMilestoneBabyVisitLight">가는 길에 깃털 조망점 진입</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyFloor2Shops">2구역은 교활한 상인 경유 시 종자 계속 획득</system:String>
     <system:String x:Key="BlackFlowMilestoneBabyFloor3Shops">3구역은 교활한 상인 경유 시 판매·진열 갱신 후 종자 최대한 구매</system:String>
     <system:String x:Key="BlackFlowMilestoneEnding2SandtableA">사판 A 획득</system:String>

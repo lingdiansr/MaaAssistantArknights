@@ -1287,6 +1287,11 @@ ScoreResult select_control(const std::vector<ScoreOper>& opers, const ScoreConte
             [](const ScoreOper& oper) { return has_any_skill(oper, { "bskill_ctrl_sp", "bskill_ctrl_cost" }); })) {
         }
     }
+    // 仍未填满时，用其余可用且未选择的干员补齐控制中枢。
+    if (best.size() < ControlSlotCount) {
+        while (add_first([](const ScoreOper&) { return true; })) {
+        }
+    }
 
     const double score = static_cast<double>(best.size());
     return { std::move(best), score };
@@ -1433,12 +1438,19 @@ ScoreResult select_dorm(const std::vector<ScoreOper>& opers, const ScoreContext&
 
 const std::array<AbyssalHunterCandidate, 4>& get_abyssal_hunter_candidates()
 {
-    static const std::array<AbyssalHunterCandidate, 4> candidates = {
-        AbyssalHunterCandidate { BattleData.get_id("斯卡蒂"), BattleData.get_role("斯卡蒂") },
-        AbyssalHunterCandidate { BattleData.get_id("幽灵鲨"), BattleData.get_role("幽灵鲨") },
-        AbyssalHunterCandidate { BattleData.get_id("乌尔比安"), BattleData.get_role("乌尔比安") },
-        AbyssalHunterCandidate { BattleData.get_id("安哲拉"), BattleData.get_role("安哲拉") },
-    };
+    static const auto candidates = [&] {
+        const auto& skadi = BattleData.find_first_oper(battle::Role::Warrior, "斯卡蒂");
+        const auto& specter = BattleData.find_first_oper(battle::Role::Warrior, "幽灵鲨");
+        const auto& ulpianus = BattleData.find_first_oper(battle::Role::Warrior, "乌尔比安");
+        const auto& angela = BattleData.find_first_oper(battle::Role::Sniper, "安哲拉");
+
+        return std::array<AbyssalHunterCandidate, 4> {
+            AbyssalHunterCandidate { skadi->id, skadi->role },
+            AbyssalHunterCandidate { specter->id, specter->role },
+            AbyssalHunterCandidate { ulpianus->id, ulpianus->role },
+            AbyssalHunterCandidate { angela->id, angela->role },
+        };
+    }();
     return candidates;
 }
 
