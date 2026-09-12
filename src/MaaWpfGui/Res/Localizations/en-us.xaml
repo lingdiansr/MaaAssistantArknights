@@ -565,6 +565,7 @@ If you choose ｢{key=ManualRestart}｣ and start MAA manually later, ｢{key=Ru
     <system:String x:Key="StartGameLaunchClient">Launch Client on Start</system:String>
     <system:String x:Key="UseWeeklySchedule">Enable Weekly Schedule</system:String>
     <system:String x:Key="UseWeeklyScheduleTip">The day of week here is based on in-game time, not real-world time. For example, if the game resets at 4:00, then 3:59 is still counted as the previous day.</system:String>
+    <system:String x:Key="FightSkippedWeeklySchedule">Weekly schedule is not enabled for today</system:String>
     <system:String x:Key="HelpUsWithOverseasServersTip">The adaptation for Overseas clients is very difficult and we need your help! No programming knowledge is required.</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunch">Startup Emulator after launched</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunchTip">The emulator is only started once when MAA launches, not every time you click ｢{key=LinkStart}｣.\nIf you need that, check ｢{key=RetryOnDisconnected}｣ instead</system:String>
@@ -975,8 +976,8 @@ Do not adjust the proxy multiplier setting in the game</system:String>
     <system:String x:Key="DepotSkipDuringResourceCollection">Skip during resource collection limited-time all-day open</system:String>
     <system:String x:Key="DepotOnlyFirstInsufficientPlan">Only execute the first insufficient plan</system:String>
     <system:String x:Key="DepotOnlyFirstInsufficientPlanTip" xml:space="preserve">Only the first insufficient plan that is open today will be queued.&#10;The log stops there; plans after it are not evaluated this run.&#10;Once it is stocked up, the next run continues with the rest.</system:String>
-    <system:String x:Key="DepotPlanSkippedActivity">An event is in progress, depot maintain skipped.</system:String>
-    <system:String x:Key="DepotPlanSkippedResourceCollection">Resource collection limited-time all-day open is in progress, depot maintain skipped.</system:String>
+    <system:String x:Key="DepotPlanSkippedActivity">An event is in progress</system:String>
+    <system:String x:Key="DepotPlanSkippedResourceCollection">Resource collection limited-time all-day open is in progress</system:String>
     <system:String x:Key="DepotPlanUpdateDepotFailed">Failed to update inventory data.</system:String>
     <system:String x:Key="DepotUseAutoSeries">Auto Series</system:String>
     <system:String x:Key="DepotUseAutoSeriesTip" xml:space="preserve">When unchecked, runs at 1×; when checked, runs at the highest series multiplier allowed by current sanity, so drops from a single run may exceed the target inventory limit.</system:String>
@@ -1395,11 +1396,15 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="CopyErrorMessage">Copy error message</system:String>
     <!--  !ErrorView  -->
     <!--  AsstProxy  -->
-    <system:String x:Key="UpdateApplyFailed">The update could not be applied and the current installation may be incomplete. Please download the full package again and migrate your config, data, and debug folders manually as described below.\n\n{key=FullPackageUpgradeTips}</system:String>
-    <system:String x:Key="UpdateApplyMissingUpdater">The update could not continue because MAA.Updater.exe is missing, so the external updater could not be started. This update has been canceled. The file may have been deleted manually, or it may have been blocked or removed by security software. If security software caused this, please check its quarantine area, restore the file, and add the MAA installation folder to that software's allowlist before trying again.\n\n{key=FullPackageUpgradeTips}</system:String>
-    <system:String x:Key="ResourceBroken">The resources are damaged. Try auto repair (download the full package again), or exit and reinstall manually.\n\n{key=FullPackageUpgradeTips}</system:String>
+    <system:String x:Key="DelegatedUpdateFailureDetected">The last automatic update failed and the current installation may be incomplete, so resource loading was skipped for this launch. Please choose how to proceed in the next dialog.\n\nFailure reason: {0}</system:String>
+    <system:String x:Key="SecuritySoftwareWhitelistTips">add the MAA installation folder to that software's allowlist before trying again.</system:String>
+    <system:String x:Key="DelegatedUpdateFailureReasonFileLocked">Moving files failed during the update. The files may have been scanned, blocked, or locked by security software, or held by another program. If security software is the cause, {key=SecuritySoftwareWhitelistTips} Restarting your computer may also help.</system:String>
+    <system:String x:Key="DelegatedUpdateFailureReasonPackageError">The update package or its extracted files may be corrupted or incomplete.</system:String>
+    <system:String x:Key="DelegatedUpdateFailureReasonUnknown">Unknown reason. See gui.log in the debug folder for details.</system:String>
+    <system:String x:Key="UpdateApplyMissingUpdater">The update could not continue because MAA.Updater.exe is missing, so the external updater could not be started. This update has been canceled. The file may have been deleted manually, or it may have been blocked or removed by security software. If security software caused this, please check its quarantine area, restore the file, and {key=SecuritySoftwareWhitelistTips}\n\n{key=FullPackageUpgradeTips}</system:String>
+    <system:String x:Key="ResourceBroken">The resources are damaged. Try auto repair (download the full package again), or continue for now and update later by dragging in a local full package.\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="ResourceIntegrityCheckTitle">Missing installation files</system:String>
-    <system:String x:Key="ResourceIntegrityCheckDesc">{0} installation file(s) are missing ({1}), and some features may not work. The files may have been blocked or removed by security software, or deleted manually. If security software caused this, please check its quarantine area, restore the files, and add the MAA installation folder to that software's allowlist before trying again.\n\nYou can also reinstall manually as described below:\n\n{key=FullPackageUpgradeTips}</system:String>
+    <system:String x:Key="ResourceIntegrityCheckDesc">{0} installation file(s) are missing ({1}), and some features may not work. The files may have been blocked or removed by security software, or deleted manually. If security software caused this, please check its quarantine area, restore the files, and {key=SecuritySoftwareWhitelistTips}\n\nYou can also reinstall manually as described below:\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="ResourceIntegrityRepairYes">Repair automatically (download the full package and restore after restart)</system:String>
     <system:String x:Key="ResourceIntegrityRepairNo">Not now, continue starting</system:String>
     <system:String x:Key="ResourceBrokenTaskBlocked">The resources are damaged, tasks cannot be started. Repair the resources as prompted at startup, or download the full package again and restart MAA.</system:String>
@@ -1536,6 +1541,10 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="BlackFlowMilestoneChanged">Objective {0}: {1}</system:String>
     <system:String x:Key="BlackFlowStrategyResult">Roguelike strategy ended: {0} ({1})</system:String>
     <system:String x:Key="BlackFlowStrategyStarted">BlackFlow strategy started: {0}</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupStarted">零件箱超载，开始清理</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupDiscarded">已丢弃零件：{0}</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupCompleted">零件箱清理完成</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupFailed">零件箱清理失败</system:String>
     <system:String x:Key="BlackFlowStrategyUnknown">Unknown strategy</system:String>
     <system:String x:Key="BlackFlowDecisionProbeUnknownNode">Probe the nearest unclassified node on the route</system:String>
     <system:String x:Key="BlackFlowDecisionPolicyOrder">Selected by the configured policy order</system:String>
@@ -2032,6 +2041,12 @@ These directories are not suitable places to keep MAA; files there can be easily
     <system:String x:Key="StallTimeoutMinutes">Log output stall timeout (min)</system:String>
     <system:String x:Key="StallTimeoutEnabled">Enable stall detection</system:String>
     <system:String x:Key="TaskStallWarning">Task log output has not been updated for {0} minutes (currently stalled for {1} minutes). Please check whether the task is still running; if so, you can ignore this warning. If the task is unresponsive, manual intervention may be required.</system:String>
+    <system:String x:Key="RunDurationLimitEnabled">Limit run duration</system:String>
+    <system:String x:Key="RunDurationLimitMinutes">Run duration limit (min)</system:String>
+    <system:String x:Key="RunDurationLimitTip" xml:space="preserve">Timed from ｢{key=LinkStart}｣. Tasks are stopped automatically once the limit is reached; the option below controls whether actions in ｢{key=PostActionsSettings}｣ (e.g. exiting the game, closing the emulator, shutting down) are executed afterwards.
+{key=CheckBoxesNotSavedAsNull}.</system:String>
+    <system:String x:Key="RunDurationLimitExecutePostActions">Run actions in ｢{key=PostActionsSettings}｣ after stopping</system:String>
+    <system:String x:Key="RunDurationLimitReached">Run duration limit ({0} min) reached, stopping tasks</system:String>
     <!--  !TimeOutTimer  -->
     <!--  Achievement  -->
     <system:String x:Key="AchievementCelebrate">🎉 Achievement Unlocked</system:String>

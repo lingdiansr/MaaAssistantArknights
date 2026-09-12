@@ -565,6 +565,7 @@ D:\
     <system:String x:Key="StartGameLaunchClient">是否啟動用戶端</system:String>
     <system:String x:Key="UseWeeklySchedule">使用週計畫</system:String>
     <system:String x:Key="UseWeeklyScheduleTip">此處的星期是根據遊戲時間計算的，並非現實時間。例如遊戲在 4:00 刷新，則 3:59 仍算作前一天。</system:String>
+    <system:String x:Key="FightSkippedWeeklySchedule">週計畫今日未勾選</system:String>
     <system:String x:Key="HelpUsWithOverseasServersTip">外服支援人力吃緊，幫幫我們！不會寫程式也可以參與。</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunch">啟動 MAA 後自動開啟模擬器</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunchTip">僅在啟動 MAA 時開啟一次模擬器，點擊 ｢{key=LinkStart}｣ 時不會自動開啟；\n如有此需求，請勾選 ｢{key=RetryOnDisconnected}｣</system:String>
@@ -975,8 +976,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DepotSkipDuringResourceCollection">資源收集限時全天開放期間跳過</system:String>
     <system:String x:Key="DepotOnlyFirstInsufficientPlan">僅執行第一個庫存不足的計劃</system:String>
     <system:String x:Key="DepotOnlyFirstInsufficientPlanTip" xml:space="preserve">僅執行第一個庫存不足且當日可執行的計劃，日誌也只顯示到該計劃為止。&#10;該計劃補滿後，下次執行會自動接續後續計劃，當日無法執行的會被跳過。</system:String>
-    <system:String x:Key="DepotPlanSkippedActivity">目前有活動進行中，已跳過庫存保持。</system:String>
-    <system:String x:Key="DepotPlanSkippedResourceCollection">目前處於資源收集限時全天開放期間，已跳過庫存保持。</system:String>
+    <system:String x:Key="DepotPlanSkippedActivity">目前有活動進行中</system:String>
+    <system:String x:Key="DepotPlanSkippedResourceCollection">目前處於資源收集限時全天開放期間</system:String>
     <system:String x:Key="DepotPlanUpdateDepotFailed">更新庫存資料失敗。</system:String>
     <system:String x:Key="DepotUseAutoSeries">AUTO 代理倍率</system:String>
     <system:String x:Key="DepotUseAutoSeriesTip" xml:space="preserve">未勾選時按單倍代理；勾選後按目前理智可刷的最大倍率代理，單次刷取可能超過目標庫存上限。</system:String>
@@ -1396,11 +1397,15 @@ C:\leidian\LDPlayer9
     <system:String x:Key="CopyErrorMessage">複製錯誤資訊</system:String>
     <!--  !ErrorView  -->
     <!--  AsstProxy  -->
-    <system:String x:Key="UpdateApplyFailed">更新失敗，目前的安裝可能已不完整。請重新下載完整安裝檔，並依照下方說明手動搬移 config、data 與 debug。\n\n{key=FullPackageUpgradeTips}</system:String>
-    <system:String x:Key="UpdateApplyMissingUpdater">更新無法繼續，因為缺少 MAA.Updater.exe，無法啟動外部更新程式。本次更新已取消。此檔案可能已被手動刪除，也可能被某些安全軟體攔截或刪除。若是安全軟體所致，請前往對應軟體的隔離區尋找並還原該檔案，並建議將 MAA 所在資料夾加入對應軟體白名單後再試一次。\n\n{key=FullPackageUpgradeTips}</system:String>
-    <system:String x:Key="ResourceBroken">檔案損毀，可嘗試自動修復（重新下載完整安裝檔），或結束後重新安裝。\n\n{key=FullPackageUpgradeTips}</system:String>
+    <system:String x:Key="DelegatedUpdateFailureDetected">上次自動更新失敗，目前的安裝可能不完整，本次啟動已跳過資源載入。請在接下來的對話方塊中選擇修復方式。\n\n失敗原因：{0}</system:String>
+    <system:String x:Key="SecuritySoftwareWhitelistTips">建議將 MAA 所在資料夾加入對應軟體白名單後再試一次。</system:String>
+    <system:String x:Key="DelegatedUpdateFailureReasonFileLocked">更新過程中移動檔案失敗。檔案可能被安全軟體掃描、攔截或鎖定，也可能被其他程式占用。若是安全軟體所致，{key=SecuritySoftwareWhitelistTips}也可重新開機後再試。</system:String>
+    <system:String x:Key="DelegatedUpdateFailureReasonPackageError">更新包或其解壓產物可能已損毀或不完整。</system:String>
+    <system:String x:Key="DelegatedUpdateFailureReasonUnknown">未知原因，詳情請查看 debug 資料夾中的 gui.log。</system:String>
+    <system:String x:Key="UpdateApplyMissingUpdater">更新無法繼續，因為缺少 MAA.Updater.exe，無法啟動外部更新程式。本次更新已取消。此檔案可能已被手動刪除，也可能被某些安全軟體攔截或刪除。若是安全軟體所致，請前往對應軟體的隔離區尋找並還原該檔案，並{key=SecuritySoftwareWhitelistTips}\n\n{key=FullPackageUpgradeTips}</system:String>
+    <system:String x:Key="ResourceBroken">檔案損毀，可嘗試自動修復（重新下載完整安裝檔），或暫不處理、稍後拖入本地完整包更新。\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="ResourceIntegrityCheckTitle">安裝檔案缺失</system:String>
-    <system:String x:Key="ResourceIntegrityCheckDesc">偵測到 {0} 個安裝檔案缺失（{1}），部分功能可能無法使用。檔案可能被某些安全軟體攔截或刪除，也可能被手動刪除。若為安全軟體所致，請前往對應軟體的隔離區尋找並還原檔案，並建議將 MAA 所在資料夾加入對應軟體白名單後再試一次。\n\n也可按下方說明手動重灌：\n\n{key=FullPackageUpgradeTips}</system:String>
+    <system:String x:Key="ResourceIntegrityCheckDesc">偵測到 {0} 個安裝檔案缺失（{1}），部分功能可能無法使用。檔案可能被某些安全軟體攔截或刪除，也可能被手動刪除。若為安全軟體所致，請前往對應軟體的隔離區尋找並還原檔案，並{key=SecuritySoftwareWhitelistTips}\n\n也可按下方說明手動重灌：\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="ResourceIntegrityRepairYes">自動修復（下載完整安裝檔並在重新啟動後還原）</system:String>
     <system:String x:Key="ResourceIntegrityRepairNo">暫不處理，繼續啟動</system:String>
     <system:String x:Key="ResourceBrokenTaskBlocked">檔案損毀，無法開始任務。請依啟動時的提示修復檔案，或重新下載完整安裝檔後重新啟動 MAA。</system:String>
@@ -1537,6 +1542,10 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BlackFlowMilestoneChanged">階段目標：{0}（{1}）</system:String>
     <system:String x:Key="BlackFlowStrategyResult">肉鴿策略結束：{0}（{1}）</system:String>
     <system:String x:Key="BlackFlowStrategyStarted">黑流策略已啟動：{0}</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupStarted">零件箱超载，开始清理</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupDiscarded">已丢弃零件：{0}</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupCompleted">零件箱清理完成</system:String>
+    <system:String x:Key="BlackFlowInventoryCleanupFailed">零件箱清理失败</system:String>
     <system:String x:Key="BlackFlowStrategyUnknown">未知策略</system:String>
     <system:String x:Key="BlackFlowDecisionProbeUnknownNode">探測路線前方最近的未分類節點</system:String>
     <system:String x:Key="BlackFlowDecisionPolicyOrder">按照策略設定的優先順序選擇</system:String>
@@ -2033,6 +2042,12 @@ DEBUG 目錄下儲存的圖片有數量限制，超出後會自動清理舊圖�
     <system:String x:Key="StallTimeoutMinutes">日誌輸出停滯超時時間（分鐘）</system:String>
     <system:String x:Key="StallTimeoutEnabled">啟用停滯偵測</system:String>
     <system:String x:Key="TaskStallWarning">任務日誌輸出已超過 {0} 分鐘無更新（當前已停滯 {1} 分鐘）。請確認任務是否正常運行，若任務正常可忽略此提示，若無回應則可能需要手動干預。</system:String>
+    <system:String x:Key="RunDurationLimitEnabled">限制單次運行時長</system:String>
+    <system:String x:Key="RunDurationLimitMinutes">運行時長上限（分鐘）</system:String>
+    <system:String x:Key="RunDurationLimitTip" xml:space="preserve">從點擊 ｢{key=LinkStart}｣ 開始計時，到達上限後自動停止任務，並依下方選項決定是否執行 ｢{key=PostActionsSettings}｣ 中的動作（如退出遊戲、關閉模擬器、關機）。
+{key=CheckBoxesNotSavedAsNull}。</system:String>
+    <system:String x:Key="RunDurationLimitExecutePostActions">停止後執行 ｢{key=PostActionsSettings}｣ 中的動作</system:String>
+    <system:String x:Key="RunDurationLimitReached">已達到運行時長上限（{0} 分鐘），停止任務</system:String>
     <!--  !TimeOutTimer  -->
     <!--  Achievement  -->
     <system:String x:Key="AchievementCelebrate">🎉 達成成就</system:String>
