@@ -468,172 +468,192 @@ public class TaskQueueViewModel : Screen
     }
 
     /// <summary>
-    /// Checks after completion.
+    /// 自然完成后的收尾：执行结束脚本后执行完成后动作。仅由 <see cref="AsstProxy"/> 的
+    /// <c>AllTasksCompleted</c> 回调调用，结束脚本恒执行。
     /// </summary>
-    /// <param name="runEndsWithScript">是否执行结束脚本；为 false 时等待本次停止中 SetStopped 启动的结束脚本执行完毕</param>
     /// <returns>Task</returns>
-    public async Task CheckAfterCompleted(bool runEndsWithScript = true)
+    public async Task CheckAfterCompleted()
     {
         RunningState.Instance.LockInterrupt();
         try
         {
-            if (runEndsWithScript)
-            {
-                await Task.Run(() => SettingsViewModel.GameSettings.RunScript("EndsWithScript"));
-            }
-            else
-            {
-                await (Volatile.Read(ref _stopHandling)?.Task ?? Task.CompletedTask);
-            }
-
-            var actions = PostActionSetting;
-            _logger.Information("Post actions: " + actions.ActionDescription);
-
-            if (actions.BackToAndroidHome)
-            {
-                Instances.AsstProxy.AsstBackToHome();
-                await Task.Delay(1000);
-            }
-
-            if (actions.ExitArknights)
-            {
-                var clientType = SettingsViewModel.GameSettings.ClientType;
-                if (!Instances.AsstProxy.AsstStartCloseDown(clientType))
-                {
-                    AddLog(LocalizationHelper.GetString("CloseArknightsFailed"), UiLogColor.Error);
-                }
-
-                await Task.Delay(1000);
-            }
-
-            if (actions.ExitEmulator && !SettingsViewModel.ConnectSettings.IsPCConnectConfig)
-            {
-                DoKillEmulator();
-                await Task.Delay(1000);
-            }
-
-            if (actions.ExitSelf && !(actions.Hibernate || actions.Shutdown || actions.Sleep))
-            {
-                Bootstrapper.Shutdown();
-            }
-
-            if (actions.Hibernate)
-            {
-                if (actions.IfNoOtherMaa && HasOtherMaa())
-                {
-                    Bootstrapper.Shutdown();
-                }
-                else
-                {
-                    await DoHibernate();
-                }
-            }
-
-            if (actions.Shutdown)
-            {
-                if (actions.IfNoOtherMaa && HasOtherMaa())
-                {
-                    Bootstrapper.Shutdown();
-                }
-                else
-                {
-                    await DoShutDown();
-                }
-            }
-
-            if (actions.Sleep)
-            {
-                if (actions.IfNoOtherMaa && HasOtherMaa())
-                {
-                    Bootstrapper.Shutdown();
-                }
-                else
-                {
-                    await DoSleep();
-                }
-            }
-
-            if (actions.ExitSelf)
-            {
-                Bootstrapper.Shutdown();
-            }
-
-            actions.LoadPostActions();
-            return;
-
-            bool HasOtherMaa()
-            {
-                var processesCount = Process.GetProcessesByName("MAA").Length;
-                _logger.Information("MAA processes count: {ProcessesCount}", processesCount);
-                return processesCount > 1;
-            }
-
-            void DoKillEmulator()
-            {
-                if (!EmulatorHelper.KillEmulatorModeSwitcher())
-                {
-                    AddLog(LocalizationHelper.GetString("ExitEmulatorFailed"), UiLogColor.Error);
-                }
-            }
-
-            async Task DoHibernate()
-            {
-                actions.LoadPostActions();
-
-                await Execute.OnUIThreadAsync(() => Instances.MainWindowManager?.Show());
-                if (await TimerCanceledAsync(
-                        LocalizationHelper.GetString("Hibernate"),
-                        LocalizationHelper.GetString("HibernatePrompt"),
-                        LocalizationHelper.GetString("Cancel"),
-                        60))
-                {
-                    return;
-                }
-
-                _logger.Information("Hibernate not canceled, proceeding to hibernate.");
-                PowerManagement.Hibernate();
-            }
-
-            async Task DoShutDown()
-            {
-                PowerManagement.Shutdown();
-
-                await Execute.OnUIThreadAsync(() => Instances.MainWindowManager?.Show());
-                if (await TimerCanceledAsync(
-                        LocalizationHelper.GetString("Shutdown"),
-                        LocalizationHelper.GetString("AboutToShutdown"),
-                        LocalizationHelper.GetString("Cancel"),
-                        60))
-                {
-                    PowerManagement.AbortShutdown();
-                    return;
-                }
-
-                _logger.Information("Shutdown not canceled, proceeding to exit application.");
-                Bootstrapper.Shutdown();
-            }
-
-            async Task DoSleep()
-            {
-                actions.LoadPostActions();
-
-                await Execute.OnUIThreadAsync(() => Instances.MainWindowManager?.Show());
-                if (await TimerCanceledAsync(
-                        LocalizationHelper.GetString("Sleep"),
-                        LocalizationHelper.GetString("SleepPrompt"),
-                        LocalizationHelper.GetString("Cancel"),
-                        60))
-                {
-                    return;
-                }
-
-                _logger.Information("Sleep not canceled, proceeding to sleep.");
-                PowerManagement.Sleep();
-            }
+            await RunStopScriptOnceAsync();
+            await RunPostActionsCoreAsync();
         }
         finally
         {
             RunningState.Instance.UnlockInterrupt();
+        }
+    }
+
+    /// <summary>
+    /// 手动停止路径（时长上限到点）的完成后动作；结束脚本已由 <see cref="StopManuallyAsync"/> 按开关发射。
+    /// </summary>
+    /// <returns>Task</returns>
+    private async Task RunPostActionsAfterManualStopAsync()
+    {
+        RunningState.Instance.LockInterrupt();
+        try
+        {
+            await RunPostActionsCoreAsync();
+        }
+        finally
+        {
+            RunningState.Instance.UnlockInterrupt();
+        }
+    }
+
+    private async Task RunPostActionsCoreAsync()
+    {
+        // per-run 幂等：时长上限到点停止与 AllTasksCompleted 自然完成赛跑时只执行一次
+        if (Interlocked.CompareExchange(ref _postActionsLaunched, 1, 0) is not 0)
+        {
+            return;
+        }
+
+        var actions = PostActionSetting;
+        _logger.Information("Post actions: " + actions.ActionDescription);
+
+        if (actions.BackToAndroidHome)
+        {
+            Instances.AsstProxy.AsstBackToHome();
+            await Task.Delay(1000);
+        }
+
+        if (actions.ExitArknights)
+        {
+            var clientType = SettingsViewModel.GameSettings.ClientType;
+            if (!Instances.AsstProxy.AsstStartCloseDown(clientType))
+            {
+                AddLog(LocalizationHelper.GetString("CloseArknightsFailed"), UiLogColor.Error);
+            }
+
+            await Task.Delay(1000);
+        }
+
+        if (actions.ExitEmulator && !SettingsViewModel.ConnectSettings.IsPCConnectConfig)
+        {
+            DoKillEmulator();
+            await Task.Delay(1000);
+        }
+
+        if (actions.ExitSelf && !(actions.Hibernate || actions.Shutdown || actions.Sleep))
+        {
+            Bootstrapper.Shutdown();
+        }
+
+        if (actions.Hibernate)
+        {
+            if (actions.IfNoOtherMaa && HasOtherMaa())
+            {
+                Bootstrapper.Shutdown();
+            }
+            else
+            {
+                await DoHibernate();
+            }
+        }
+
+        if (actions.Shutdown)
+        {
+            if (actions.IfNoOtherMaa && HasOtherMaa())
+            {
+                Bootstrapper.Shutdown();
+            }
+            else
+            {
+                await DoShutDown();
+            }
+        }
+
+        if (actions.Sleep)
+        {
+            if (actions.IfNoOtherMaa && HasOtherMaa())
+            {
+                Bootstrapper.Shutdown();
+            }
+            else
+            {
+                await DoSleep();
+            }
+        }
+
+        if (actions.ExitSelf)
+        {
+            Bootstrapper.Shutdown();
+        }
+
+        actions.LoadPostActions();
+        return;
+
+        bool HasOtherMaa()
+        {
+            var processesCount = Process.GetProcessesByName("MAA").Length;
+            _logger.Information("MAA processes count: {ProcessesCount}", processesCount);
+            return processesCount > 1;
+        }
+
+        void DoKillEmulator()
+        {
+            if (!EmulatorHelper.KillEmulatorModeSwitcher())
+            {
+                AddLog(LocalizationHelper.GetString("ExitEmulatorFailed"), UiLogColor.Error);
+            }
+        }
+
+        async Task DoHibernate()
+        {
+            actions.LoadPostActions();
+
+            await Execute.OnUIThreadAsync(() => Instances.MainWindowManager?.Show());
+            if (await TimerCanceledAsync(
+                    LocalizationHelper.GetString("Hibernate"),
+                    LocalizationHelper.GetString("HibernatePrompt"),
+                    LocalizationHelper.GetString("Cancel"),
+                    60))
+            {
+                return;
+            }
+
+            _logger.Information("Hibernate not canceled, proceeding to hibernate.");
+            PowerManagement.Hibernate();
+        }
+
+        async Task DoShutDown()
+        {
+            PowerManagement.Shutdown();
+
+            await Execute.OnUIThreadAsync(() => Instances.MainWindowManager?.Show());
+            if (await TimerCanceledAsync(
+                    LocalizationHelper.GetString("Shutdown"),
+                    LocalizationHelper.GetString("AboutToShutdown"),
+                    LocalizationHelper.GetString("Cancel"),
+                    60))
+            {
+                PowerManagement.AbortShutdown();
+                return;
+            }
+
+            _logger.Information("Shutdown not canceled, proceeding to exit application.");
+            Bootstrapper.Shutdown();
+        }
+
+        async Task DoSleep()
+        {
+            actions.LoadPostActions();
+
+            await Execute.OnUIThreadAsync(() => Instances.MainWindowManager?.Show());
+            if (await TimerCanceledAsync(
+                    LocalizationHelper.GetString("Sleep"),
+                    LocalizationHelper.GetString("SleepPrompt"),
+                    LocalizationHelper.GetString("Cancel"),
+                    60))
+            {
+                return;
+            }
+
+            _logger.Information("Sleep not canceled, proceeding to sleep.");
+            PowerManagement.Sleep();
         }
     }
 
@@ -646,20 +666,23 @@ public class TaskQueueViewModel : Screen
     {
         _runningState = RunningState.Instance;
         _runningState.StateChanged += (_, e) => {
-            Idle = e.NewState.Idle;
-            Inited = e.NewState.Inited;
-            Stopping = e.NewState.Stopping;
+            // 回到空闲的变化沿时重置主任务进度（原 Idle 镜像置 true 的联动；
+            // 空闲期内其他状态字段的广播不重复触发）
+            if (!e.OldState.Idle && e.NewState.Idle)
+            {
+                UpdateMainTasksProgress(0);
+            }
 
-            Instances.SettingsViewModel.Idle = e.NewState.Idle;
             if (!e.NewState.Idle)
             {
                 Instances.Data.ClearCache();
             }
 
-            // 进入运行或停止中时重置停止处理权
-            if ((e.OldState.Idle && !e.NewState.Idle) || (!e.OldState.Stopping && e.NewState.Stopping))
+            // 每轮运行开始（离开空闲）时重置结束脚本与完成后动作的发射权；停止中不重置，避免把已合法发射的标志清零导致二次发射
+            if (e.OldState.Idle && !e.NewState.Idle)
             {
-                Interlocked.Exchange(ref _stopHandling, null);
+                Interlocked.Exchange(ref _stopScriptLaunched, 0);
+                Interlocked.Exchange(ref _postActionsLaunched, 0);
             }
 
             if (e.NewState.Idle && _runDurationLimitOnce)
@@ -813,7 +836,7 @@ public class TaskQueueViewModel : Screen
 
             _lastTimerElapsed = currentTime;
 
-            if ((currentTime.Hour == 3 || currentTime.Hour == 13 || currentTime.Hour == 23) && currentTime.Minute == 25 && !Idle)
+            if ((currentTime.Hour == 3 || currentTime.Hour == 13 || currentTime.Hour == 23) && currentTime.Minute == 25 && !_runningState.GetIdle())
             {
                 AchievementTrackerHelper.Instance.Unlock(AchievementIds.Time325);
             }
@@ -848,7 +871,7 @@ public class TaskQueueViewModel : Screen
     {
         try
         {
-            if (Stopping || _runningState.GetIdle())
+            if (_runningState.GetStopping() || _runningState.GetIdle())
             {
                 return;
             }
@@ -889,15 +912,15 @@ public class TaskQueueViewModel : Screen
                 return;
             }
 
-            await Stop();
-            SetStopped();
+            // 到点视为一次手动停止（设置开且肉鸽战斗中时前面已等待过战斗结束），结束脚本按当前任务链的开关闭合
+            var stopped = await StopManuallyAsync();
 
-            if (!executePostActions)
+            if (!stopped || !executePostActions)
             {
                 return;
             }
 
-            await CheckAfterCompleted(runEndsWithScript: !SettingsViewModel.GameSettings.ManualStopWithScript);
+            await RunPostActionsAfterManualStopAsync();
         }
         catch (Exception ex)
         {
@@ -944,7 +967,7 @@ public class TaskQueueViewModel : Screen
         var delayTime = CalculateRandomDelay();
         _ = Task.Run(async () => {
             await Task.Delay(delayTime);
-            await _runningState.UntilIdleAsync(60000);
+            await _runningState.UntilIdleAsync();
             await UpdateDatePromptAndStagesWeb();
             _isUpdatingDatePrompt = false;
         });
@@ -1610,7 +1633,7 @@ public class TaskQueueViewModel : Screen
     [UsedImplicitly]
     public void RenameTask(TaskItemViewModel taskItem)
     {
-        if (taskItem == null || !Idle)
+        if (taskItem == null || !_runningState.GetIdle())
         {
             return;
         }
@@ -1650,7 +1673,7 @@ public class TaskQueueViewModel : Screen
     [UsedImplicitly]
     public async Task RunTaskOnce(TaskItemViewModel taskItem)
     {
-        if (taskItem == null || !Idle)
+        if (taskItem == null || !_runningState.GetIdle())
         {
             return;
         }
@@ -1682,7 +1705,7 @@ public class TaskQueueViewModel : Screen
     [UsedImplicitly]
     public void CopyTask(TaskItemViewModel taskItem)
     {
-        if (taskItem == null || !Idle)
+        if (taskItem == null || !_runningState.GetIdle())
         {
             return;
         }
@@ -1713,7 +1736,7 @@ public class TaskQueueViewModel : Screen
     [UsedImplicitly]
     public void RemoveTask(TaskItemViewModel taskItem)
     {
-        if (taskItem == null || !Idle)
+        if (taskItem == null || !_runningState.GetIdle())
         {
             return;
         }
@@ -1908,7 +1931,6 @@ public class TaskQueueViewModel : Screen
         if (!connected && SettingsViewModel.ConnectSettings.IsPCConnectConfig)
         {
             AddLog(errMsg, UiLogColor.Error);
-            _runningState.SetIdle(true);
             SetStopped();
             return false;
         }
@@ -1983,7 +2005,6 @@ public class TaskQueueViewModel : Screen
         }
 
         AddLog(errMsg, UiLogColor.Error);
-        _runningState.SetIdle(true);
         SetStopped();
         return false;
     }
@@ -2101,11 +2122,10 @@ public class TaskQueueViewModel : Screen
         _taskStartTime = DateTime.Now;
         ClearLog();
 
-        // Core 资源损坏待修复期间任务不可启动，覆盖热键/托盘/远程等入口（启动自动运行在 AsstProxy 另有前置拦截）
-        if (Bootstrapper.IsResourceBroken)
+        // 拦截判定收敛于 Bootstrapper.TryGetTaskBlockReason；热键/托盘/远程等入口汇入于此（启动自动运行在 AsstProxy 另有前置检查）
+        if (Bootstrapper.TryGetTaskBlockReason() is { } reason)
         {
-            AddLog(LocalizationHelper.GetString("ResourceBrokenTaskBlocked"), UiLogColor.Error);
-            _logger.Warning("LinkStart blocked: resource broken");
+            AddLog(reason, UiLogColor.Error);
             return;
         }
 
@@ -2148,8 +2168,8 @@ public class TaskQueueViewModel : Screen
         MainTasksCompletedCount = 0;
         ResetTaskItemStatuses();
 
-        // 所有提前 return 都要放在 _runningState.SetIdle(false) 之前，否则会导致无法再次点击开始
-        _runningState.SetIdle(false);
+        // 所有提前 return 都要放在进入运行态之前，否则会导致无法再次点击开始
+        _runningState.BeginRun(RunOwner.TaskQueue);
 
         // 虽然更改时已经保存过了，不过保险起见在点击开始之后再次保存任务和基建列表
         // TaskItemSelectionChanged();
@@ -2189,6 +2209,8 @@ public class TaskQueueViewModel : Screen
 
         // 直接遍历TaskItemViewModels里面的内容，是排序后的
         int count = 0;
+        List<int> coreTaskIds = [];
+        bool serializeFailed = false;
         foreach (var item in tasks)
         {
             var index = ConfigFactory.CurrentConfig.TaskQueue.IndexOf(item);
@@ -2210,11 +2232,12 @@ public class TaskQueueViewModel : Screen
                 {
                     case true:
                         ++count;
+                        coreTaskIds.AddRange(taskIds);
                         Instances.TaskQueueViewModel.TaskItemViewModels.ElementAtOrDefault(index)?.SetTaskIds(taskIds);
                         break;
                     case false:
-                        taskRet = false;
-                        AddLog(LocalizationHelper.GetStringFormat("TaskAppend.Error", LocalizationHelper.GetString(item.TaskType.ToString()), item.NameOrTaskType), UiLogColor.Error);
+                        serializeFailed = true;
+                        AddLog(LocalizationHelper.GetStringFormat("TaskSerialize.Error", LocalizationHelper.GetString(item.TaskType.ToString()), item.NameOrTaskType), UiLogColor.Error);
                         SetTaskStatus(index, TaskItemStatus.Error);
                         break;
                     case null:
@@ -2225,15 +2248,30 @@ public class TaskQueueViewModel : Screen
             }
             catch (Exception ex)
             {
-                taskRet = false;
-                AddLog(LocalizationHelper.GetStringFormat("TaskAppend.Error", LocalizationHelper.GetString(item.TaskType.ToString()), item.NameOrTaskType) + "\n" + ex.Message, UiLogColor.Error);
+                serializeFailed = true;
+                AddLog(LocalizationHelper.GetStringFormat("TaskSerialize.Error", LocalizationHelper.GetString(item.TaskType.ToString()), item.NameOrTaskType) + "\n" + ex.Message, UiLogColor.Error);
             }
+        }
+
+        if (serializeFailed)
+        {
+            // 有任务序列化失败则整轮不启动（失败任务已各自记录错误并标记条目），与 AsstStart 失败的 ｢出现未知错误｣ 区分开
+            Instances.AsstProxy.AsstStop();
+            SetStopped();
+            return;
         }
 
         if (count == 0)
         {
             AddLog(LocalizationHelper.GetString("UnselectedTask"));
-            _runningState.SetIdle(true);
+            Instances.AsstProxy.AsstStop();
+            SetStopped();
+            return;
+        }
+
+        if (coreTaskIds.Count == 0)
+        {
+            // 本轮所有任务都不需要 core 执行（例如更新数据仅勾选干员识别且从一图流 OpenAPI 获取），直接收尾
             Instances.AsstProxy.AsstStop();
             SetStopped();
             return;
@@ -2280,13 +2318,13 @@ public class TaskQueueViewModel : Screen
 
     public void ManualStop()
     {
-        if (Stopping || _runningState.GetIdle())
+        if (_runningState.GetStopping() || _runningState.GetIdle())
         {
             _logger.Information("Already stopping or idle, return.");
             return;
         }
 
-        _ = Stop();
+        _ = StopManuallyAsync();
         AchievementTrackerHelper.Instance.Unlock(AchievementIds.TacticalRetreat);
 
         if (_taskStartTime is null)
@@ -2308,15 +2346,16 @@ public class TaskQueueViewModel : Screen
     /// <para>超时后会自动调用 <see cref="SetStopped"/> 强制恢复 UI 状态。</para>
     /// <para>Notifies Core to stop the current task and waits for completion.</para>
     /// <para>Normally Core sends <c>TaskChainStopped</c> callback after stopping, and <see cref="AsstProxy"/> calls <see cref="SetStopped"/> to reset UI state.</para>
-    /// <para>If Core was not invoked via task chain (e.g. Peep), no callback will be received; caller must manually call <see cref="SetStopped"/> after <see cref="Stop"/>.</para>
+    /// <para>If Core was not invoked via task chain (e.g. Peep), no callback will be received; caller must manually call <see cref="SetStopped"/> after calling <see cref="Stop"/>.</para>
     /// <para>On timeout, <see cref="SetStopped"/> is called automatically to force-reset UI state.</para>
     /// </summary>
     /// <param name="timeout">Timeout millisecond</param>
-    /// <returns>A <see cref="Task"/>
+    /// <returns>
+    /// 是否在超时内确认 Core 停止；<see langword="false"/> 表示超时后由强制收口恢复。
     /// <para>尝试等待 core 成功停止运行，默认超时时间一分钟</para>
     /// <para>Try to wait for the core to stop running, the default timeout is one minute</para>
     /// </returns>
-    public async Task Stop(int timeout = 60 * 1000)
+    public async Task<bool> Stop(int timeout = 60 * 1000)
     {
         _runningState.SetStopping(true);
         AddLog(LocalizationHelper.GetString("Stopping"), splitMode: LogCardSplitMode.Both);
@@ -2339,8 +2378,14 @@ public class TaskQueueViewModel : Screen
             // 超时：Core 未在超时内停止，强制恢复 UI 状态
             _logger.Warning("Stop timeout, force resetting UI state");
             AddLog(LocalizationHelper.GetString("StopTimeout") + "\n" + LocalizationHelper.GetString("RestartRecommendation"), UiLogColor.Error);
+
+            // Core 可能仍挂起并补发迟到 TaskChainStopped，若此后放行新任务，回调会把新运行的归属清掉，故重启前禁止再开任务
+            Bootstrapper.MarkRequiresRestart();
             SetStopped();
+            return false;
         }
+
+        return true;
     }
 
     // UI 绑定的方法
@@ -2349,15 +2394,8 @@ public class TaskQueueViewModel : Screen
     {
         Waiting = true;
         AddLog(LocalizationHelper.GetString("Waiting"));
-        if (RoguelikeTask.RoguelikeDelayAbortUntilCombatComplete)
-        {
-            await WaitUntilRoguelikeCombatComplete();
-
-            if (Instances.AsstProxy.AsstRunning() && !_runningState.GetStopping())
-            {
-                await Stop();
-            }
-        }
+        await WaitUntilRoguelikeCombatComplete();
+        await StopManuallyAsync();
     }
 
     /// <summary>
@@ -2366,7 +2404,7 @@ public class TaskQueueViewModel : Screen
     private async Task WaitUntilRoguelikeCombatComplete()
     {
         int time = 0;
-        while (RoguelikeTask.RoguelikeDelayAbortUntilCombatComplete && RoguelikeInCombatAndShowWait && time < 600 && !Stopping)
+        while (RoguelikeTask.RoguelikeDelayAbortUntilCombatComplete && RoguelikeInCombatAndShowWait && time < 600 && !_runningState.GetStopping())
         {
             await Task.Delay(1000);
             ++time;
@@ -2375,15 +2413,89 @@ public class TaskQueueViewModel : Screen
 
     public bool RoguelikeInCombatAndShowWait { get => field; set => SetAndNotify(ref field, value); }
 
-    // 本次停止的处理权，进入运行或停止中时重置为 null；其 Task 在 SetStopped 启动的结束脚本执行完毕后完成
-    private TaskCompletionSource? _stopHandling;
+    // 手动停止的结束脚本发射权，每轮运行开始（离开空闲）时重置；多个手动入口并发时保证只发射一次
+    private int _stopScriptLaunched;
+
+    // 完成后动作发射权，每轮运行开始（离开空闲）时重置；时长上限停止与自然完成赛跑时保证只执行一次
+    private int _postActionsLaunched;
 
     /// <summary>
-    /// 重置 UI 状态为已停止。
+    /// 按 Interlocked 标志去重地执行一次结束脚本（EndsWithScript）。手动停止各入口与自然完成
+    /// 回调共享发射权，手动停止与自然完成赛跑时只执行一次。
     /// </summary>
-    /// <param name="runStopScript">是否执行结束脚本。</param>
+    /// <param name="showLog">是否在任务日志记录脚本执行。</param>
+    /// <returns>Task</returns>
+    public async Task RunStopScriptOnceAsync(bool showLog = true)
+    {
+        if (Interlocked.CompareExchange(ref _stopScriptLaunched, 1, 0) is not 0)
+        {
+            return;
+        }
+
+        await Task.Run(() => SettingsViewModel.GameSettings.RunScript("EndsWithScript", showLog));
+    }
+
+    /// <summary>
+    /// 手动停止核心：等待 Core 停止、UI 状态恢复（TaskChainStopped 回调，或 Stop 超时强制）后，
+    /// 按运行归属发射结束脚本（仅主任务队列与 copilot 归属）——非 copilot 须 ｢手动停止时启用上述脚本｣ 开启，
+    /// copilot 还须 ｢自动战斗时启用上述脚本｣ 同时开启。归属在开始入口声明，跨页停止也能正确判定。
+    /// 所有手动语义入口（手动停止 / 等待并停止 / 时长上限 / 热键 / 远控 StopTask / 各页停止按钮）收敛到此；
+    /// 非手动场景（异常停止、挤停、启动失败等）直接调用 <see cref="Stop"/> 与 <see cref="SetStopped"/>，不发射脚本。
+    /// </summary>
+    /// <returns>是否完整走完本次手动停止（等到空闲且未被新一轮运行抢占）；false 时调用方不应再执行后续动作。</returns>
+    public async Task<bool> StopManuallyAsync()
+    {
+        if (_runningState.GetStopping() || _runningState.GetIdle())
+        {
+            return false;
+        }
+
+        // 仅主任务队列与 copilot 发射结束脚本；小游戏/工具箱轮次从不跑开始脚本，各停止入口统一不发
+        var owner = _runningState.Owner;
+        var runScript = owner is RunOwner.TaskQueue or RunOwner.Copilot
+            && SettingsViewModel.GameSettings.ManualStopWithScript
+            && (owner != RunOwner.Copilot || SettingsViewModel.GameSettings.CopilotWithScript);
+
+        // 等 Idle 是等「本次停止完成」：Stop() 正常出口不置 Idle（收口归异步在途的 TaskChainStopped 回调）；
+        // 启动链路进行中点停止则要等链路走到下一个 Stopping 检查点（模拟器等待等环节每秒检查，通常秒级，
+        // 开始前脚本阶段则要等脚本跑完、可任意长）；超时出口已自行强制置位，此处立即通过。
+        // timeout 不针对现有场景（均有收口方），仅防御未来出现无收口方的情况
+        var stoppedWithinTimeout = await Stop();
+        if (!await _runningState.UntilIdleAsync(confirmTimes: 0, timeout: 600_000))
+        {
+            _logger.Warning("Manual stop: idle not reached before wait limit, skip stop script");
+            return false;
+        }
+
+        // 等待窗口内新一轮可能已开始，放弃本次发射；Stop() 超时强制收口时 Core 挂死仍在运行，仍应发射，
+        // 用是否超时区分这两种 AsstRunning == true 的情况
+        if (stoppedWithinTimeout && Instances.AsstProxy.AsstRunning())
+        {
+            return false;
+        }
+
+        if (runScript)
+        {
+            // 脚本运行期间持有 InterruptLock，防止等待空闲的自动更新安装/定时启动放行打断收尾
+            RunningState.Instance.LockInterrupt();
+            try
+            {
+                await RunStopScriptOnceAsync();
+            }
+            finally
+            {
+                RunningState.Instance.UnlockInterrupt();
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 重置 UI 状态为已停止（仅重置状态，不执行结束脚本；脚本发射归 <see cref="StopManuallyAsync"/> 与自然完成回调）。
+    /// </summary>
     /// <returns>是否实际执行了状态重置（false 表示被幂等保护跳过）。</returns>
-    public bool SetStopped(bool runStopScript = true)
+    public bool SetStopped()
     {
         // 幂等保护：已经空闲且不在停止中，跳过
         // 防止超时 SetStopped 后 Core 延迟回调再次触发导致打断新任务
@@ -2392,32 +2504,7 @@ public class TaskQueueViewModel : Screen
             return false;
         }
 
-        // 回调与到点停止等可能并发调用，CAS 抢占处理权，保证只处理一次
-        var handling = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        if (Interlocked.CompareExchange(ref _stopHandling, handling, null) is not null)
-        {
-            return false;
-        }
-
         SleepManagement.AllowSleep();
-        if (runStopScript && SettingsViewModel.GameSettings.ManualStopWithScript)
-        {
-            Task.Run(() => {
-                try
-                {
-                    SettingsViewModel.GameSettings.RunScript("EndsWithScript");
-                }
-                finally
-                {
-                    handling.TrySetResult();
-                }
-            });
-        }
-        else
-        {
-            handling.TrySetResult();
-        }
-
         if (!_runningState.GetIdle() || _runningState.GetStopping())
         {
             AddLog(LocalizationHelper.GetString("Stopped"), splitMode: LogCardSplitMode.Both);
@@ -2427,43 +2514,15 @@ public class TaskQueueViewModel : Screen
         _runningState.SetStopping(false);
         _runningState.SetIdle(true);
 
-        // 只抑制“本轮任务期间”的自动开启；任务结束后应允许下一轮自动开启 LiveView。
         return true;
     }
 
     public bool EnableSetFightParams { get; set; } = true;
 
-    public bool Inited { get => field; set => SetAndNotify(ref field, value); }
-
-    private bool _idle;
-
     /// <summary>
-    /// Gets or sets a value indicating whether it is idle.
+    /// Gets the shared run control state for run-state bindings.
     /// </summary>
-    public bool Idle
-    {
-        get => _idle;
-        set {
-            SetAndNotify(ref _idle, value);
-            if (!value)
-            {
-                return;
-            }
-
-            UpdateMainTasksProgress(0);
-        }
-    }
-
-    private bool _stopping;
-
-    /// <summary>
-    /// Gets a value indicating whether `stop` is awaiting.
-    /// </summary>
-    public bool Stopping
-    {
-        get => _stopping;
-        private set => SetAndNotify(ref _stopping, value);
-    }
+    public RunControlState Run => RunControlState.Instance;
 
     private bool _waiting;
 

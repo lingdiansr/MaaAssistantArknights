@@ -586,7 +586,7 @@ public class AsstProxy
     /// 检查当前选中的 GPU，在任务队列与日志中输出相关提示。
     /// </summary>
     /// <remarks>
-    /// 当 GPU 不受推荐（存在兼容性问题）或驱动版本过旧（超过两年）时，
+    /// 当 GPU 不受推荐（存在兼容性问题）、驱动版本过旧（超过两年）或驱动信息无法读取时，
     /// 会向任务队列写入警告级别的日志。
     /// 本方法在程序启动（Init）与每次开始运行时都会调用，
     /// 以保证提示在日志被清空后仍能重新显示，避免被自动运行刷掉。
@@ -625,6 +625,13 @@ public class AsstProxy
                 Instances.TaskQueueViewModel.AddLog(message, UiLogColor.Warning);
                 _logger.Warning("Using GPU {0} with outdated driver {1} (release date: {2}, over {3} years old)", description, version, dateStr, driverAgeYears);
             }
+        }
+        else if (info is { DriverDate: null })
+        {
+            // DriverDate 缺失即版本与日期一并读不到（PnP 驱动属性查询失败），过旧检查无从进行，且该状态多为驱动安装异常
+            var message = LocalizationHelper.GetStringFormat("GpuDriverInfoUnavailableMessage", description);
+            Instances.TaskQueueViewModel.AddLog(message, UiLogColor.Warning);
+            _logger.Warning("Using GPU {0} with unreadable driver info (DriverVersion/DriverDate unavailable)", description);
         }
     }
 
@@ -703,6 +710,14 @@ public class AsstProxy
             return;
         }
 
+        // 停止超时强收后 Core 状态不可信：重启前不进入启动自动运行
+        // 进程内实际不可达（Init 仅进程启动时调用一次，置位必然晚于它），保留作与 IsResourceBroken 对称的防御
+        if (Bootstrapper.RequiresRestart)
+        {
+            _logger.Information("Skip startup auto-run: restart required");
+            return;
+        }
+
         // TODO: 之后把这个 OnUIThread 拆出来
         // ReSharper disable once AsyncVoidLambda
         Execute.OnUIThread(
@@ -739,7 +754,7 @@ public class AsstProxy
                 if (runDirectly)
                 {
                     // 如果是直接运行模式，就先让按钮显示为运行
-                    _runningState.SetIdle(false);
+                    _runningState.BeginRun(RunOwner.TaskQueue);
                 }
 
                 await Task.Run(() => SettingsViewModel.StartSettings.TryToStartEmulator(true));
@@ -1298,9 +1313,7 @@ public class AsstProxy
         {
             case AsstMsg.TaskChainStopped:
                 {
-                    // Copilot 场景下只有 CopilotWithScript 开启时才执行结束脚本，否则由 SetStopped 默认逻辑处理
-                    bool runScript = !isCopilotTaskChain || SettingsViewModel.GameSettings.CopilotWithScript;
-                    Instances.TaskQueueViewModel.SetStopped(runStopScript: runScript);
+                    Instances.TaskQueueViewModel.SetStopped();
                 }
 
                 // UpdateTaskStatus(taskId, TaskStatus.Completed);
@@ -1433,19 +1446,20 @@ public class AsstProxy
                 }
 
             case AsstMsg.AllTasksCompleted:
-                bool isMainTaskQueueAllCompleted = false;
                 var taskList = details["finished_tasks"]?.ToObject<AsstTaskId[]>();
-                if (taskList?.Length > 0)
-                {
-                    var latestMainTaskIds = _tasksStatus.Where(i => _mainTaskTypes.Contains(i.Value.Type)).Select(i => i.Key);
-                    isMainTaskQueueAllCompleted = taskList.Any(i => latestMainTaskIds.Contains(i));
-                }
 
-                if (_tasksStatus.Any(t => t.Value.Type == TaskType.Copilot))
+                // 完成判定按发起归属而非 _tasksStatus 条目类型推断：条目 Type 与队列任务脱节
+                // （更新数据/仓库维护展开的链不在白名单、copilot 启动失败残留条目误判轮次归属）。
+                // 归属快照须在 SetIdle(true) 清零之前取得
+                var runOwner = _runningState.Owner;
+                bool isMainTaskQueueAllCompleted = taskList?.Length > 0 && runOwner == RunOwner.TaskQueue;
+
+                if (runOwner == RunOwner.Copilot)
                 {
                     if (SettingsViewModel.GameSettings.CopilotWithScript)
                     {
-                        Task.Run(() => SettingsViewModel.GameSettings.RunScript("EndsWithScript", showLog: false));
+                        // 与手动停止入口共享发射权（copilot 日志走下方 AddLog，不进任务日志）
+                        _ = Instances.TaskQueueViewModel.RunStopScriptOnceAsync(showLog: false);
                         if (!string.IsNullOrWhiteSpace(SettingsViewModel.GameSettings.EndsWithScript))
                         {
                             Instances.CopilotViewModel.AddLog(LocalizationHelper.GetString("EndsWithScript"));
@@ -1528,7 +1542,7 @@ public class AsstProxy
                         AchievementTrackerHelper.Instance.Unlock(AchievementIds.LogSupervisor);
                     }
                 }
-                else if (isCopilotTaskChain)
+                else if (runOwner == RunOwner.Copilot)
                 {
                     ToastNotification.ShowDirect(LocalizationHelper.GetString("CompleteTask") + LocalizationHelper.GetString(taskChain));
                 }
@@ -2786,9 +2800,9 @@ public class AsstProxy
         try
         {
             success = await GameDataReportService.PostWithRetryAsync(url, content, headers, subTask, penguinId => {
-                if (string.IsNullOrWhiteSpace(SettingsViewModel.GameSettings.PenguinId))
+                if (string.IsNullOrWhiteSpace(SettingsViewModel.ThirdPartyServiceSettings.PenguinId))
                 {
-                    SettingsViewModel.GameSettings.PenguinId = penguinId;
+                    SettingsViewModel.ThirdPartyServiceSettings.PenguinId = penguinId;
                 }
 
                 _logger.Information("New PenguinId got: {PenguinId}", penguinId);

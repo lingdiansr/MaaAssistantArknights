@@ -102,6 +102,7 @@
     <system:String x:Key="GpuOptionSystemDefault">시스템 기본 GPU</system:String>
     <system:String x:Key="GpuDeprecatedMessage">현재 선택된 추론 가속 GPU({0})는 호환성 문제가 있어, 인식 오류, 위치 이상 또는 기타 예기치 않은 문제가 발생할 수 있습니다.\n｢{key=Settings} - {key=PerformanceSettings}｣ 에서 다른 GPU로 변경하는 것을 권장합니다.</system:String>
     <system:String x:Key="GpuDriverOutdatedMessage">현재 선택된 추론 가속 GPU({0})의 드라이버 버전({1}, 릴리스 날짜: {2})이 {3}년 이상 경과되어 호환성 문제가 발생할 수 있습니다.\n그래픽 드라이버를 업데이트하거나 ｢{key=Settings} - {key=PerformanceSettings}｣ 에서 다른 GPU로 변경하는 것을 권장합니다.</system:String>
+    <system:String x:Key="GpuDriverInfoUnavailableMessage">현재 선택된 추론 가속 GPU({0})의 드라이버 정보를 읽을 수 없습니다. 드라이버가 올바르게 설치되지 않았거나 상태가 비정상일 수 있으며, 호환성 문제가 발생할 수 있습니다.\n그래픽 드라이버를 업데이트하거나 다시 설치하거나, ｢{key=Settings} - {key=PerformanceSettings}｣ 에서 다른 GPU로 변경하는 것을 권장합니다.</system:String>
     <system:String x:Key="GpuAllowDeprecated">권장되지 않는 GPU 사용 허용</system:String>
     <system:String x:Key="Copy">복사</system:String>
     <!--  Toast 不可用  -->
@@ -687,9 +688,28 @@ MAA는 비설치형 응용 프로그램으로, 삭제 시 레지스트리 항목
     <system:String x:Key="RoguelikeStartWithIdea">구상</system:String>
     <system:String x:Key="RoguelikeStartWithTicket">티켓</system:String>
     <system:String x:Key="RefreshTraderWithDice">상점 새로고침</system:String>
-    <system:String x:Key="PenguinId">Penguin-Stats 보고 ID (숫자)</system:String>
-    <system:String x:Key="EnablePenguin">Penguin-Stats 보고</system:String>
-    <system:String x:Key="EnableYituliu">Yituliu 보고</system:String>
+    <system:String x:Key="PenguinId">보고 ID (숫자)</system:String>
+    <system:String x:Key="EnablePenguin">드롭 및 공개모집 데이터 보고</system:String>
+    <system:String x:Key="EnableYituliu">{key=EnablePenguin}</system:String>
+    <system:String x:Key="ThirdPartyServiceSettings">서드파티</system:String>
+    <system:String x:Key="ThirdPartyGroupPenguin">Penguin-Stats</system:String>
+    <system:String x:Key="ThirdPartyGroupYituliu">Yituliu</system:String>
+    <system:String x:Key="YituliuOpenApiToken">OpenAPI 토큰</system:String>
+    <system:String x:Key="YituliuTokenVerify">확인</system:String>
+    <system:String x:Key="YituliuTokenEmpty">먼저 토큰을 입력해 주세요</system:String>
+    <system:String x:Key="YituliuTokenValid">토큰이 유효합니다. 총 {0}명의 오퍼레이터</system:String>
+    <system:String x:Key="YituliuTokenValidNoData">토큰은 유효하지만 계정에 아직 오퍼레이터 데이터가 없습니다</system:String>
+    <system:String x:Key="YituliuTokenWriteOnly">토큰에 읽기 권한이 없습니다. 읽기 전용 또는 읽기/쓰기 토큰을 사용해 주세요</system:String>
+    <system:String x:Key="YituliuTokenInvalid">토큰이 유효하지 않거나 만료되었습니다. 다시 생성해 주세요</system:String>
+    <system:String x:Key="YituliuTokenNetworkError">네트워크 오류가 발생했습니다. 나중에 다시 시도해 주세요</system:String>
+    <system:String x:Key="EnableOperBoxYituliuApi">{key=OperBoxRecognition}을 Yituliu에서 가져오기</system:String>
+    <system:String x:Key="EnableOperBoxYituliuApiTip" xml:space="preserve">활성화하면 ｢{key=Toolbox}｣와 ｢{key=UserDataUpdate}｣의 {key=OperBoxRecognition}이 에뮬레이터에 연결해 스크린샷으로 식별하지 않고, 토큰에 해당하는 Yituliu 육성 데이터를 직접 불러옵니다.&#10;｢{key=UserDataUpdate}｣ 트리거 시 ｢{key=LinkStart}｣ 후 에뮬레이터 연결이 완료되면 다른 작업과 병렬로 가져오기를 시작합니다.&#10;Yituliu에 저장되는 것은 육성 데이터 스냅샷이므로 먼저 Yituliu 사이트에 오퍼레이터 데이터를 업로드해야 합니다. 육성 데이터는 센쿵다오에서 가져오므로 CN 서버 계정에만 데이터가 있습니다.&#10;토큰은 Yituliu 계정 페이지의 ｢서드파티 API Token｣에서 생성할 수 있습니다. 계정 데이터 보호를 위해 읽기 전용 토큰만 사용해 주세요.</system:String>
+    <system:String x:Key="OperBoxFetchingFromYituliu">Yituliu에서 오퍼레이터 데이터를 가져오는 중…</system:String>
+    <system:String x:Key="YituliuFetchFailed">Yituliu에서 가져오기 실패: {0}</system:String>
+    <system:String x:Key="YituliuNoOperBoxData">토큰에 해당하는 Yituliu 계정에 오퍼레이터 데이터가 없어 로컬 인식 결과를 유지합니다</system:String>
+    <system:String x:Key="YituliuOperBoxCompleted">{key=OperBoxRecognition} 완료(Yituliu)</system:String>
+    <system:String x:Key="OperBoxExportHeaderSkills">스킬 전문화</system:String>
+    <system:String x:Key="OperBoxExportHeaderEquips">모듈</system:String>
     <system:String x:Key="DrGrandet">그랑데 영감 모드</system:String>
     <system:String x:Key="DrGrandetTip">회복제나 순오리지늄 사용 시 이성이 자연 회복될 때까지 기다렸다가 회복되는 즉시 사용합니다.</system:String>
     <system:String x:Key="OnlyOnceADay">하루에 한 번만 실행</system:String>
@@ -733,6 +753,8 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settin
     <system:String x:Key="MainTasksNullFunctionality">메인 작업 오른쪽 클릭 효과 반전</system:String>
     <system:String x:Key="MainTasksNullFunctionalityTip">기본: 한 번만 적용, 체크 시: 한 번만 건너뛰기</system:String>
     <system:String x:Key="MainTasksNullFunctionalitySwitch">｢{key=Settings} - {key=UiSettings} - {key=MainTasksNullFunctionality}｣ 에서 우클릭 효과 전환 가능</system:String>
+    <system:String x:Key="HideHoverActionButtons">메인 작업에 마우스를 올릴 때 버튼 숨기기</system:String>
+    <system:String x:Key="HideHoverActionButtonsTip">해당 기능은 기어 우클릭 메뉴에서 계속 사용할 수 있습니다</system:String>
     <system:String x:Key="UseCardLog">카드 스타일 로그 사용</system:String>
     <system:String x:Key="MaxNumberOfLogThumbnails">로그 썸네일 최대 개수</system:String>
     <system:String x:Key="TitleBarDisplayContent">제목 표시줄 표시 내용</system:String>
@@ -912,6 +934,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BackToAndroidHome">에뮬레이터 홈 화면으로 이동</system:String>
     <system:String x:Key="LinkStart">Link Start!</system:String>
     <system:String x:Key="Stop">중지</system:String>
+    <system:String x:Key="StopCurrentTaskFormat">실행 중인 {0} 중지</system:String>
     <system:String x:Key="WaitAndStop">대기 &amp; 중지</system:String>
     <system:String x:Key="AutoReloadResource">리소스 자동 재로딩</system:String>
     <system:String x:Key="CustomTaskName">작업 이름</system:String>
@@ -1042,7 +1065,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="UnselectedTask">선택된 작업이 없습니다</system:String>
     <system:String x:Key="Running">실행 중……</system:String>
     <system:String x:Key="TaskAppend.Skip">{0}: {1} 작업 스킵</system:String>
-    <system:String x:Key="TaskAppend.Error">{0}: {1} 작업 추가 실패</system:String>
+    <system:String x:Key="TaskSerialize.Error">{0}: {1} 직렬화 실패</system:String>
     <system:String x:Key="AdbReplacementTips">작업이 전혀 반응하지 않을 경우, ｢{key=Settings} - {key=ConnectionSettings} - {key=ForcedReplaceAdb}｣를 사용하거나, 터치 모드에서 ADB Input(권장하지 않음)을 선택해 보세요.</system:String>
     <system:String x:Key="LDPlayerMaaTouchWarning">LDPlayer 에뮬레이터와 MaaTouch 터치 모드 조합이 감지되었습니다. 이 조합은 스와이프 작업이 비정상적으로 느려지는 것으로 알려져 있습니다(실제 스와이프 지속 시간이 설정값을 훨씬 초과함). 스와이프가 끝나기 전에 다음 작업이 실행되어 다양한 문제가 발생할 수 있습니다. 다른 터치 모드로 전환하는 것을 권장합니다.</system:String>
     <system:String x:Key="Waiting">전투가 끝나기를 기다리며……</system:String>
@@ -1410,9 +1433,11 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ResourceIntegrityRepairYes">자동 복구(전체 패키지 다운로드 및 재시작 후 복원)</system:String>
     <system:String x:Key="ResourceIntegrityRepairNo">나중에 처리</system:String>
     <system:String x:Key="ResourceBrokenTaskBlocked">리소스가 손상되어 작업을 시작할 수 없습니다. 시작 시 안내에 따라 리소스를 복구하거나, 전체 패키지를 다시 다운로드한 후 MAA를 재시작하세요.</system:String>
-    <system:String x:Key="ResourceIntegrityRepairDownloading">누락된 리소스 파일을 복구하기 위해 전체 패키지를 다운로드하는 중…</system:String>
+    <system:String x:Key="ResourceIntegrityRepairDownloading">설치를 복구하기 위해 전체 패키지를 다운로드하는 중…</system:String>
     <system:String x:Key="ResourceIntegrityRepairFailed">자동 복구에 실패했습니다. 안내에 따라 수동으로 처리해 주세요.\n\n{key=FullPackageUpgradeTips}</system:String>
-    <system:String x:Key="ResourceIntegrityRepairCanceled">자동 복구가 취소되었습니다. 누락된 파일은 다음 시작 시 다시 알림이 표시됩니다.</system:String>
+    <system:String x:Key="ResourceIntegrityRepairCanceled">자동 복구가 취소되었습니다. 다음 시작 시 다시 알림이 표시됩니다.</system:String>
+    <system:String x:Key="ForcedFullPackageUpdateNotice">설치를 복구하기 위해 증분 업데이트 패키지 대신 전체 패키지를 다운로드합니다.</system:String>
+    <system:String x:Key="OtaPackageRejectedByBrokenInstall">설치가 불완전한 상태(리소스 손상 또는 이전 업데이트 실패)일 수 있어 OTA 증분 패키지로는 복구할 수 없습니다. 전체 패키지를 사용해 주세요.</system:String>
     <system:String x:Key="ReplaceAdbNotExists">ADB 파일이 존재하지 않습니다</system:String>
     <system:String x:Key="AdbDownloadFailedTitle">ADB 다운로드 실패</system:String>
     <system:String x:Key="AdbDeletionFailedMessage">폴더 삭제에 실패했습니다. 폴더가 바뀌었거나 다른 문제가 발생했을 수 있습니다. 자세한 내용은 로그를 확인하세요.</system:String>
@@ -1657,7 +1682,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BlackFlowOutcomeMoveConfirmationFailed">이번 이동을 확정할 수 없음</system:String>
     <system:String x:Key="BlackFlowOutcomePostMoveValidationFailed">이동 후 상태 검증 실패</system:String>
     <system:String x:Key="BlackFlowOutcomePlanningRetryExhausted">경로 재계획 횟수를 모두 소진함</system:String>
-    <system:String x:Key="BlackFlowOutcomeStateMachineDeadEnd">화면 진행이 더 이상 불가능함</system:String>
+    <system:String x:Key="BlackFlowOutcomeStateMachineDeadEnd">내부 상태 머신 오류</system:String>
     <system:String x:Key="BlackFlowOutcomeMapRecoveryExhausted">지도 복구 재시도 횟수를 모두 소진함</system:String>
     <system:String x:Key="BlackFlowOutcomeFloorRecognitionFailed">구역 인식 실패</system:String>
     <system:String x:Key="BlackFlowOutcomeMovementInventoryFailed">이동 가공품 인식 실패</system:String>
@@ -1687,7 +1712,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BlackFlowTerminationPerceptionPortUnavailable">지도 인식·작업 인터페이스를 사용할 수 없음</system:String>
     <system:String x:Key="BlackFlowTerminationMapRebuildFailedTwice">지도 재구축 2회 연속 실패</system:String>
     <system:String x:Key="BlackFlowTerminationPlanningRetryExhausted">미리보기가 경로를 계속 바꿔 재계획 횟수 초과</system:String>
-    <system:String x:Key="BlackFlowTerminationUnknown">자세한 내용은 파일 로그를 확인하세요</system:String>
+    <system:String x:Key="BlackFlowTerminationUnknown">피드백하려면 "{key=Settings} - {key=IssueReport}"(으)로 이동하세요</system:String>
     <system:String x:Key="RoguelikeEvent">이벤트:</system:String>
     <system:String x:Key="RoguelikeEncounterOptions">선택지 {0}개 감지:</system:String>
     <system:String x:Key="RoguelikeEncounterEnabledOption">가능한 선택지: {0}</system:String>
@@ -2044,7 +2069,7 @@ MAA를 독립된 새 폴더에 압축 해제하거나, MAA에 속하지 않는 D
     <system:String x:Key="TaskStallWarning">작업 로그 출력이 {0}분 동안 업데이트되지 않았습니다(현재 {1}분 정지). 작업이 정상적으로 실행 중인지 확인하세요. 정상이라면 이 경고를 무시해도 됩니다. 응답이 없으면 수동 개입이 필요할 수 있습니다.</system:String>
     <system:String x:Key="RunDurationLimitEnabled">1회 실행 시간 제한</system:String>
     <system:String x:Key="RunDurationLimitMinutes">실행 시간 상한 (분)</system:String>
-    <system:String x:Key="RunDurationLimitTip" xml:space="preserve">｢{key=LinkStart}｣ 클릭 시점부터 시간을 측정하며, 상한에 도달하면 작업을 자동으로 중지합니다. 중지 후 ｢{key=PostActionsSettings}｣의 동작(게임 종료, 에뮬레이터 종료, 시스템 종료 등) 실행 여부는 아래 옵션으로 설정할 수 있습니다.
+    <system:String x:Key="RunDurationLimitTip" xml:space="preserve">｢{key=LinkStart}｣ 클릭 시점부터 시간을 측정하며, 상한에 도달하면 수동 중지를 한 번 실행합니다.
 {key=CheckBoxesNotSavedAsNull}.</system:String>
     <system:String x:Key="RunDurationLimitExecutePostActions">중지 후 ｢{key=PostActionsSettings}｣의 동작 실행</system:String>
     <system:String x:Key="RunDurationLimitReached">실행 시간 상한({0}분)에 도달하여 작업을 중지합니다</system:String>

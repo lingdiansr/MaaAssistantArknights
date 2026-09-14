@@ -387,8 +387,19 @@ internal static partial class PendingUpdateApplier
     }
 
     /// <summary>
+    /// 判断委托更新失败标志文件是否存在（只读检查，无副作用）。
+    /// 存在期间安装可能处于半更新状态，只允许完整包更新。
+    /// </summary>
+    /// <returns>失败标志文件存在时为 <c>true</c>。</returns>
+    public static bool HasDelegatedUpdateFailure()
+    {
+        return File.Exists(DelegatedUpdateFailureStatusFilePath);
+    }
+
+    /// <summary>
     /// 读取外部更新器写入的失败状态。标志文件只读不删：须跨启动持久保留
-    /// （避免用户忽略提示后重启导致半更新状态无人提醒），直至完整包安装时随根目录清场移除。
+    /// （避免用户忽略提示后重启导致半更新状态无人提醒），直至完整包安装时随根目录清场、
+    /// 或注册新更新包时（注册即代表用户已着手修复，旧失败原因失效）移除。
     /// 读取同时会清空待应用更新包配置（沿用旧消费语义：失败后不再自动重试该包）。
     /// </summary>
     /// <param name="failureReason">更新器写入的 UTF-8 失败原因，读取失败时为 <c>null</c>。</param>
@@ -396,7 +407,7 @@ internal static partial class PendingUpdateApplier
     public static bool TryReadDelegatedUpdateFailure(out string? failureReason)
     {
         failureReason = null;
-        if (!File.Exists(DelegatedUpdateFailureStatusFilePath))
+        if (!HasDelegatedUpdateFailure())
         {
             return false;
         }
@@ -428,6 +439,16 @@ internal static partial class PendingUpdateApplier
         {
             _logger.Error(ex, "Failed to write delegated update failure state: {FailureStateFilePath}", DelegatedUpdateFailureStatusFilePath);
         }
+    }
+
+    /// <summary>
+    /// 删除委托更新失败标志，供所有注册新更新包的路径统一调用。
+    /// 注册即代表用户已着手修复（手动下载完整包、拖入本地包等），旧失败原因失效；
+    /// 标志不删的话，下次启动 <see cref="TryReadDelegatedUpdateFailure"/> 会连刚注册的包一起清空，形成死循环。
+    /// </summary>
+    public static void ClearDelegatedUpdateFailureState()
+    {
+        SafeDeleteFile(DelegatedUpdateFailureStatusFilePath, "delegated update failure state");
     }
 
     /// <summary>
@@ -910,7 +931,7 @@ internal static partial class PendingUpdateApplier
         }
     }
 
-    private static void SafeDeleteFile(string filePath)
+    private static void SafeDeleteFile(string filePath, string fileDescription = "pending update package")
     {
         try
         {
@@ -921,7 +942,7 @@ internal static partial class PendingUpdateApplier
         }
         catch (Exception ex)
         {
-            _logger.Warning(ex, "Failed to delete pending update package: {FilePath}", filePath);
+            _logger.Warning(ex, "Failed to delete {FileDescription}: {FilePath}", fileDescription, filePath);
         }
     }
 
@@ -968,6 +989,8 @@ internal static partial class PendingUpdateApplier
         }
 
         ConfigFactory.Root.Update.UpdatePackage = packagePath;
+
+        ClearDelegatedUpdateFailureState();
     }
 
     private static void ClearPendingUpdatePackageState()

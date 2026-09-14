@@ -102,6 +102,7 @@
     <system:String x:Key="GpuOptionSystemDefault">系统默认 GPU</system:String>
     <system:String x:Key="GpuDeprecatedMessage">当前选择的推理加速 GPU（{0}）存在兼容性问题，可能导致识别错误、错位或其他异常结果。\n建议前往 ｢{key=Settings} - {key=PerformanceSettings}｣ 更换其他 GPU。</system:String>
     <system:String x:Key="GpuDriverOutdatedMessage">当前选择的推理加速 GPU（{0}）的驱动版本（{1}，发布日期：{2}）距今已超过约 {3} 年，可能存在兼容性问题。\n建议更新显卡驱动或前往 ｢{key=Settings} - {key=PerformanceSettings}｣ 更换其他 GPU。</system:String>
+    <system:String x:Key="GpuDriverInfoUnavailableMessage">当前选择的推理加速 GPU（{0}）的驱动信息无法读取，驱动可能未正确安装或状态异常，可能存在兼容性问题。\n建议更新或重新安装显卡驱动，或前往 ｢{key=Settings} - {key=PerformanceSettings}｣ 更换其他 GPU。</system:String>
     <system:String x:Key="GpuAllowDeprecated">允许使用不推荐的 GPU</system:String>
     <system:String x:Key="Copy">复制</system:String>
     <!--  Toast 不可用  -->
@@ -595,7 +596,7 @@ D:\
     <system:String x:Key="EndsWithScript">结束后脚本</system:String>
     <system:String x:Key="EndsWithScriptPlaceholder">示例："C:\1.cmd" -noWindow</system:String>
     <system:String x:Key="CopilotWithScript">自动战斗时启用上述脚本</system:String>
-    <system:String x:Key="ManualStopWithScript">手动暂停时启用上述脚本</system:String>
+    <system:String x:Key="ManualStopWithScript">手动停止时启用上述脚本</system:String>
     <system:String x:Key="BlockSleep">运行任务时阻止休眠</system:String>
     <system:String x:Key="BlockSleepWithScreenOn">阻止休眠时保持屏幕常亮</system:String>
     <system:String x:Key="ScreencapCost">截图耗时 min/avg/max(ms): {0:#,#} / {1:#,#} / {2:#,#} ({3})</system:String>
@@ -685,9 +686,28 @@ D:\
     <system:String x:Key="RoguelikeStartWithIdea">构想</system:String>
     <system:String x:Key="RoguelikeStartWithTicket">票券</system:String>
     <system:String x:Key="RefreshTraderWithDice">刷新商店（指路鳞）</system:String>
-    <system:String x:Key="PenguinId">企鹅物流汇报 ID（仅数字部分）</system:String>
-    <system:String x:Key="EnablePenguin">上报企鹅物流</system:String>
-    <system:String x:Key="EnableYituliu">上报一图流</system:String>
+    <system:String x:Key="PenguinId">汇报 ID（仅数字部分）</system:String>
+    <system:String x:Key="EnablePenguin">掉落与公招数据上报</system:String>
+    <system:String x:Key="EnableYituliu">{key=EnablePenguin}</system:String>
+    <system:String x:Key="ThirdPartyServiceSettings">三方服务</system:String>
+    <system:String x:Key="ThirdPartyGroupPenguin">企鹅物流</system:String>
+    <system:String x:Key="ThirdPartyGroupYituliu">一图流</system:String>
+    <system:String x:Key="YituliuOpenApiToken">OpenAPI Token</system:String>
+    <system:String x:Key="YituliuTokenVerify">验证</system:String>
+    <system:String x:Key="YituliuTokenEmpty">请先填写 Token</system:String>
+    <system:String x:Key="YituliuTokenValid">Token 有效，共 {0} 名干员</system:String>
+    <system:String x:Key="YituliuTokenValidNoData">Token 有效，但账号暂无干员练度数据</system:String>
+    <system:String x:Key="YituliuTokenWriteOnly">Token 不具备读取权限，请使用只读或读写权限的 Token</system:String>
+    <system:String x:Key="YituliuTokenInvalid">Token 无效或已失效，请重新生成</system:String>
+    <system:String x:Key="YituliuTokenNetworkError">网络错误，请稍后重试</system:String>
+    <system:String x:Key="EnableOperBoxYituliuApi">{key=OperBoxRecognition}从一图流获取</system:String>
+    <system:String x:Key="EnableOperBoxYituliuApiTip" xml:space="preserve">开启后 ｢{key=Toolbox}｣ 与 ｢{key=UserDataUpdate}｣ 的{key=OperBoxRecognition}不再连接模拟器截图识别，改为直接读取 Token 对应的一图流练度数据。&#10;更新数据触发时在点下 ｢{key=LinkStart}｣ 并连接模拟器后立即并行拉取，不等待其他任务完成。&#10;一图流保存的是练度快照，需先在一图流网站上传过干员数据；练度数据由森空岛导入，仅国服账号有数据。&#10;Token 在一图流 ｢个人中心｣ 的 ｢第三方 API Token｣ 中生成，为保护账号数据请仅使用只读 Token。</system:String>
+    <system:String x:Key="OperBoxFetchingFromYituliu">正在从一图流获取干员数据…</system:String>
+    <system:String x:Key="YituliuFetchFailed">从一图流获取失败：{0}</system:String>
+    <system:String x:Key="YituliuNoOperBoxData">Token 对应的一图流账号暂无干员练度数据，已保留本地识别结果</system:String>
+    <system:String x:Key="YituliuOperBoxCompleted">{key=OperBoxRecognition}完成（一图流）</system:String>
+    <system:String x:Key="OperBoxExportHeaderSkills">技能专精</system:String>
+    <system:String x:Key="OperBoxExportHeaderEquips">模组</system:String>
     <system:String x:Key="DrGrandet">博朗台模式</system:String>
     <system:String x:Key="DrGrandetTip">在恢复理智确认界面等待，直到当前的 1 点理智恢复完成再立即确认。</system:String>
     <system:String x:Key="SocialPtShop">信用交易所自动购物</system:String>
@@ -731,6 +751,8 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settin
     <system:String x:Key="MainTasksNullFunctionality">反转主任务右键单击效果</system:String>
     <system:String x:Key="MainTasksNullFunctionalityTip">默认仅一次生效，勾选后仅一次跳过</system:String>
     <system:String x:Key="MainTasksNullFunctionalitySwitch">可在 ｢{key=Settings} - {key=UiSettings} - {key=MainTasksNullFunctionality}｣ 切换右键单击效果</system:String>
+    <system:String x:Key="HideHoverActionButtons">隐藏主任务悬停操作按钮</system:String>
+    <system:String x:Key="HideHoverActionButtonsTip">相应功能仍可通过右键齿轮菜单使用</system:String>
     <system:String x:Key="UseCardLog">使用卡片样式日志</system:String>
     <system:String x:Key="MaxNumberOfLogThumbnails">日志缩略图最大数量</system:String>
     <system:String x:Key="TitleBarDisplayContent">标题栏显示内容</system:String>
@@ -910,6 +932,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BackToAndroidHome">返回 模拟器 主屏幕</system:String>
     <system:String x:Key="LinkStart">Link Start!</system:String>
     <system:String x:Key="Stop">停止</system:String>
+    <system:String x:Key="StopCurrentTaskFormat">停止当前运行的 {0}</system:String>
     <system:String x:Key="WaitAndStop">等待 &amp; 停止</system:String>
     <system:String x:Key="AutoReloadResource">自动重载资源</system:String>
     <system:String x:Key="CustomTaskName">任务名</system:String>
@@ -1040,7 +1063,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="UnselectedTask">未选择任务</system:String>
     <system:String x:Key="Running">正在运行中……</system:String>
     <system:String x:Key="TaskAppend.Skip">{0}: {1} 任务跳过</system:String>
-    <system:String x:Key="TaskAppend.Error">{0}: {1} 添加任务失败</system:String>
+    <system:String x:Key="TaskSerialize.Error">{0}: {1} 序列化失败</system:String>
     <system:String x:Key="AdbReplacementTips">如果任务完全没有反应，请使用 ｢{key=Settings} - {key=ConnectionSettings} - {key=ForcedReplaceAdb}｣，或触控模式选择 ADB Input（不推荐）。</system:String>
     <system:String x:Key="LDPlayerMaaTouchWarning">检测到当前使用雷电模拟器 + MaaTouch 触控模式。已知该组合下滑动操作会异常缓慢（滑动实际持续时间远大于设定值），可能导致后续操作在滑动尚未结束时提前执行，从而引发各种异常。建议更换其他触控模式。</system:String>
     <system:String x:Key="Waiting">正在等待当前任务结束……</system:String>
@@ -1408,9 +1431,11 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ResourceIntegrityRepairYes">自动修复（下载完整包并在重启后恢复）</system:String>
     <system:String x:Key="ResourceIntegrityRepairNo">暂不处理，继续启动</system:String>
     <system:String x:Key="ResourceBrokenTaskBlocked">资源损坏，无法开始任务。请按启动时的提示修复资源，或重新下载完整安装包后重启 MAA。</system:String>
-    <system:String x:Key="ResourceIntegrityRepairDownloading">正在下载完整包以修复缺失的资源文件…</system:String>
+    <system:String x:Key="ResourceIntegrityRepairDownloading">正在下载完整包以修复安装…</system:String>
     <system:String x:Key="ResourceIntegrityRepairFailed">自动修复失败，请按提示手动处理。\n\n{key=FullPackageUpgradeTips}</system:String>
-    <system:String x:Key="ResourceIntegrityRepairCanceled">已取消自动修复，缺失文件下次启动时仍会提醒</system:String>
+    <system:String x:Key="ResourceIntegrityRepairCanceled">已取消自动修复，下次启动时仍会提醒</system:String>
+    <system:String x:Key="ForcedFullPackageUpdateNotice">为修复安装，将下载完整安装包而非增量更新包</system:String>
+    <system:String x:Key="OtaPackageRejectedByBrokenInstall">当前安装可能处于不完整状态（资源损坏或上次更新失败），OTA 增量更新包无法修复，请改用完整安装包</system:String>
     <system:String x:Key="ReplaceAdbNotExists">ADB 路径不存在</system:String>
     <system:String x:Key="AdbDownloadFailedTitle">ADB 下载失败</system:String>
     <system:String x:Key="AdbDeletionFailedMessage">无法删除目录，可能已被替换或发生了其他问题。请检查日志获取更多信息。</system:String>
@@ -1655,7 +1680,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BlackFlowOutcomeMoveConfirmationFailed">无法确认本次移动</system:String>
     <system:String x:Key="BlackFlowOutcomePostMoveValidationFailed">移动后的状态校验失败</system:String>
     <system:String x:Key="BlackFlowOutcomePlanningRetryExhausted">路线重新规划次数已经用尽</system:String>
-    <system:String x:Key="BlackFlowOutcomeStateMachineDeadEnd">界面流程走不下去了</system:String>
+    <system:String x:Key="BlackFlowOutcomeStateMachineDeadEnd">内部状态机错误</system:String>
     <system:String x:Key="BlackFlowOutcomeMapRecoveryExhausted">地图恢复重试次数已经用尽</system:String>
     <system:String x:Key="BlackFlowOutcomeFloorRecognitionFailed">楼层识别失败</system:String>
     <system:String x:Key="BlackFlowOutcomeMovementInventoryFailed">移动加工品识别失败</system:String>
@@ -1685,7 +1710,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BlackFlowTerminationPerceptionPortUnavailable">地图识别与任务接口不可用</system:String>
     <system:String x:Key="BlackFlowTerminationMapRebuildFailedTwice">连续两次地图重建失败</system:String>
     <system:String x:Key="BlackFlowTerminationPlanningRetryExhausted">预览反复改变可选路线，已经超过重新规划次数</system:String>
-    <system:String x:Key="BlackFlowTerminationUnknown">详细原因请查看文件日志</system:String>
+    <system:String x:Key="BlackFlowTerminationUnknown">如需反馈请前往 ｢{key=Settings} - {key=IssueReport}｣</system:String>
     <system:String x:Key="RoguelikeEvent">事件:</system:String>
     <system:String x:Key="RoguelikeEncounterOptions">识别到 {0} 个选项:</system:String>
     <system:String x:Key="RoguelikeEncounterEnabledOption">可选选项: {0}</system:String>
@@ -2042,7 +2067,7 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
     <system:String x:Key="TaskStallWarning">任务日志输出已超过 {0} 分钟无更新（当前已停滞 {1} 分钟）。请确认任务是否正常运行，若任务正常可忽略此提示，若无响应则可能需要手动干预。</system:String>
     <system:String x:Key="RunDurationLimitEnabled">限制单次运行时长</system:String>
     <system:String x:Key="RunDurationLimitMinutes">运行时长上限（分钟）</system:String>
-    <system:String x:Key="RunDurationLimitTip" xml:space="preserve">从点击 ｢{key=LinkStart}｣ 开始计时，到达上限后自动停止任务，并按下方选项决定是否执行 ｢{key=PostActionsSettings}｣ 中的动作（如退出游戏、关闭模拟器、关机）。
+    <system:String x:Key="RunDurationLimitTip" xml:space="preserve">从点击 ｢{key=LinkStart}｣ 开始计时，到达上限后触发一次手动停止。
 {key=CheckBoxesNotSavedAsNull}。</system:String>
     <system:String x:Key="RunDurationLimitExecutePostActions">停止后执行 ｢{key=PostActionsSettings}｣ 中的动作</system:String>
     <system:String x:Key="RunDurationLimitReached">已达到运行时长上限（{0} 分钟），停止任务</system:String>

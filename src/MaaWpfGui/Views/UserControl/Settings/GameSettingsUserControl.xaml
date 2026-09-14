@@ -34,7 +34,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             DisplayMemberPath="Display"
-            IsEnabled="{Binding Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
+            IsEnabled="{Binding Run.Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
             ItemsSource="{Binding ClientTypeList}"
             SelectedValue="{Binding ClientType}"
             SelectedValuePath="Value" />
@@ -188,31 +188,6 @@
             </CheckBox>
         </StackPanel>
 
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Horizontal">
-            <CheckBox
-                Margin="10"
-                Content="{DynamicResource EnablePenguin}"
-                IsChecked="{Binding EnablePenguin}" />
-            <CheckBox
-                Margin="10"
-                Content="{DynamicResource EnableYituliu}"
-                IsChecked="{Binding EnableYituliu}" />
-        </StackPanel>
-        <StackPanel
-            Margin="10,5"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal"
-            Visibility="{c:Binding EnablePenguin}">
-            <controls:TextBlock Text="{DynamicResource PenguinId}" />
-            <TextBox
-                MinWidth="80"
-                Margin="5,0,0,0"
-                InputMethod.IsInputMethodEnabled="False"
-                Text="{Binding PenguinId}" />
-        </StackPanel>
         <CheckBox
             Margin="10"
             HorizontalAlignment="Center"
@@ -247,7 +222,7 @@
                 VerticalAlignment="Center"
                 Content="{DynamicResource RunDurationLimitEnabled}"
                 IsChecked="{Binding EnableRunDurationLimit}"
-                IsEnabled="{Binding Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
+                IsEnabled="{Binding Run.Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
                 MouseRightButtonUp="{s:Action ToggleCheckBoxNullOnRightClick,
                                               Target={x:Type helper:CheckBoxHelper}}" />
             <controls:TooltipBlock
@@ -264,7 +239,7 @@
                 hc:InfoElement.Title="{DynamicResource RunDurationLimitMinutes}"
                 hc:TitleElement.TitlePlacement="Left"
                 InputMethod.IsInputMethodEnabled="False"
-                IsEnabled="{Binding Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
+                IsEnabled="{Binding Run.Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
                 Maximum="11451"
                 Minimum="1"
                 Value="{Binding RunDurationLimitMinutes}" />
@@ -274,7 +249,7 @@
             HorizontalAlignment="Center"
             Content="{DynamicResource RunDurationLimitExecutePostActions}"
             IsChecked="{Binding RunDurationLimitExecutePostActions}"
-            IsEnabled="{Binding Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
+            IsEnabled="{Binding Run.Idle, Source={x:Static ui_vms:TaskQueueViewModel.TaskSettingDataContext}}"
             Visibility="{c:Binding RunDurationLimitActive}" />
     </StackPanel>
 </UserControl>
