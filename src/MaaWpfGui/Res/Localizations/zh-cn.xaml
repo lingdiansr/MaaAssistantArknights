@@ -574,6 +574,8 @@ D:\
     <system:String x:Key="UseWeeklySchedule">启用周计划</system:String>
     <system:String x:Key="UseWeeklyScheduleTip">此处星期根据游戏时间计算，并非现实时间。例如游戏在 4:00 刷新，则 3:59 仍算作前一天。</system:String>
     <system:String x:Key="FightSkippedWeeklySchedule">周计划今日未勾选</system:String>
+    <system:String x:Key="FightSkippedEmptyStagePlan">关卡计划为空</system:String>
+    <system:String x:Key="FightSkippedNoOpenStage">关卡计划内没有当日开放的关卡</system:String>
     <system:String x:Key="HelpUsWithOverseasServersTip">外服适配滞销，帮帮我们！不会编程也可以。</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunch">启动 MAA 后自动开启模拟器</system:String>
     <system:String x:Key="OpenEmulatorAfterLaunchTip">仅在启动 MAA 时开启一次模拟器，点击 ｢{key=LinkStart}｣ 时不会自动开启；\n如有此需求，请勾选 ｢{key=RetryOnDisconnected}｣</system:String>
@@ -986,6 +988,10 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Inventory">库存</system:String>
     <system:String x:Key="InventoryUpdateTip">可通过 ｢{key=Toolbox}-{key=DepotRecognition}｣ 更新库存数据</system:String>
     <system:String x:Key="SpecifiedDropsInventoryUnavailable">任务 ｢{0}｣ 启用了 {key=TargetInventory}，但当前没有可用的库存数据，已跳过。可通过 ｢{key=Toolbox}-{key=DepotRecognition}｣ 更新库存。</system:String>
+    <system:String x:Key="SpecifiedDropsInventoryEnough">{0} 已充足 {1}/{2}</system:String>
+    <system:String x:Key="UserDataUpdateCannotModifyExistingTask">无法修改已添加的 ｢{key=UserDataUpdate}｣ 任务参数</system:String>
+    <system:String x:Key="UserDataUpdateNothingSelected">｢{key=OperBoxRecognition}｣ 和 ｢{key=DepotRecognition}｣ 均未勾选</system:String>
+    <system:String x:Key="UserDataUpdateIntervalNotReached">距上次同步未达到 ｢{0}｣ 触发间隔</system:String>
     <!--  库存保持  -->
     <system:String x:Key="DepotUpdateBeforeStart">任务开始前更新库存数据</system:String>
     <system:String x:Key="AddPlan">添加</system:String>
@@ -1006,6 +1012,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DepotPlanSanityInsufficient">#{0}：理智不足（当前 {1}，低于关卡消耗 {2}），已跳过</system:String>
     <system:String x:Key="DepotPlanStageNotOpen">#{0}：关卡 ｢{1}｣ 未开放</system:String>
     <system:String x:Key="DepotPlanAddTaskFailed">#{0}：添加任务失败</system:String>
+    <system:String x:Key="DepotPlanNoPlan">未配置任何计划</system:String>
     <system:String x:Key="DepotSkipDuringActivity">活动期间跳过</system:String>
     <system:String x:Key="DepotSkipDuringResourceCollection">资源收集限时全天开放期间跳过</system:String>
     <system:String x:Key="DepotOnlyFirstInsufficientPlan">仅执行第一个库存不足的计划</system:String>
@@ -1830,7 +1837,7 @@ C:\leidian\LDPlayer9
 4. 明日方舟设置 → 游戏 → UI 缩放需设为 100%
 5. 在明日方舟设置中调小鼠标指针比例，以减少对识别区域的遮挡
 6. 游戏分辨率需为 16:9，推荐设置 1280x720 或 1920x1080</system:String>
-    <system:String x:Key="UseAttachWindowWarningRecommendation" xml:space="preserve">7. 推荐鼠标输入方式使用 SendMsg-WindowPos，使用此方式可以很大程度解决 PC 端识别错误和卡住的问题</system:String>
+    <system:String x:Key="UseAttachWindowWarningRecommendation" xml:space="preserve">7. 推荐鼠标输入方式使用 PostMsg-WindowPos，使用此方式可以很大程度解决 PC 端识别错误和卡住的问题</system:String>
     <system:String x:Key="AttachWindowScreencapMethod">截图方式</system:String>
     <system:String x:Key="AttachWindowMouseMethod">鼠标输入</system:String>
     <system:String x:Key="AttachWindowKeyboardMethod">键盘输入</system:String>
@@ -1841,8 +1848,10 @@ C:\leidian\LDPlayer9
     <system:String x:Key="AttachWindowInputSeize">Seize（前台，完全抢鼠标）</system:String>
     <system:String x:Key="AttachWindowInputSendMsgDisabled">SendMsg（全后台，明日方舟仅按真实鼠标定位，无效）</system:String>
     <system:String x:Key="AttachWindowInputPostMsgDisabled">PostMsg（全后台，明日方舟仅按真实鼠标定位，无效）</system:String>
-    <system:String x:Key="AttachWindowInputSendWithCursor">SendMsg-CursorPos（半后台，短暂抢鼠标）</system:String>
-    <system:String x:Key="AttachWindowInputSendWithWindowPos">SendMsg-WindowPos（推荐，全后台，不抢鼠标，窗口会乱飞，截图方式仅 PrintWindow，建议最小化）</system:String>
+    <system:String x:Key="AttachWindowInputSendWithCursorDisabled">SendMsg-CursorPos（延迟过高，已停用）</system:String>
+    <system:String x:Key="AttachWindowInputPostWithCursor">PostMsg-CursorPos（半后台，短暂抢鼠标）</system:String>
+    <system:String x:Key="AttachWindowInputSendWithWindowPosDisabled">SendMsg-WindowPos（延迟过高，已停用）</system:String>
+    <system:String x:Key="AttachWindowInputPostWithWindowPos">PostMsg-WindowPos（推荐，全后台，不抢鼠标，窗口会乱飞，截图方式仅 PrintWindow，建议最小化）</system:String>
     <system:String x:Key="AttachWindowInputSendMsg">SendMsg（稳定）</system:String>
     <system:String x:Key="AttachWindowInputPostMsg">PostMsg（高效）</system:String>
     <!--  !AsstProxy  -->
