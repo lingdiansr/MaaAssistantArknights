@@ -29,6 +29,8 @@
     <system:String x:Key="BackgroundMonetCustom">自定义颜色</system:String>
     <system:String x:Key="BackgroundMonetSelectColor">选择颜色</system:String>
     <system:String x:Key="BackgroundMonetAutoTip">将从背景图自动提取主色生成主题配色</system:String>
+    <system:String x:Key="BackgroundMonetKeepMaskNeutral">不改变遮罩颜色</system:String>
+    <system:String x:Key="BackgroundMonetKeepMaskNeutralTip">开启后遮罩不随主题色变化，可能影响控件辨识度</system:String>
     <system:String x:Key="UiTheme">界面主题</system:String>
     <system:String x:Key="TransitionSpeed">过渡动画</system:String>
     <system:String x:Key="TransitionSpeedNormal">原速</system:String>
@@ -661,19 +663,20 @@ D:\
 4. 当前难度 ≥15 时，6★ 干员希望消耗 +1，使用部分分队时可能无法招募开局 6★ 干员，导致出错或失败</system:String>
     <system:String x:Key="RoguelikeThemeTipBlackFlow" xml:space="preserve">{key=RoguelikeThemeBlackFlow}推荐配置：
 
-{key=StartingCoreChar}: 机械师（要精二）
+{key=StartingCoreChar}: 机械师（必须精二并解锁 ｢招募精通 II｣ 天赋的 ｢效果提升 II｣ ）
 {key=StartingSquad}: ｢{key=SpecialForceSquad}｣ / ｢{key=TacticalFortificationOperative}｣
 {key=StartingRoles}: ｢{key=SlowAndSteadyWinsTheRace}｣ / ｢{key=Unbreakable}｣
 
 1. 目前没有专用战斗策略，作战由招募评分自动决策；
     刷源石锭、刷等级、刷襁褓动物目前全部围绕精二机械师的飞展开。
     本次肉鸽机制繁多，不按上述配置开局就只能使用默认寻路与战斗，大概率失败，
-    强烈推荐精二机械师开局（精二机械师只需通关一次 N1，相对简单）
-2. 机械师精二后，完成 ｢招募精通 II｣ ｢效果提升 II｣ 科技，开局即可携带 ｢结构性原理｣（全图任意飞 3 次）；
-    解锁很简单，精二后累计卖出 10 个零件即可，强烈推荐。
-    未解锁时只能向周围 8 格飞 3 次，虽然也能刷，但效率会低不少
-3. 刷等级时，机械师（要精二）+ 上述分队与职业组 + 重装券，可以快速飞完三层
-4. 没有精二机械师就不要选机械师，可以正常刷钱，但战斗大概率暴毙，其他策略待后续优化
+    招募到机械师后为保证效率不再检查精英化状态，直接按精二执行策略，
+    所选机械师未精二会卡住甚至死循环，必须使用精二机械师；
+    且通关一次前部分事件的选项会不同，遇到可能卡死；先通关一次 N1 即可同时满足精二与事件选项的前提，相对简单
+2. 必须解锁 ｢招募精通 II｣ 天赋的 ｢效果提升 II｣ ，开局才会携带 ｢结构性原理｣ 零件（全图任意飞 3 次）；
+    解锁很简单，精二后累计卖出 10 个零件即可
+3. 刷等级时，机械师（必须精二）+ 上述分队与职业组 + 重装券，可以快速飞完三层
+4. 没有精二机械师就不要选机械师，否则会卡住或死循环；不选机械师可以正常刷钱，但战斗大概率暴毙，其他策略待后续优化
 5. 刷等级 + 不勾选 ｢{key=InvestmentEnabled}｣，即可跳过商店</system:String>
     <system:String x:Key="RoguelikeDifficulty">难度</system:String>
     <system:String x:Key="RoguelikeJieGardenDifficultyTip" xml:space="preserve">解锁 ｢{key=RoguelikeThemeJieGarden}｣ 相关科技后，{key=LeaderSquad}在进行 N3 及以上难度的探索时，会额外携带一个 ｢时光之末｣，可以利用其进行 ｢一战一跳｣ 的存钱策略。
@@ -779,7 +782,8 @@ HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settin
     <system:String x:Key="AllowUseStoneSaveTip">默认 ｢{key=UseOriginitePrime}｣ 仅生效一次；勾选后其状态将保存，左键可正常切换，右键选中时仍仅生效一次</system:String>
     <system:String x:Key="AllowUseStoneSaveWarning">该功能属于危险功能。按下 ｢{key=Confirm}｣ 键即视为你了解并愿意承担可能出现的风险。</system:String>
     <system:String x:Key="UseAlternateStage">使用备选关卡</system:String>
-    <system:String x:Key="UseExpiringMedicine">无限吃 N 小时内过期的理智药</system:String>
+    <system:String x:Key="UseExpiringMedicine">无限吃 N 天内过期的理智药</system:String>
+    <system:String x:Key="MedicineExpireDaysTip">只吃游戏内显示不足 N 天的理智药，显示“N 天”及以上的不吃。</system:String>
     <system:String x:Key="UseExpireMedicineForActivity">活动结束前 48H 吃当周过期理智药</system:String>
     <system:String x:Key="NoActivity">暂无活动</system:String>
     <system:String x:Key="HideUnavailableStage">下拉框中隐藏当日不开放关卡</system:String>
@@ -941,6 +945,9 @@ C:\leidian\LDPlayer9
     <system:String x:Key="PostActionOnceTip" xml:space="preserve">勾选后将不保存选项变化，下次 MAA 启动或 {key=LinkStart} 后复原
 取消勾选本选项后，其他选项状态将会正常保存
 右键点击其他选项时，会同步勾选/取消勾选本选项</system:String>
+    <system:String x:Key="SkipPostActionOnError">任务出错时跳过</system:String>
+    <system:String x:Key="SkipPostActionOnErrorTip">勾选后，若任务列表中有一个或多个任务出错，将跳过以上全部动作。</system:String>
+    <system:String x:Key="PostActionSkippedDueToError">以下任务出错：{0}，已跳过完成后动作</system:String>
     <system:String x:Key="IfNoOtherMaa">无其他 MAA 时</system:String>
     <system:String x:Key="IfNoOtherMaaTip">勾选后，仅当没有其他 MAA 实例在运行时，才会执行睡眠/休眠/关机</system:String>
     <system:String x:Key="BackToAndroidHome">返回 模拟器 主屏幕</system:String>
@@ -1484,12 +1491,15 @@ C:\leidian\LDPlayer9
     <system:String x:Key="IdentifyTheMistakes">识别错误</system:String>
     <system:String x:Key="RecruitRefreshLimitReached">刷新次数达到上限</system:String>
     <system:String x:Key="TaskError" xml:space="preserve">任务出错: </system:String>
+    <system:String x:Key="TaskErrorSummaryTitle">本轮任务出现以下错误：</system:String>
+    <system:String x:Key="TaskErrorSummaryItem">{0}</system:String>
     <system:String x:Key="OutOfMemoryError">{0}任务因内存不足停止，请关闭部分程序或重启 MAA 后重试</system:String>
     <system:String x:Key="CombatError">战斗出错</system:String>
     <system:String x:Key="StartTask" xml:space="preserve">开始任务: </system:String>
     <system:String x:Key="CompleteTask" xml:space="preserve">完成任务: </system:String>
     <system:String x:Key="StartCombat" xml:space="preserve">开始战斗: </system:String>
     <system:String x:Key="CompleteCombat">完成战斗</system:String>
+    <system:String x:Key="TaskCompletedWithErrors">任务已完成，但出现错误！\n(用时 {0})</system:String>
     <system:String x:Key="AllTasksComplete">任务已全部完成！\n(用时 {0})</system:String>
     <system:String x:Key="SanityReport">理智将在 {DateTime} 回满。({TimeDiff} 后)</system:String>
     <system:String x:Key="AllTaskCompleteContent">MAA 已在 {DateTime} 完成了 {Preset} 配置下所有预设的任务。(用时 {TimeDiff})</system:String>
@@ -1519,7 +1529,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="MedicineUsedTimesWithExpiring" xml:space="preserve">药: {0},{1}(临期)  </system:String>
     <system:String x:Key="StoneUsedTimes" xml:space="preserve">石: {0}  </system:String>
     <system:String x:Key="MedicineUsed">已使用理智药</system:String>
-    <system:String x:Key="ExpiringMedicineUsed">已使用 {0} H内过期理智药</system:String>
+    <system:String x:Key="ExpiringMedicineUsed">已使用 {0} 天内过期理智药</system:String>
     <system:String x:Key="UseMedicine.MedicineInfo">药: {0}, 库存: {1}</system:String>
     <system:String x:Key="StoneUsed">已使用源石</system:String>
     <system:String x:Key="ActingCommandError">代理指挥失误</system:String>
@@ -1766,6 +1776,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Refreshed">当前槽位已刷新</system:String>
     <system:String x:Key="ContinueRefresh">无招聘许可，继续尝试刷新 Tags</system:String>
     <system:String x:Key="NoRecruitmentPermit">无招聘许可，已返回</system:String>
+    <system:String x:Key="RecruitPermitReserved">招聘许可剩余 {0}，小于等于保留数量，跳过当前 3 星招募</system:String>
+    <system:String x:Key="RecruitPermitCountRecognitionFailed">招聘许可数量识别失败，为避免消耗保留许可，已跳过当前 3 星招募</system:String>
     <system:String x:Key="AutoRecruitSelectStrategy">公招多选 Tag 的策略</system:String>
     <system:String x:Key="DefaultNoExtraTags">默认不选择额外 Tag</system:String>
     <system:String x:Key="SelectExtraTags">选择高星时总是选择三个 Tag</system:String>
@@ -1899,6 +1911,8 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
     <system:String x:Key="RecruitMaxTimes">每次执行时最大招募次数</system:String>
     <system:String x:Key="PreserveTags">保留指定词条</system:String>
     <system:String x:Key="AutoSelectLevel3">自动确认 3 星</system:String>
+    <system:String x:Key="RecruitLevel3PermitReserve">3 星保留招聘许可</system:String>
+    <system:String x:Key="RecruitLevel3PermitReserveTip">当剩余招聘许可小于等于该值时跳过 3 星招聘</system:String>
     <system:String x:Key="AutoSelectLevel4">自动确认 4 星</system:String>
     <system:String x:Key="AutoSelectLevel5">自动确认 5 星</system:String>
     <system:String x:Key="AutoSelectLevel6">自动确认 6 星</system:String>
