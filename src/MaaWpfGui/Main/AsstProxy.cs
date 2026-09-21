@@ -2005,6 +2005,13 @@ public class AsstProxy
 
                         case "OfflineConfirm":
                         case "OfflineConfirmAfterBattle":
+                            // 回调中的节点名已由 Core 去掉 @ 前缀（AbstractTask::callback），开始唤醒命中的 StartUp@OfflineConfirm 同样报为 OfflineConfirm，
+                            // 只能按任务链区分。开始唤醒会点击确认重连，属于正常的启动流程，不按掉线停止
+                            if (details["taskchain"]?.ToString() == "StartUp")
+                            {
+                                break;
+                            }
+
                             var log = LocalizationHelper.GetString("GameDrop");
                             Instances.TaskQueueViewModel.AddLog(log, UiLogColor.Error);
                             ToastNotification.ShowDirect(log);
@@ -3219,7 +3226,7 @@ public class AsstProxy
             {
                 Connected = false;
                 _logger.Information("Connection lost to {ConnectedAdb} {ConnectedAddress}", _connectedAdb, _connectedAddress);
-                error = "Connection lost";
+                error = LocalizationHelper.GetString("ConnectionLost");
             }
             else
             {
@@ -3232,7 +3239,7 @@ public class AsstProxy
                 _logger.Information("Forced reload resource");
                 if (!LoadResource())
                 {
-                    error = "Load Resource Failed";
+                    error = LocalizationHelper.GetString("LoadResourceFailed");
                     return false;
                 }
 

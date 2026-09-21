@@ -108,6 +108,7 @@
     <system:String x:Key="GpuAllowDeprecated">非推奨 GPU の使用を許可する</system:String>
     <system:String x:Key="Copy">コピー</system:String>
     <!--  Toast 不可用  -->
+    <system:String x:Key="ToastNotificationTest">通知テスト</system:String>
     <system:String x:Key="ToastNotificationUnavailable">Toast 通知は使用できません、 {0}</system:String>
     <system:String x:Key="ToastNotificationUnavailable.DisabledForApplication">ユーザーはWindowsの設定でこのアプリの通知をオフにしました</system:String>
     <system:String x:Key="ToastNotificationUnavailable.DisabledForUser">ユーザーはWindowsの設定ですべてのアプリの通知をオフにしました</system:String>
@@ -296,6 +297,8 @@
     <system:String x:Key="RoguelikeStopAtMaxLevel">最大レベル達成時に停止</system:String>
     <system:String x:Key="RoguelikeStartWithSeed">シードから始める</system:String>
     <!--<system:String x:Key="RoguelikeStartWithSeed">投資のシードを有効にする</system:String>-->
+    <system:String x:Key="RoguelikeSeedFormatError">形式が正しくありません</system:String>
+    <system:String x:Key="RoguelikeStartWithSeedTip">例: 2b3c4d,rogue_1,120</system:String>
     <system:String x:Key="RoguelikeMonthlySquadAutoIterate">月次小隊自動切替</system:String>
     <system:String x:Key="RoguelikeMonthlySquadCheckComms">月次小隊通信</system:String>
     <system:String x:Key="RoguelikeMonthlySquadCheckCommsTip" xml:space="preserve">有効にすると、MAAは現在の小隊の通信がすべて解放されているかを確認し、すべて解放されてから次の月次小隊に切り替えます。&#10;報酬の獲得のみが目的の場合は、この設定を無効にすると探索の繰り返しを減らせます。&#10;この設定を無効にしたからといって、MAAが進行中の探索を早めに終了することはありません。</system:String>
@@ -395,9 +398,11 @@
     <system:String x:Key="RenameTask">タスク名を変更</system:String>
     <system:String x:Key="RenameTaskPrompt">新しいタスク名を入力してください：</system:String>
     <system:String x:Key="AddTaskQueueTask">新しいタスクを追加</system:String>
+    <system:String x:Key="ConfirmDeleteConfigurationMessage">構成 &lt;{0}&gt; を削除してもよろしいですか？この操作は元に戻せません。</system:String>
     <system:String x:Key="ConfirmDeleteTask">削除の確認</system:String>
     <system:String x:Key="ConfirmDeleteTaskMessage">タスク "{1}" ({0}) を削除してもよろしいですか？</system:String>
     <system:String x:Key="TaskRenamed">タスク名を変更しました: {0}</system:String>
+    <system:String x:Key="TaskRenameFailed">タスクの名前変更に失敗しました</system:String>
     <system:String x:Key="TaskDeleted">タスクを削除しました: {0}</system:String>
     <system:String x:Key="TaskCopied">タスクをコピーしました: {0}</system:String>
     <system:String x:Key="StartGuideDemo">デモでは実際にタスクは実行されません</system:String>
@@ -406,6 +411,9 @@
     <system:String x:Key="HotKeyShowGui">[ホットキー] MAAの表示/最小化</system:String>
     <system:String x:Key="HotKeyLinkStart">[ホットキー] Link 開始/停止</system:String>
     <system:String x:Key="HotKeyChangingTip">バックスペース/Esc/デリート キーを押すことで初期化できます</system:String>
+    <system:String x:Key="HotKeyRegistrationFailedOccupied">ホットキーの登録に失敗しました：このキー組み合わせは他のプログラムで使用中の可能性があります。別の組み合わせをお試しください</system:String>
+    <system:String x:Key="HotKeyRegistrationFailedDuplicate">ホットキーの登録に失敗しました：このキー組み合わせは他の MAA ホットキーと重複しています。別の組み合わせをお試しください</system:String>
+    <system:String x:Key="HotKeyNotSet">&lt; 未設定 &gt;</system:String>
     <system:String x:Key="LabelSequenceTip">タブの順番はドラッグ可能です</system:String>
     <system:String x:Key="CheckBoxesNotSaved">このオプションは一度有効です</system:String>
     <system:String x:Key="CheckBoxesNotSavedAsNull">このオプションは、右クリックで選択した時のみ一度だけ有効です</system:String>
@@ -945,8 +953,9 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DepotMaintain">在庫維持</system:String>
     <system:String x:Key="SwitchTheme">テーマ変更</system:String>
     <system:String x:Key="MiniGame">便利機能</system:String>
-    <system:String x:Key="MiniGameCategoryPermanent">常設</system:String>
+    <system:String x:Key="MiniGameCategoryPermanent">常設イベント</system:String>
     <system:String x:Key="MiniGameCategoryCurrentEvent">現在のイベント</system:String>
+    <system:String x:Key="MiniGameCategoryPermanentFeature">常設機能</system:String>
     <system:String x:Key="Custom">カスタムタスク</system:String>
     <system:String x:Key="SingleStep">単一ステップタスク</system:String>
     <system:String x:Key="ReclamationTheme">主題</system:String>
@@ -1129,6 +1138,9 @@ C:\leidian\LDPlayer9
     <system:String x:Key="VersionMismatch">UI と Core のバージョンが一致しません: {0} と {1}、予測不可能な動作を引き起こす可能性があります。ファイルを手動で置き換えたり、更新中にファイルを占有しないでください。\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="FullPackageUpgradeTips">完全パッケージをダウンロードし、既存のフォルダーを上書きせずに新しいフォルダーに解凍してください。\n設定とログを保持するには、元の config、data、および debug フォルダーを新しいフォルダーにコピーしてください。</system:String>
     <system:String x:Key="ConnectingToEmulator">エミュレータ接続中……</system:String>
+    <system:String x:Key="ImageIsNull">スクリーンショットが空です</system:String>
+    <system:String x:Key="ConnectionLost">接続が切断されました</system:String>
+    <system:String x:Key="LoadResourceFailed">リソースの読み込みに失敗しました</system:String>
     <system:String x:Key="UnselectedTask">タスクが選択されていません</system:String>
     <system:String x:Key="Running">動作中……</system:String>
     <system:String x:Key="TaskAppend.Skip">{0}: {1} タスクをスキップしました</system:String>
@@ -1245,6 +1257,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Peep">Peep</system:String>
     <system:String x:Key="PeepTip">パラスの目に映る世界を見てみませんか？</system:String>
     <system:String x:Key="PeepTargetFps">目標フレームレート</system:String>
+    <system:String x:Key="PeepScreenshotTooLong">スクリーンショットに時間がかかりすぎています。目標フレームレートを {0} に下げてください</system:String>
     <!--  !Peep  -->
     <!--  小游戏  -->
     <system:String x:Key="MiniGameName">ミニゲーム名</system:String>
@@ -1934,6 +1947,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Issue">フィードバック</system:String>
     <system:String x:Key="GenerateSupportPayload">サポート用ZIPを生成</system:String>
     <system:String x:Key="OpenDebugFolder">デバッグフォルダーを開く</system:String>
+    <system:String x:Key="FailedToOpenFolder">フォルダーを開けませんでした：{0}</system:String>
     <system:String x:Key="GenerateSupportPayloadSuccessful">サポート用ZIPの生成に成功しました</system:String>
     <system:String x:Key="GenerateSupportPayloadException">サポート用ZIPの生成中にエラーが発生しました：</system:String>
     <system:String x:Key="ClearImageCache">画像キャッシュをクリア</system:String>
