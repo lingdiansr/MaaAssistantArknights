@@ -1350,6 +1350,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="MiniGame@AutoRaisePotential@TotalLog">잠재능력 자동 강화: 처리할 오퍼레이터 {0}명</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@PotentialFoundLog">오퍼레이터 {0}/{1}: 강화 가능한 잠재능력 있음</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@NoPotentialLog">오퍼레이터 {0}/{1}: 강화 가능한 잠재능력 없음</system:String>
+    <system:String x:Key="MiniGame@CursedRelic">IS2 빅토리아 왕관 리롤</system:String>
+    <system:String x:Key="MiniGame@CursedRelicTip" xml:space="preserve">팬텀 로그라이크 메인 화면에서 '탐험 시작' 버튼이 표시된 상태에서 시작하세요</system:String>
 
     <system:String x:Key="MiniGameNameGreenTicketStore">자격증명서 상점</system:String>
     <system:String x:Key="MiniGameNameGreenTicketStoreTip" xml:space="preserve">1단계는 전부 구매하고&#10;2단계는 헤드헌팅 허가증과 모집 허가증을 구매해요</system:String>
@@ -1883,7 +1885,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Copilot.UnsupportedSkill">{0}은 {1} 스킬을 지원하지 않으므로, 스킬이 선택되지 않음</system:String>
     <system:String x:Key="Copilot.EliteEmpty">{0} 정예화 등급 요구 사항이 설정되지 않았지만, 다른 속성에 대한 요구 사항은 정예화 {1}입니다. 이 값은 자동으로 채워졌습니다.</system:String>
     <system:String x:Key="Copilot.EliteAjust">{0} 정예화 {1}을 요구하도록 설정되었지만, 다른 속성에 대한 요구 사항은 정예화 {2}입니다. 이 값은 자동으로 조정되었습니다.</system:String>
-    <system:String x:Key="Copilot.ActionWithBothLocAndOper">{0} 동시에 위치와 오퍼레이터가 설정되어 있어, 위치 설정이 제거됩니다.</system:String>
+    <system:String x:Key="Copilot.ActionWithBothLocAndOper">{0} 동시에 위치와 오퍼레이터가 설정되어 있어, 위치가 사용됩니다.</system:String>
+    <system:String x:Key="Copilot.ActionWithBothRectAndLoc">{0} 동시에 픽셀 영역과 위치가 설정되어 있어, 픽셀 영역이 사용됩니다.</system:String>
     <system:String x:Key="RecruitTagsDetected" xml:space="preserve">인식 결과: </system:String>
     <system:String x:Key="ConnectFailed">연결 실패</system:String>
     <system:String x:Key="TryToReconnectByAdb">재접속을 시도하고 있습니다</system:String>

@@ -1349,6 +1349,8 @@ Only level rewards can be farmed; to get the Engraved Medal, all ｢Key Objectiv
     <system:String x:Key="MiniGame@AutoRaisePotential@TotalLog">Automatically Raise Potential: {0} operators to process</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@PotentialFoundLog">Operator {0}/{1}: potential raise available</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@NoPotentialLog">Operator {0}/{1}: no potential raise available</system:String>
+    <system:String x:Key="MiniGame@CursedRelic">IS2 Victoria Crown reroll</system:String>
+    <system:String x:Key="MiniGame@CursedRelicTip" xml:space="preserve">Please start from the IS2 main menu where the EXPLORE button is visible.</system:String>
     <system:String x:Key="MiniGameNameGreenTicketStore">Green Ticket Store</system:String>
     <system:String x:Key="MiniGameNameGreenTicketStoreTip" xml:space="preserve">Buy everything on the 1st floor.&#10;Buy Headhunting Permits and Recruitment Permits on the 2nd floor.</system:String>
     <system:String x:Key="MiniGameNameYellowTicketStore">Yellow Ticket Store</system:String>
@@ -1881,7 +1883,8 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="Copilot.UnsupportedSkill">{0} does not support Skill {1}, so the Skill will no longer be selected.</system:String>
     <system:String x:Key="Copilot.EliteEmpty">{0} No Elite Level requirement was set, but the requirement for other attributes is Elite {1}; this has been auto-filled.</system:String>
     <system:String x:Key="Copilot.EliteAjust">{0} Was set to require Elite {1}, but the requirement for other attributes is Elite {2}; this has been auto-adjusted.</system:String>
-    <system:String x:Key="Copilot.ActionWithBothLocAndOper">{0} has both location and operator set, the location setting will be removed.</system:String>
+    <system:String x:Key="Copilot.ActionWithBothLocAndOper">{0} has both location and operator set, the location will be used.</system:String>
+    <system:String x:Key="Copilot.ActionWithBothRectAndLoc">{0} has both rect and location set, the rect will be used.</system:String>
     <system:String x:Key="RecruitTagsDetected" xml:space="preserve">Identification results:&#160;</system:String>
     <system:String x:Key="ConnectFailed">Connection Failed</system:String>
     <system:String x:Key="TryToReconnectByAdb">Attempting to reconnect</system:String>
