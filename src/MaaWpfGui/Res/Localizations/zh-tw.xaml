@@ -176,6 +176,7 @@
     <system:String x:Key="ClueExchangeUnlocked">已開啟線索交流</system:String>
     <system:String x:Key="InfrastReceptionSendClue">贈送線索</system:String>
     <system:String x:Key="ReceptionOptionsRequireInfrast">以下功能需在{key=Infrast}中設定並執行</system:String>
+    <system:String x:Key="ContinueTraining">訓練完成後繼續嘗試專精目前技能</system:String>
     <system:String x:Key="InfrastFiammettaRecovery">啟用菲亞梅塔心情恢復</system:String>
     <system:String x:Key="InfrastFiammettaRecoveryTips">開啟後，換班開始時會將恢復目標與滿心情的菲亞梅塔放入宿舍互換心情，菲亞梅塔隨後留在宿舍恢復心情。</system:String>
     <system:String x:Key="InfrastFiammettaTargets">菲亞梅塔恢復目標</system:String>
@@ -1349,8 +1350,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="MiniGame@AutoRaisePotential@TotalLog">自動提升潛能：識別到 {0} 位待處理幹員</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@PotentialFoundLog">第 {0}/{1} 位幹員：有待提升的潛能</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@NoPotentialLog">第 {0}/{1} 位幹員：無可提升的潛能</system:String>
-    <system:String x:Key="MiniGame@CursedRelic">IS2 維多利亞皇冠重置</system:String>
-    <system:String x:Key="MiniGame@CursedRelicTip" xml:space="preserve">請從 IS2 主選單中“探索”按鈕可見的狀態開始。</system:String>
+    <system:String x:Key="MiniGame@CursedRelic">刷傀影維多利亞皇冠</system:String>
+    <system:String x:Key="MiniGame@CursedRelicTip" xml:space="preserve">請從傀影肉鴿主選單中“探索”按鈕可見的狀態開始。</system:String>
 
     <system:String x:Key="MiniGameNameGreenTicketStore">綠票商店</system:String>
     <system:String x:Key="MiniGameNameGreenTicketStoreTip" xml:space="preserve">第 1 層全買。&#10;第 2 層買 ｢尋訪憑證｣ 和 ｢招聘許可｣ 。</system:String>
@@ -1880,6 +1881,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ResetStopwatch">重置全域計時器</system:String>
     <system:String x:Key="Click">點擊</system:String>
     <system:String x:Key="Swipe">滑動</system:String>
+    <system:String x:Key="SetUnitLocation">設定單位座標</system:String>
     <system:String x:Key="UnsupportedLevel">不支援的關卡，請檢查關卡名稱或前往 ｢{key=Settings} - {key=UpdateSettings} - {key=ResourceUpdate}｣ 嘗試更新資源版本！</system:String>
     <system:String x:Key="Copilot.UnsupportedSkill">{0} 不支援技能 {1}, 不再選擇技能</system:String>
     <system:String x:Key="Copilot.EliteEmpty">{0} 未設定精英等級要求, 但其他屬性要求 精{1}, 已自動補全</system:String>

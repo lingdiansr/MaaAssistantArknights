@@ -176,6 +176,7 @@
     <system:String x:Key="ClueExchangeUnlocked">단서 공유 개방</system:String>
     <system:String x:Key="InfrastReceptionSendClue">단서 전달</system:String>
     <system:String x:Key="ReceptionOptionsRequireInfrast">다음 기능들은 {key=Infrast}에서 설정 및 실행해야 합니다</system:String>
+    <system:String x:Key="ContinueTraining">마스터리 훈련 완료 시 이어서 시도</system:String>
     <system:String x:Key="InfrastFiammettaRecovery">피아메타 컨디션 회복 활성화</system:String>
     <system:String x:Key="InfrastFiammettaRecoveryTips">활성화하면 교대 시작 시 회복 대상과 컨디션이 가득한 피아메타를 숙소에 넣어 컨디션을 교환하며, 이후 피아메타는 숙소에서 회복합니다.</system:String>
     <system:String x:Key="InfrastFiammettaTargets">피아메타 회복 대상</system:String>
@@ -1350,7 +1351,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="MiniGame@AutoRaisePotential@TotalLog">잠재능력 자동 강화: 처리할 오퍼레이터 {0}명</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@PotentialFoundLog">오퍼레이터 {0}/{1}: 강화 가능한 잠재능력 있음</system:String>
     <system:String x:Key="MiniGame@AutoRaisePotential@NoPotentialLog">오퍼레이터 {0}/{1}: 강화 가능한 잠재능력 없음</system:String>
-    <system:String x:Key="MiniGame@CursedRelic">IS2 빅토리아 왕관 리롤</system:String>
+    <system:String x:Key="MiniGame@CursedRelic">팬텀 빅토리아 왕관 리롤</system:String>
     <system:String x:Key="MiniGame@CursedRelicTip" xml:space="preserve">팬텀 로그라이크 메인 화면에서 '탐험 시작' 버튼이 표시된 상태에서 시작하세요</system:String>
 
     <system:String x:Key="MiniGameNameGreenTicketStore">자격증명서 상점</system:String>
@@ -1881,6 +1882,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ResetStopwatch">스톱워치 초기화</system:String>
     <system:String x:Key="Click">클릭</system:String>
     <system:String x:Key="Swipe">스와이프</system:String>
+    <system:String x:Key="SetUnitLocation">유닛 좌표 설정</system:String>
     <system:String x:Key="UnsupportedLevel">지원되지 않는 스테이지입니다. 스테이지 이름을 확인하거나 ｢{key=Settings} - {key=UpdateSettings} - {key=ResourceUpdate}｣ 로 이동하여 리소스 버전을 업데이트해 보세요!</system:String>
     <system:String x:Key="Copilot.UnsupportedSkill">{0}은 {1} 스킬을 지원하지 않으므로, 스킬이 선택되지 않음</system:String>
     <system:String x:Key="Copilot.EliteEmpty">{0} 정예화 등급 요구 사항이 설정되지 않았지만, 다른 속성에 대한 요구 사항은 정예화 {1}입니다. 이 값은 자동으로 채워졌습니다.</system:String>
