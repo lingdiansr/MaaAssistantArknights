@@ -68,11 +68,6 @@ public class ToolboxViewModel : Screen
         DisplayName = LocalizationHelper.GetString("Toolbox");
         _runningState = RunningState.Instance;
         _runningState.StateChanged += (__, e) => {
-            if (e.NewState.Idle)
-            {
-                PixelPaintParametersLocked = false;
-            }
-
             if (e.NewState.Stopping && Peeping && !IsPeepTransitioning)
             {
                 _ = Peep();
@@ -2682,6 +2677,8 @@ public class ToolboxViewModel : Screen
 
     public bool IsPixelPaintSelected => SelectedMiniGameItem?.IsPixelPaint == true;
 
+    public bool IsAutoRaisePotentialSelected => SelectedMiniGameItem?.IsAutoRaisePotential == true;
+
     public static void UpdateMiniGameTaskList()
     {
         var categorizedItems = Instances.StageManager.MiniGameEntries
@@ -2848,14 +2845,6 @@ public class ToolboxViewModel : Screen
 
     private PixelPaintHelper.ConvertResult? _pixelPaintResult;
 
-    private bool _pixelPaintParametersLocked;
-
-    public bool PixelPaintParametersLocked
-    {
-        get => _pixelPaintParametersLocked;
-        private set => SetAndNotify(ref _pixelPaintParametersLocked, value);
-    }
-
     /// <summary>相对去边后内容图的归一化取景（0~1）。</summary>
     private System.Windows.Rect _pixelPaintView = new(0, 0, 1, 1);
 
@@ -2942,7 +2931,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintPickImage()
     {
-        if (PixelPaintParametersLocked)
+        if (!_runningState.GetIdle())
         {
             return;
         }
@@ -2962,7 +2951,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintDrop(object sender, DragEventArgs e)
     {
-        if (PixelPaintParametersLocked || e.Data == null)
+        if (!_runningState.GetIdle() || e.Data == null)
         {
             return;
         }
@@ -2982,7 +2971,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintDragOver(object sender, DragEventArgs e)
     {
-        e.Effects = (!PixelPaintParametersLocked && e.Data?.GetDataPresent(DataFormats.FileDrop) == true)
+        e.Effects = (_runningState.GetIdle() && e.Data?.GetDataPresent(DataFormats.FileDrop) == true)
             ? DragDropEffects.Copy
             : DragDropEffects.None;
         e.Handled = true;
@@ -2998,7 +2987,7 @@ public class ToolboxViewModel : Screen
     /// <param name="e">按键事件数据。</param>
     public void PixelPaintKeyDown(object sender, KeyEventArgs e)
     {
-        if (e.Key != Key.V || Keyboard.Modifiers != ModifierKeys.Control || !IsPixelPaintSelected || PixelPaintParametersLocked)
+        if (e.Key != Key.V || Keyboard.Modifiers != ModifierKeys.Control || !IsPixelPaintSelected || !_runningState.GetIdle())
         {
             return;
         }
@@ -3122,7 +3111,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintPreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
-        if (PixelPaintParametersLocked || _pixelPaintSourceImage == null)
+        if (!_runningState.GetIdle() || _pixelPaintSourceImage == null)
         {
             return;
         }
@@ -3142,7 +3131,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (PixelPaintParametersLocked || _pixelPaintSourceImage == null)
+        if (!_runningState.GetIdle() || _pixelPaintSourceImage == null)
         {
             return;
         }
@@ -3160,7 +3149,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintPreviewMouseMove(object sender, MouseEventArgs e)
     {
-        if (_pixelPaintDragStart is null || PixelPaintParametersLocked)
+        if (_pixelPaintDragStart is null || !_runningState.GetIdle())
         {
             return;
         }
@@ -3195,7 +3184,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintResetView()
     {
-        if (PixelPaintParametersLocked)
+        if (!_runningState.GetIdle())
         {
             return;
         }
@@ -3206,7 +3195,7 @@ public class ToolboxViewModel : Screen
 
     public void PixelPaintResetParameters()
     {
-        if (PixelPaintParametersLocked)
+        if (!_runningState.GetIdle())
         {
             return;
         }
@@ -3256,7 +3245,7 @@ public class ToolboxViewModel : Screen
 
     private void ReconvertPixelPaint()
     {
-        if (PixelPaintParametersLocked || _pixelPaintSourceImage == null)
+        if (!_runningState.GetIdle() || _pixelPaintSourceImage == null)
         {
             return;
         }
@@ -3342,66 +3331,88 @@ public class ToolboxViewModel : Screen
             return;
         }
 
-        var isPixelPaint = IsPixelPaintSelected;
-        if (isPixelPaint && (_pixelPaintResult == null || _pixelPaintResult.Groups.Count == 0))
+        if (!CheckSelectedMiniGameReady())
         {
-            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("MiniGame@PixelPaint@NeedImage"), UiLogColor.Warning);
             return;
         }
 
         Instances.TaskQueueViewModel.ClearLog();
 
         _runningState.BeginRun(RunOwner.MiniGame);
-        if (isPixelPaint)
-        {
-            PixelPaintParametersLocked = true;
-        }
 
         string errMsg = string.Empty;
-        bool caught = await Task.Run(() => Instances.AsstProxy.AsstConnect(ref errMsg));
+        var caught = await Task.Run(() => Instances.AsstProxy.AsstConnect(ref errMsg));
         if (!caught)
         {
             Instances.TaskQueueViewModel.AddLog(errMsg, UiLogColor.Error);
             _runningState.SetIdle(true);
-            PixelPaintParametersLocked = false;
             return;
         }
 
         if (_runningState.GetStopping())
         {
             Instances.TaskQueueViewModel.SetStopped();
-            PixelPaintParametersLocked = false;
             return;
         }
 
-        if (isPixelPaint)
-        {
-            var groups = _pixelPaintResult!.Groups;
-            caught = Instances.AsstProxy.AsstPixelPaint(groups, PixelPaintSwipeEnabled, PixelPaintGridDelay);
-            if (caught)
-            {
-                Instances.TaskQueueViewModel.AddLog(
-                    string.Format(
-                        LocalizationHelper.GetString("MiniGame@PixelPaint@StartLog"),
-                        groups.Sum(g => g.Points.Count),
-                        groups.Count),
-                    UiLogColor.Info);
-            }
-        }
-        else
-        {
-            caught = Instances.AsstProxy.AsstMiniGame(GetMiniGameTask(), MiniGameUseNormalToken);
-        }
-
+        caught = StartSelectedMiniGame();
         if (!caught)
         {
             _runningState.SetIdle(true);
-            PixelPaintParametersLocked = false;
         }
         else
         {
             AchievementTrackerHelper.Instance.Unlock(AchievementIds.SlackingOff);
         }
+    }
+
+    /// <summary>校验选中任务的前置条件，不满足时已输出日志。</summary>
+    /// <returns>是否可以启动。</returns>
+    private bool CheckSelectedMiniGameReady()
+    {
+        if (IsPixelPaintSelected && (_pixelPaintResult == null || _pixelPaintResult.Groups.Count == 0))
+        {
+            Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("MiniGame@PixelPaint@NeedImage"), UiLogColor.Warning);
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>按选中任务分派对应的启动入口。新增带参数任务在此补一个分支。</summary>
+    /// <returns>任务是否成功提交。</returns>
+    private bool StartSelectedMiniGame()
+    {
+        if (IsPixelPaintSelected)
+        {
+            return StartPixelPaint();
+        }
+
+        if (IsAutoRaisePotentialSelected)
+        {
+            return Instances.AsstProxy.AsstAutoRaisePotential(MiniGameUseNormalToken);
+        }
+
+        return Instances.AsstProxy.AsstMiniGame(GetMiniGameTask());
+    }
+
+    /// <summary>像素画启动：提交分组点列，成功时输出统计日志。</summary>
+    /// <returns>任务是否成功提交。</returns>
+    private bool StartPixelPaint()
+    {
+        var groups = _pixelPaintResult!.Groups;
+        var caught = Instances.AsstProxy.AsstPixelPaint(groups, PixelPaintSwipeEnabled, PixelPaintGridDelay);
+        if (caught)
+        {
+            Instances.TaskQueueViewModel.AddLog(
+                string.Format(
+                    LocalizationHelper.GetString("MiniGame@PixelPaint@StartLog"),
+                    groups.Sum(g => g.Points.Count),
+                    groups.Count),
+                UiLogColor.Info);
+        }
+
+        return caught;
     }
 
     #endregion
