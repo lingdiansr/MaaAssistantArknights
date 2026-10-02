@@ -750,6 +750,13 @@ D:\
     <system:String x:Key="CreditFightWhenOF-1Warning">當 ｢{key=Fight}｣ 任務關卡列表中已包含 ｢{key=DefaultStage}｣ 時， ｢{key=Mall}｣ 任務將不再借助戰打一把 OF-1。任務名稱: {0} (序號{1}), 關卡序號 {2}</system:String>
     <system:String x:Key="HighPriority">優先購買（子字串即可，分號分隔）</system:String>
     <system:String x:Key="Blacklist">黑名單（子字串即可，分號分隔）</system:String>
+    <system:String x:Key="MiniGame@EventShop@BlacklistTip">勾選的商品將加入黑名單</system:String>
+    <system:String x:Key="MiniGame@EventShop@CommonItemsTip">下拉選單選擇常用商品</system:String>
+    <system:String x:Key="MiniGame@EventShop@DataSupplementInstrument">數據增補儀</system:String>
+    <system:String x:Key="MiniGame@EventShop@DataSupplementStick">數據增補條</system:String>
+    <system:String x:Key="MiniGame@EventShop@Lmd">龍門幣</system:String>
+    <system:String x:Key="MiniGame@EventShop@FurniturePart">傢俱零件</system:String>
+    <system:String x:Key="MiniGame@EventShop@Other">其他自訂商品</system:String>
     <system:String x:Key="HighPriorityDefault">招聘許可</system:String>
     <system:String x:Key="BlacklistDefault">碳;傢俱;加急許可</system:String>
     <system:String x:Key="Drink">要來一杯美酒嗎🍷？博士</system:String>
@@ -972,6 +979,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="Hibernate">休眠</system:String>
     <system:String x:Key="HibernateTip">需要在 Windows 電源選項中啟用休眠功能，否則該功能無效。</system:String>
     <system:String x:Key="Sleep">睡眠</system:String>
+    <system:String x:Key="LockScreen">鎖定螢幕</system:String>
     <system:String x:Key="Shutdown">關機</system:String>
     <system:String x:Key="Once">僅當次*</system:String>
     <system:String x:Key="PostActionOnceTip" xml:space="preserve">勾選後將不儲存選項變更，下次 MAA 啟動或 {key=LinkStart} 後將復原
@@ -981,7 +989,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="SkipPostActionOnErrorTip">勾選後，若任務清單中有一個或多個任務出錯，將跳過以上全部動作。</system:String>
     <system:String x:Key="PostActionSkippedDueToError">任務出錯，已跳過完成後動作</system:String>
     <system:String x:Key="IfNoOtherMaa">無其他 MAA 執行時</system:String>
-    <system:String x:Key="IfNoOtherMaaTip">勾選後，僅當沒有其他 MAA 實例在執行時，才會執行睡眠/休眠/關機</system:String>
+    <system:String x:Key="IfNoOtherMaaTip">勾選後，僅當沒有其他 MAA 實例在執行時，才會執行鎖定螢幕/睡眠/休眠/關機</system:String>
     <system:String x:Key="BackToAndroidHome">返回模擬器主畫面</system:String>
     <system:String x:Key="LinkStart">Link Start!</system:String>
     <system:String x:Key="Stop">停止</system:String>
@@ -1136,6 +1144,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="SetSuccessfully">設定成功</system:String>
     <system:String x:Key="SetFailed">設定失敗</system:String>
     <system:String x:Key="CloseArknightsFailed">遊戲關閉失敗</system:String>
+    <system:String x:Key="LockScreenFailed">鎖定螢幕失敗</system:String>
+    <system:String x:Key="LockScreenTip">任務已完成，即將鎖定螢幕</system:String>
     <system:String x:Key="ExitEmulatorFailed">模擬器關閉失敗</system:String>
     <system:String x:Key="AboutToShutdown">已執行完畢，即將關機，是否取消？</system:String>
     <system:String x:Key="ShutdownPrompt">提示</system:String>

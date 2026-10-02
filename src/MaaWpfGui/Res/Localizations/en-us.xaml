@@ -751,6 +751,13 @@ Please do not check it when the stage OF-1 is not unlocked.</system:String>
     <system:String x:Key="CreditFightWhenOF-1Warning">A ｢{key=Fight}｣ task has ｢{key=DefaultStage}｣ in its stage list, ｢{key=Mall}｣ task will skip the Combat with Support Unit in OF-1. Task: {0} (index: {1}), Stage index in list: {2}</system:String>
     <system:String x:Key="HighPriority">Whitelist (split by semicolon)</system:String>
     <system:String x:Key="Blacklist">Blacklist (split by semicolon)</system:String>
+    <system:String x:Key="MiniGame@EventShop@BlacklistTip">Checked items will be added to the blacklist</system:String>
+    <system:String x:Key="MiniGame@EventShop@CommonItemsTip">Select common items from the dropdown</system:String>
+    <system:String x:Key="MiniGame@EventShop@DataSupplementInstrument">Data Supplement Instrument</system:String>
+    <system:String x:Key="MiniGame@EventShop@DataSupplementStick">Data Supplement Stick</system:String>
+    <system:String x:Key="MiniGame@EventShop@Lmd">LMD</system:String>
+    <system:String x:Key="MiniGame@EventShop@FurniturePart">Furniture Part</system:String>
+    <system:String x:Key="MiniGame@EventShop@Other">Other custom items</system:String>
     <system:String x:Key="HighPriorityDefault">Recruitment Permit</system:String>
     <system:String x:Key="BlacklistDefault">Carbon;Furniture Part;Expedited Plan</system:String>
     <system:String x:Key="Drink">Would you like a drink🍷? doctor</system:String>
@@ -972,6 +979,7 @@ If the game is launched in portrait mode and then switched to landscape, it may 
     <system:String x:Key="Hibernate">Hibernate</system:String>
     <system:String x:Key="HibernateTip">You need to enable the hibernate feature in Windows power options, otherwise this feature will be invalid.</system:String>
     <system:String x:Key="Sleep">Sleep</system:String>
+    <system:String x:Key="LockScreen">Lock Screen</system:String>
     <system:String x:Key="Shutdown">Shutdown</system:String>
     <system:String x:Key="Once">Only this time*</system:String>
     <system:String x:Key="PostActionOnceTip" xml:space="preserve">When checked, option changes will not be saved and will revert the next time MAA starts or after {key=LinkStart}
@@ -981,7 +989,7 @@ Right-clicking other options will check/uncheck this option simultaneously</syst
     <system:String x:Key="SkipPostActionOnErrorTip">When checked, all actions above will be skipped if one or more tasks in the task list failed.</system:String>
     <system:String x:Key="PostActionSkippedDueToError">Post actions skipped, due to error tasks</system:String>
     <system:String x:Key="IfNoOtherMaa">If no other running MAA</system:String>
-    <system:String x:Key="IfNoOtherMaaTip">When checked, Sleep/Hibernate/Shutdown will only run when no other MAA instance is running</system:String>
+    <system:String x:Key="IfNoOtherMaaTip">When checked, Lock Screen/Sleep/Hibernate/Shutdown will only run when no other MAA instance is running</system:String>
     <system:String x:Key="BackToAndroidHome">Return to home screen of emulator</system:String>
     <system:String x:Key="LinkStart">Link Start!</system:String>
     <system:String x:Key="Stop">Stop</system:String>
@@ -1136,6 +1144,8 @@ Do not adjust the proxy multiplier setting in the game</system:String>
     <system:String x:Key="SetSuccessfully">Set successfully</system:String>
     <system:String x:Key="SetFailed">Setting failed</system:String>
     <system:String x:Key="CloseArknightsFailed">Shutdown Arknights failed</system:String>
+    <system:String x:Key="LockScreenFailed">Failed to lock the screen</system:String>
+    <system:String x:Key="LockScreenTip">Tasks completed, about to lock the screen</system:String>
     <system:String x:Key="ExitEmulatorFailed">Emulator shutdown failed</system:String>
     <system:String x:Key="AboutToShutdown">All tasks have been completed: shutting down. Do you want to cancel?</system:String>
     <system:String x:Key="ShutdownPrompt">Tip</system:String>

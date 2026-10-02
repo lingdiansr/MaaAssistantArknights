@@ -1,6 +1,6 @@
 // <copyright file="TaskQueueViewModel.cs" company="MaaAssistantArknights">
 // Part of the MaaWpfGui project, maintained by the MaaAssistantArknights team (Maa Team)
-// Copyright (C) 2021-2025 MaaAssistantArknights Contributors
+// Copyright (C) 2021-2026 MaaAssistantArknights Contributors
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License v3.0 only as published by
@@ -558,9 +558,21 @@ public class TaskQueueViewModel : Screen
             await Task.Delay(1000);
         }
 
-        if (actions.ExitSelf && !(actions.Hibernate || actions.Shutdown || actions.Sleep))
+        if (actions.ExitSelf && !(actions.LockScreen || actions.Hibernate || actions.Shutdown || actions.Sleep))
         {
             Bootstrapper.Shutdown();
+        }
+
+        if (actions.LockScreen)
+        {
+            if (actions.IfNoOtherMaa && HasOtherMaa())
+            {
+                Bootstrapper.Shutdown();
+            }
+            else
+            {
+                await DoLockScreen();
+            }
         }
 
         if (actions.Hibernate)
@@ -619,6 +631,25 @@ public class TaskQueueViewModel : Screen
             if (!EmulatorHelper.KillEmulatorModeSwitcher())
             {
                 AddLog(LocalizationHelper.GetString("ExitEmulatorFailed"), UiLogColor.Error);
+            }
+        }
+
+        async Task DoLockScreen()
+        {
+            await Execute.OnUIThreadAsync(() => Instances.MainWindowManager?.Show());
+            if (await TimerCanceledAsync(
+                    LocalizationHelper.GetString("LockScreen"),
+                    LocalizationHelper.GetString("LockScreenTip"),
+                    LocalizationHelper.GetString("Cancel"),
+                    60))
+            {
+                return;
+            }
+
+            _logger.Information("Lock screen not canceled, proceeding to lock workstation.");
+            if (!PowerManagement.LockScreen())
+            {
+                AddLog(LocalizationHelper.GetString("LockScreenFailed"), UiLogColor.Error);
             }
         }
 

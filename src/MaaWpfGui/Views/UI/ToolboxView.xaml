@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
     xmlns:controls="clr-namespace:MaaWpfGui.Styles.Controls"
+    xmlns:converters="clr-namespace:MaaWpfGui.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:helper="clr-namespace:MaaWpfGui.Helper"
@@ -18,6 +19,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
+        <converters:ItemImageConverter x:Key="ItemImageConverter" />
         <!--  头像卡片的 12px 专精品字圆标：按 0.5 像素对齐网格直绘，勿改值或换回 Viewbox 缩放（小圆会渲染成椭圆）  -->
         <DataTemplate x:Key="OperMasteryBadgeLargeTemplate">
             <Canvas
@@ -1558,10 +1560,9 @@
 
                             <!--  自动提升潜能  -->
                             <Grid Grid.Row="0" Visibility="{c:Binding 'SelectedMiniGameItem.IsAutoRaisePotential'}">
-                                <CheckBox
-                                    Margin="0,10,0,0"
-                                    Content="{DynamicResource MiniGame@AutoRaisePotential@UseNormalToken}"
-                                    IsChecked="{Binding MiniGameUseNormalToken}" />
+                                <CheckBox Margin="0,10,0,0" IsChecked="{Binding MiniGameUseNormalToken}">
+                                    <TextBlock Text="{DynamicResource MiniGame@AutoRaisePotential@UseNormalToken}" TextWrapping="Wrap" />
+                                </CheckBox>
                             </Grid>
 
                             <!--  缺口材料合成  -->
@@ -1583,6 +1584,51 @@
                                     </controls:TooltipBlock>
                                 </StackPanel>
                             </Grid>
+
+                            <!--  活动商店  -->
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="0"
+                                Visibility="{c:Binding 'SelectedMiniGameItem.IsEventShop'}">
+                                <controls:TextBlock
+                                    Margin="0,0,0,8"
+                                    HorizontalAlignment="Left"
+                                    Text="{DynamicResource MiniGame@EventShop@BlacklistTip}"
+                                    TextWrapping="Wrap" />
+                                <hc:CheckComboBox
+                                    MinWidth="180"
+                                    HorizontalAlignment="Stretch"
+                                    hc:InfoElement.Placeholder="{DynamicResource MiniGame@EventShop@CommonItemsTip}"
+                                    hc:ListBoxAttach.SelectedItems="{Binding EventShopBlackListSelectedItems}"
+                                    ItemsSource="{Binding EventShopBlackListItems}"
+                                    SelectionMode="Multiple">
+                                    <hc:CheckComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image
+                                                    Width="18"
+                                                    Height="18"
+                                                    VerticalAlignment="Center"
+                                                    Source="{Binding Value, Converter={StaticResource ItemImageConverter}}" />
+                                                <TextBlock
+                                                    Margin="4,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding Display}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </hc:CheckComboBox.ItemTemplate>
+                                </hc:CheckComboBox>
+                                <CheckBox
+                                    Margin="0,8,0,0"
+                                    Content="{DynamicResource MiniGame@EventShop@Other}"
+                                    IsChecked="{Binding EventShopBlackListOther}" />
+                                <TextBox
+                                    Margin="0,8,0,0"
+                                    hc:InfoElement.Title="{DynamicResource Blacklist}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding EventShopBlackList, UpdateSourceTrigger=PropertyChanged}"
+                                    Visibility="{c:Binding EventShopBlackListOther}" />
+                            </StackPanel>
 
                             <Viewbox
                                 Grid.Row="1"
