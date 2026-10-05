@@ -1106,12 +1106,55 @@ public class TaskQueueViewModel : Screen
         return (timeToStart, timeToChangeConfig, configIndex);
     }
 
+    private static void HandleScheduledStartNotifications(DateTime currentTime)
+    {
+        var settings = SettingsViewModel.TimerSettings;
+        var notifyDesktop = settings.NotifyBeforeScheduledStart;
+        var notifyExternal = SettingsViewModel.ExternalNotificationSettings.ExternalNotificationSendBeforeScheduledStart;
+        if (!notifyDesktop && !notifyExternal)
+        {
+            return;
+        }
+
+        // 比较提前后的时刻，兼容跨午夜的定时任务。
+        var startTime = currentTime.AddMinutes(settings.ScheduledStartNotificationMinutes);
+        for (int i = 0; i < settings.TimerList.Count; ++i)
+        {
+            var timer = settings.TimerList[i];
+            if (timer.IsEnabled == false || timer.Hour != startTime.Hour || timer.Minute != startTime.Minute)
+            {
+                continue;
+            }
+
+            var title = LocalizationHelper.GetString("ScheduledStartNotificationTitle");
+            var content = string.Format(
+                LocalizationHelper.GetString("ScheduledStartNotificationContent"),
+                i + 1,
+                startTime.ToString("HH:mm"),
+                settings.ScheduledStartNotificationMinutes);
+
+            _logger.Information("Scheduled start notification: Timer Index: {TimerIndex}, Start Time: {StartTime}", i, startTime);
+            if (notifyDesktop)
+            {
+                using var toast = new ToastNotification(title);
+                toast.AppendContentText(content).Show();
+            }
+
+            if (notifyExternal)
+            {
+                ExternalNotificationService.Send(title, content);
+            }
+        }
+    }
+
     private async Task HandleTimerLogic(DateTime currentTime)
     {
         if (!_runningState.CanInterrupt() && !SettingsViewModel.TimerSettings.ForceScheduledStart)
         {
             return;
         }
+
+        await Execute.OnUIThreadAsync(() => HandleScheduledStartNotifications(currentTime));
 
         var (timeToStart, timeToChangeConfig, timerIndex) = CheckTimers(currentTime);
 
@@ -2081,11 +2124,29 @@ public class TaskQueueViewModel : Screen
         ResetTaskSelection();
     }
 
-    private async Task<bool> ConnectToEmulator()
+    internal async Task<bool> ConnectToConnectionTarget()
     {
         string errMsg = string.Empty;
         bool connected = await Task.Run(() => Instances.AsstProxy.AsstConnect(ref errMsg));
 
+        if (!connected
+            && SettingsViewModel.ConnectSettings.IsPCConnectConfig
+            && SettingsViewModel.ConnectSettings.RetryPcClientOnDisconnected)
+        {
+            AddLog(LocalizationHelper.GetString("ConnectFailed") + "\n" + LocalizationHelper.GetString("TryToStartPcClient"));
+
+            await Task.Run(() => SettingsViewModel.StartSettings.TryToStartPcClient());
+
+            if (_runningState.GetStopping())
+            {
+                SetStopped();
+                return false;
+            }
+
+            connected = await Task.Run(() => Instances.AsstProxy.AsstConnect(ref errMsg));
+        }
+
+        // Window attachment does not use ADB recovery.
         if (!connected && SettingsViewModel.ConnectSettings.IsPCConnectConfig)
         {
             AddLog(errMsg, UiLogColor.Error);
@@ -2277,15 +2338,15 @@ public class TaskQueueViewModel : Screen
             return;
         }
 
-        _taskStartTime = DateTime.Now;
-        ClearLog();
-
         // 拦截判定收敛于 Bootstrapper.TryGetTaskBlockReason；热键/托盘/远程等入口汇入于此（启动自动运行在 AsstProxy 另有前置检查）
         if (Bootstrapper.TryGetTaskBlockReason() is { } reason)
         {
             AddLog(reason, UiLogColor.Error);
             return;
         }
+
+        _taskStartTime = DateTime.Now;
+        ClearLog();
 
         Instances.OverlayViewModel.LogItemsSource = LogItemViewModels;
 
@@ -2351,7 +2412,7 @@ public class TaskQueueViewModel : Screen
             return;
         }
 
-        if (!await ConnectToEmulator())
+        if (!await ConnectToConnectionTarget())
         {
             return;
         }

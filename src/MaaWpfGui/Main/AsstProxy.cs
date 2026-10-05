@@ -76,6 +76,7 @@ public class AsstProxy
 {
     private readonly RunningState _runningState;
     private static readonly ILogger _logger = Log.ForContext<AsstProxy>();
+    private readonly Dictionary<AsstTaskId, long> _taskChainStartTimes = [];
 
     public DateTimeOffset StartTaskTime { get; set; }
 
@@ -692,10 +693,10 @@ public class AsstProxy
             }
         }
 
-        _runningState.SetInit(true);
         AsstSetInstanceOption(InstanceOptionKey.TouchMode, SettingsViewModel.ConnectSettings.TouchMode.ToCustomString());
         AsstSetInstanceOption(InstanceOptionKey.DeploymentWithPause, SettingsViewModel.GameSettings.DeploymentWithPause ? "1" : "0");
         AsstSetInstanceOption(InstanceOptionKey.AdbLiteEnabled, SettingsViewModel.ConnectSettings.AdbLiteEnabled ? "1" : "0");
+        _runningState.SetInit(true);
 
         // Core 资源损坏待修复：修复完成重启前任务不可启动，也不进入启动自动运行
         if (Bootstrapper.IsResourceBroken)
@@ -723,21 +724,26 @@ public class AsstProxy
         Execute.OnUIThread(
             async () => {
                 bool runDirectly = SettingsViewModel.StartSettings.RunDirectly;
-                bool openEmulator = SettingsViewModel.StartSettings.OpenEmulatorAfterLaunch;
+                bool isPcConnection = SettingsViewModel.ConnectSettings.IsPCConnectConfig;
+                bool openConnectionTarget = isPcConnection
+                    ? SettingsViewModel.StartSettings.OpenPcClientAfterLaunch
+                    : SettingsViewModel.StartSettings.OpenEmulatorAfterLaunch;
 
-                // 更新重启链写入的 --skip-startup-auto-run：跳过启动后自动开任务/模拟器
+                // 更新重启链写入的 --skip-startup-auto-run：跳过启动后自动开任务/连接目标
                 if (Bootstrapper.ShouldSkipStartupAutoRun)
                 {
                     _logger.Information("Skip startup auto-run due to {Arg}", Bootstrapper.SkipStartupAutoRunArg);
                     return;
                 }
 
-                // 会自动开任务或模拟器时，先给 10 秒反悔倒计时（不强制拉起主窗口）
-                if (runDirectly || openEmulator)
+                // 会自动开任务或连接目标时，先给 10 秒反悔倒计时（不强制拉起主窗口）
+                if (runDirectly || openConnectionTarget)
                 {
-                    string tipKey = (runDirectly, openEmulator) switch {
-                        (true, true) => "StartupAutoRunCountdownTaskAndEmulator",
-                        (true, false) => "StartupAutoRunCountdownTaskOnly",
+                    string tipKey = (runDirectly, openConnectionTarget, isPcConnection) switch {
+                        (true, true, true) => "StartupAutoRunCountdownTaskAndPcClient",
+                        (true, true, false) => "StartupAutoRunCountdownTaskAndEmulator",
+                        (true, false, _) => "StartupAutoRunCountdownTaskOnly",
+                        (_, _, true) => "StartupAutoRunCountdownPcClientOnly",
                         _ => "StartupAutoRunCountdownEmulatorOnly",
                     };
 
@@ -757,7 +763,7 @@ public class AsstProxy
                     _runningState.BeginRun(RunOwner.TaskQueue);
                 }
 
-                await Task.Run(() => SettingsViewModel.StartSettings.TryToStartEmulator(true));
+                await Task.Run(() => SettingsViewModel.StartSettings.TryToStartConnectionTarget(true));
 
                 // 一般是点了“停止”按钮了
                 if (_runningState.GetStopping())
@@ -1362,10 +1368,12 @@ public class AsstProxy
 
                 // UpdateTaskStatus(taskId, TaskStatus.Completed);
                 _tasksStatus.Clear();
+                _taskChainStartTimes.Clear();
                 break;
 
             case AsstMsg.TaskChainError:
                 {
+                    _taskChainStartTimes.Remove(taskId);
                     UpdateTaskStatus(taskId, TaskStatus.Error);
                     _tasksStatus.TryGetValue(taskId, out var value);
 
@@ -1407,6 +1415,7 @@ public class AsstProxy
 
             case AsstMsg.TaskChainStart:
                 {
+                    _taskChainStartTimes[taskId] = Stopwatch.GetTimestamp();
                     var taskIndex = Instances.TaskQueueViewModel.TaskItemViewModels.FirstOrDefault(i => i.TaskIds.Contains(taskId))?.Index ?? -1;
                     var task = taskIndex >= 0 && taskIndex < ConfigFactory.CurrentConfig.TaskQueue.Count
                         ? ConfigFactory.CurrentConfig.TaskQueue[taskIndex]
@@ -1427,6 +1436,10 @@ public class AsstProxy
 
             case AsstMsg.TaskChainCompleted:
                 {
+                    var completionLog = LocalizationHelper.GetString("CompleteTask");
+                    var taskTimeLog = _taskChainStartTimes.Remove(taskId, out var startTime)
+                        ? LocalizationHelper.GetStringFormat("TaskTime", Stopwatch.GetElapsedTime(startTime).ToString(@"h\h\ m\m\ s\s"))
+                        : string.Empty;
                     UpdateTaskStatus(taskId, TaskStatus.Completed);
 
                     var taskIndex = Instances.TaskQueueViewModel.TaskItemViewModels.FirstOrDefault(i => i.TaskIds.Contains(taskId))?.Index ?? -1;
@@ -1447,10 +1460,11 @@ public class AsstProxy
 
                     var taskName = task?.NameOrTaskType ?? $"({LocalizationHelper.GetString(taskChain)})";
                     taskName += GetMultiChainTaskNameSuffix(task, taskChain, taskId);
+                    completionLog += taskName + taskTimeLog;
                     if (taskChain == "Fight" && FightSetting.SanityReport is not null)
                     {
                         var sanityLog = "\n" + LocalizationHelper.GetStringFormat("CurrentSanity", FightSetting.SanityReport.SanityCurrent, FightSetting.SanityReport.SanityMax);
-                        Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("CompleteTask") + taskName + sanityLog);
+                        Instances.TaskQueueViewModel.AddLog(completionLog + sanityLog);
 
                         if (FightSetting.SanityReport.SanityCurrent == 0)
                         {
@@ -1459,7 +1473,7 @@ public class AsstProxy
                     }
                     else
                     {
-                        Instances.TaskQueueViewModel.AddLog(LocalizationHelper.GetString("CompleteTask") + taskName);
+                        Instances.TaskQueueViewModel.AddLog(completionLog);
                     }
 
                     _logger.Information("Completed Task Chain: {TaskChain}, Task ID: {TaskId}", taskChain, taskId);
@@ -1523,6 +1537,7 @@ public class AsstProxy
                 var failedTaskNames = Instances.TaskQueueViewModel.TaskItemViewModels.Where(i => i.StatusDisplay == TaskItemStatus.Error).Select(i => i.Name).ToArray();
                 bool hasTaskErrors = failedTaskNames.Length > 0;
                 _tasksStatus.Clear();
+                _taskChainStartTimes.Clear();
 
                 Instances.TaskQueueViewModel.ResetAllTemporaryVariable();
                 _runningState.SetIdle(true);
@@ -3202,10 +3217,14 @@ public class AsstProxy
         var mouseMethod = (ulong)win32Extra.MouseMethod;
         var keyboardMethod = (ulong)win32Extra.KeyboardMethod;
 
+        // Connecting Core takes screenshots that can already move or transparently restore the window.
+        GameAudioMuteManager.CaptureWindowPlacement(hwnd);
         bool ret = AsstAttachWindow(GetHandle(), hwnd, screencapMethod, mouseMethod, keyboardMethod);
 
         if (!ret)
         {
+            GameAudioMuteManager.Restore();
+
             // 等待回调完成以获取详细错误信息
             System.Threading.Thread.Sleep(1000);
 

@@ -163,9 +163,10 @@ bool asst::OperProgressProcessTask::_run()
                 if (arr[i] <= 0) {
                     continue;
                 }
-                auto skill_ret = execute_mastery(target.role, target.name, i + 1, arr[i]);
+                int training_level = 0;
+                auto skill_ret = execute_mastery(target.role, target.name, i + 1, arr[i], training_level);
                 std::array<int, 3> skill_levels { 0, 0, 0 };
-                skill_levels[i] = arr[i];
+                skill_levels[i] = skill_ret == ResultDetail::Completed ? training_level : arr[i];
                 report_skill_result(target.role, target.name, skill_ret, skill_levels);
                 if (skill_ret == ResultDetail::TrainingRoomBusy || skill_ret == ResultDetail::Completed) {
                     training_room_busy = true;
@@ -485,7 +486,8 @@ asst::OperProgressProcessTask::ResultDetail asst::OperProgressProcessTask::execu
     battle::Role role,
     std::string_view name,
     int skill,
-    int specialization)
+    int specialization,
+    int& training_level)
 {
     // 档案页技能等级 OCR、精英阶段与专精图标识别共用一张截图
     const cv::Mat& image = ctrler()->get_image();
@@ -519,7 +521,7 @@ asst::OperProgressProcessTask::ResultDetail asst::OperProgressProcessTask::execu
     }
 
     // 本次将启动的专精等级,导师评分用的应该是这个等级,而不是计划目标等级。
-    int training_level = master_current + 1;
+    training_level = master_current + 1;
 
     // 从干员档案页的训练按钮直接进入训练室专精页面,保留当前目标干员的上下文。
     if (!run_task("OperProgress@MasteryPageEnter")) {
@@ -557,7 +559,7 @@ asst::OperProgressProcessTask::ResultDetail asst::OperProgressProcessTask::execu
     if (!run_task("BattleQuickFormationConfirm") || !run_task("InfrastTrainingMasteryPage")) {
         return ResultDetail::RecognitionFailed;
     }
-    if (run_task("OperProgress@MasterySelectSkillMaxAlready" + std::to_string(skill))) {
+    if (run_task("OperProgress@MasterySelectSkillMaxAlready" + std::to_string(skill), 2)) {
         return ResultDetail::AlreadySatisfied;
     }
 
@@ -1169,7 +1171,7 @@ bool asst::OperProgressProcessTask::manufacture_dual_chip(battle::Role role, con
 
     int catalyst_owned = shortfall;
     int catalyst_stock = shortfall;
-    if (run_task("OperProgress@MfgPage")) {
+    if (run_task("OperProgress@MfgPage", 2)) {
         // 因为没有对紫色芯片数量做识别,如果是没有紫色芯片,就会每次都买胶水
         // 没识别出来的时候就不买芯片(强制识别结果为shortfall)
         catalyst_owned = ocr_number("OperProgress@MfgCatalystCount").value_or(shortfall);
@@ -1177,7 +1179,7 @@ bool asst::OperProgressProcessTask::manufacture_dual_chip(battle::Role role, con
     }
     // 点击芯片后会若没有紫色芯片或者胶水,这时候无法跳转,还停留在配方选择页
     // 助剂数量与库存识别:出现红色视为0
-    else if (run_task("ChooseChipTabSelected") && run_task("OperProgress@MfgCatalystMissing")) {
+    else if (run_task("ChooseChipTabSelected") && run_task("OperProgress@MfgCatalystMissing", 2)) {
         catalyst_owned = 0;
         catalyst_stock = 0;
     }
