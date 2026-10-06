@@ -234,6 +234,9 @@ To customize rotation schedules, please use ｢{key=InfrastModeCustom}｣.</syst
     <system:String x:Key="General">General Mode</system:String>
     <system:String x:Key="BlueStacks">BlueStacks</system:String>
     <system:String x:Key="MuMuEmulator12">MuMu Emulator</system:String>
+    <system:String x:Key="MuMuArm">MuMu Player (Windows ARM)</system:String>
+    <system:String x:Key="MuMuArmDetectAndTest">Detect and test</system:String>
+    <system:String x:Key="MuMuArmConnectionNotReady">Unable to read the MuMu ARM ADB address. Wait for the emulator to finish starting and retry, or disable auto detection and enter the connection address manually.</system:String>
     <system:String x:Key="LDPlayer">LD Player</system:String>
     <system:String x:Key="AVD">Android Virtual Device (AVD)</system:String>
     <system:String x:Key="Androws">Androws</system:String>
@@ -1919,6 +1922,7 @@ Right-click to clear inactive jobs</system:String>
     <system:String x:Key="AttachWindowMultipleFound">Found {0} "{1}" windows, using the first one</system:String>
     <system:String x:Key="AttachWindowFound">Found window "{0}"</system:String>
     <system:String x:Key="Administrator">Admin</system:String>
+    <system:String x:Key="UiPreviewMode">UI Preview</system:String>
     <system:String x:Key="AttachWindowNeedAdmin">PC connection requires administrator privileges.\nRestart MAA as administrator?</system:String>
     <system:String x:Key="RestartingAsAdmin">Restarting as administrator…</system:String>
     <system:String x:Key="RestartAsAdminFailed">Please run MAA as administrator manually.</system:String>

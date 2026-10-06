@@ -234,6 +234,9 @@
     <system:String x:Key="General">通用模式</system:String>
     <system:String x:Key="BlueStacks">藍疊模擬器</system:String>
     <system:String x:Key="MuMuEmulator12">MuMu 模擬器</system:String>
+    <system:String x:Key="MuMuArm">MuMu 模擬器（Windows ARM）</system:String>
+    <system:String x:Key="MuMuArmDetectAndTest">自動偵測並測試</system:String>
+    <system:String x:Key="MuMuArmConnectionNotReady">無法讀取 MuMu ARM 的 ADB 位址。請等待模擬器啟動完成後重試，或關閉自動偵測並手動填入連線位址。</system:String>
     <system:String x:Key="LDPlayer">雷電模擬器</system:String>
     <system:String x:Key="AVD">Android 虛擬裝置（AVD）</system:String>
     <system:String x:Key="Androws">應用寶模擬器</system:String>
@@ -1917,6 +1920,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="AttachWindowMultipleFound">找到 {0} 個 "{1}" 視窗，將使用第一個</system:String>
     <system:String x:Key="AttachWindowFound">找到視窗 "{0}"</system:String>
     <system:String x:Key="Administrator">系統管理員</system:String>
+    <system:String x:Key="UiPreviewMode">UI 預覽</system:String>
     <system:String x:Key="AttachWindowNeedAdmin">PC 端連線需要系統管理員權限。\n是否以系統管理員身分重新啟動 MAA？</system:String>
     <system:String x:Key="RestartingAsAdmin">正在以系統管理員身分重新啟動…</system:String>
     <system:String x:Key="RestartAsAdminFailed">請手動以系統管理員身分執行 MAA</system:String>
