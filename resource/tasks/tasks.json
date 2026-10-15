@@ -967,7 +967,7 @@
     },
     "LoadingText": {
         "algorithm": "OcrDetect",
-        "text": ["正在提交", "反馈至神经"],
+        "text": ["在提交", "至神经"],
         "roi": [700, 600, 300, 120],
         "next": ["LoadingText", "LoadingTextPostDelay"]
     },
@@ -2933,7 +2933,7 @@
     },
     "InfrastReward": {
         "algorithm": "OcrDetect",
-        "text": ["可收获", "订单交付", "员信赖"],
+        "text": ["可收获", "订单交付", "员信赖", "材料产出"],
         "action": "ClickSelf",
         "roi": [0, 600, 800, 118],
         "postDelay": 1000,
@@ -3030,7 +3030,15 @@
         "action": "ClickSelf",
         "roi": [882, 128, 165, 149],
         "postDelay": 1000,
-        "next": ["ReplenishToMaxConfirm", "Stop"]
+        "next": ["ReplenishToMaxConfirm", "ReplenishToMaxConfirmWait"]
+    },
+    "ReplenishToMaxConfirmWait": {
+        "Doc": "｢执行更改?｣ 确认按钮有弹出动画，没等到就直接 Stop 会留下未执行的制造计划，切换设施时被 ｢尚未执行新的制造计划｣ 弹窗卡住；已是最多份数时不会弹出确认，等满次数后 Stop",
+        "algorithm": "JustReturn",
+        "postDelay": 500,
+        "maxTimes": 2,
+        "next": ["ReplenishToMaxConfirm", "ReplenishToMaxConfirmWait"],
+        "exceededNext": ["Stop"]
     },
     "ReplenishToMaxConfirm": {
         "action": "ClickSelf",
@@ -3228,7 +3236,7 @@
     "InfrastOffice": {
         "template": "Office.png",
         "maskRange": [1, 255],
-        "roi": [378, 94, 900, 529],
+        "roi": [378, 94, 900, 586],
         "templThreshold": 0.95
     },
     "InfrastOfficeMini": {
@@ -3239,7 +3247,7 @@
     },
     "InfrastProcessing": {
         "maskRange": [1, 255],
-        "roi": [378, 94, 900, 529],
+        "roi": [378, 94, 900, 586],
         "templThreshold": 0.95
     },
     "InfrastProcessingMini": {
@@ -3257,7 +3265,7 @@
     "InfrastReception": {
         "template": "Reception.png",
         "maskRange": [1, 255],
-        "roi": [378, 94, 900, 529],
+        "roi": [378, 94, 900, 586],
         "templThreshold": 0.95
     },
     "InfrastReceptionMini": {
@@ -3336,7 +3344,7 @@
     "InfrastTraining": {
         "template": "Training.png",
         "maskRange": [1, 255],
-        "roi": [378, 94, 900, 529],
+        "roi": [378, 94, 900, 586],
         "templThreshold": 0.95
     },
     "InfrastTrainingMini": {
@@ -3348,7 +3356,6 @@
     "InfrastRecycle": {
         "template": "Recycle.png",
         "maskRange": [1, 255],
-        "roi_Doc": "回收站位于右列最下方，模板需要更深的检索区域",
         "roi": [378, 94, 900, 586],
         "templThreshold": 0.95
     },
@@ -3616,6 +3623,15 @@
     "InfrastEnterFacility": {
         "algorithm": "JustReturn",
         "postDelay": 2000
+    },
+    "InfrastUnexecutedPlanLeaveConfirm": {
+        "Doc": "上一个设施留有未执行的制造计划时，切换设施会弹出 ｢尚未执行新的制造计划，是否确认离开设施｣ ，点右侧 ✔ 确认离开（放弃未执行的修改）",
+        "algorithm": "OcrDetect",
+        "text": ["尚未执行", "确认离开设施"],
+        "roi": [340, 290, 600, 70],
+        "action": "ClickRect",
+        "specificRect": [760, 465, 160, 55],
+        "postDelay": 1000
     },
     "InfrastFacilityListTabMfg": {
         "template": "FacilityListTabMfg.png",
@@ -4103,6 +4119,33 @@
         "doc": "无论有没有干员在训练都点击进行选择",
         "specificRect": [145, 148, 142, 122],
         "postDelay": 800
+    },
+    "InfrastTrainingAssistantConfirm": {
+        "baseTask": "InfrastDormConfirmButton",
+        "next": [
+            "InfrastTrainingAssistantConfirmWait",
+            "InfrastTrainingAssistantDoubleConfirm",
+            "InfrastTrainingMasteryPage"
+        ],
+        "doc": "训练室协助者确认：复用宿舍确认按钮，确认后沿等待/冲突确认链回到专精页"
+    },
+    "InfrastTrainingAssistantConfirmWait": {
+        "baseTask": "LoadingText",
+        "postDelay": 500,
+        "next": [
+            "InfrastTrainingAssistantConfirmWait",
+            "InfrastTrainingAssistantDoubleConfirm",
+            "InfrastTrainingMasteryPage"
+        ]
+    },
+    "InfrastTrainingAssistantDoubleConfirm": {
+        "baseTask": "InfrastDormDoubleConfirmButton",
+        "template": "InfrastOperConflictConfirm.png",
+        "next": [
+            "InfrastTrainingAssistantConfirmWait",
+            "InfrastTrainingAssistantDoubleConfirm",
+            "InfrastTrainingMasteryPage"
+        ]
     },
     "InfrastTrainingProcessing": {
         "baseTask": "InfrastTrainingIdle",
