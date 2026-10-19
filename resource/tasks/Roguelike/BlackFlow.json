@@ -17,6 +17,21 @@
         "template": "BlackFlow@Roguelike@Recruit.png"
     },
     "BlackFlow@StartExplore@Roguelike@RecruitWithoutButton": {},
+    "BlackFlowReenter@BlackFlow@Roguelike@InventoryCleanupFailed": {
+        "next": ["BlackFlow@Roguelike@RecoveryFailed"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@InventoryCleanupRequired": {
+        "next": ["BlackFlow@Roguelike@RecoveryFailed"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmCompletedDone": {
+        "next": ["BlackFlow@Roguelike@StartAction"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmExceeded": {
+        "next": ["BlackFlow@Roguelike@RecoveryFailed"]
+    },
+    "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmSucceeded": {
+        "next": ["BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirmCompleted"]
+    },
     "BlackFlow@Roguelike@Abandon": {
         "template": "BlackFlow@Roguelike@Abandon.png"
     },
@@ -159,9 +174,11 @@
         "baseTask": "BlackFlow@Roguelike@RecoveryFailed"
     },
     "BlackFlow@Roguelike@CultivateBuyConfirm": {
+        "Doc": "扣款后右上角源石锭逐个滚到余额，16 锭约 0.7 秒才停，等滚动动画完成再回到决策读余额。",
         "template": "BlackFlow@Roguelike@CultivateBuyConfirm.png",
         "roi": [442, 361, 725, 179],
         "action": "ClickSelf",
+        "postDelay": 500,
         "next": ["#self", "BlackFlow@Roguelike@CultivateBuyDecision"]
     },
     "BlackFlow@Roguelike@CultivateBuyConfirm-Enter": {
@@ -246,9 +263,11 @@
         "next": ["BlackFlow@Roguelike@CultivateBuyDecision"]
     },
     "BlackFlow@Roguelike@CultivateRefreshConfirm": {
+        "Doc": "刷新同样扣款，与 CultivateBuyConfirm 一样等源石锭滚动动画完成。",
         "template": "BlackFlow@Roguelike@CultivateRefreshConfirm.png",
         "roi": [751, 409, 483, 157],
         "action": "ClickSelf",
+        "postDelay": 500,
         "next": ["#self", "BlackFlow@Roguelike@CultivateRefreshCompleted"]
     },
     "BlackFlow@Roguelike@CultivateSellAction": {
@@ -1182,10 +1201,17 @@
         "algorithm": "JustReturn",
         "sub": ["BlackFlow@Roguelike@MovementPanelBackClickOnce*2", "BlackFlow@Roguelike@MovementPanelBackClickWait"]
     },
+    "BlackFlow@Roguelike@MovementPanelBackClickLoaded": {
+        "algorithm": "JustReturn"
+    },
     "BlackFlow@Roguelike@MovementPanelBackClickOnce": {
         "algorithm": "JustReturn",
         "action": "ClickRect",
-        "specificRect": [18, 138, 20, 293]
+        "specificRect": [18, 138, 20, 293],
+        "next": [
+            "BlackFlow@Roguelike@MovementPanelBackClickOnce@LoadingText",
+            "BlackFlow@Roguelike@MovementPanelBackClickLoaded"
+        ]
     },
     "BlackFlow@Roguelike@MovementPanelBackClickWait": {
         "algorithm": "JustReturn",
@@ -1881,6 +1907,16 @@
         "Doc": "同样是关藏品弹窗，供 ClickToDrops 与 DropsFlag 继承下来的列表使用。",
         "template": "BlackFlow@Roguelike@CloseCollection.png",
         "roi": [1, 447, 1275, 166]
+    },
+    "BlackFlow@Roguelike@StageEnterBattleAgain": {
+        "Doc": [
+            "编队后返回地图，再次进入战斗时改用前往按钮的模板匹配，避免基任务的固定坐标点到按钮上方",
+            "BlackFlowReenter 前缀用于复用确认和收尾流程，仅调整成功与失败出口，不影响正常选点"
+        ],
+        "algorithm": "JustReturn",
+        "action": "DoNothing",
+        "next": ["BlackFlow@Roguelike@StartAction", "BlackFlowReenter@BlackFlow@Roguelike@MovePreviewConfirm"],
+        "onErrorNext": ["BlackFlow@Roguelike@RecoveryFailed"]
     },
     "BlackFlow@Roguelike@StageTraderInvest-Wallet": {
         "roi": [1136, 15, 124, 43]

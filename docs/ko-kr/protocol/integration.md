@@ -158,44 +158,45 @@ Bilibili 서버: `张三`인 경우 `张三`, `张`, `三` 입력 가능
 - SideStory의 OF-1 / OF-F3
 - 현재 진행 중인 SS 이벤트의 마지막 3개 스테이지. 지원되는 스테이지 목록은 [API](https://api.maa.plus/MaaAssistantArknights/api/gui/StageActivityV2.json)에서 확인 가능. 이벤트 스테이지 내비게이션을 위해 [tasks.json](https://api.maa.plus/MaaAssistantArknights/api/resource/tasks.json) 파일을 추가로 로드해야 함
 - 복각 SS 이벤트. `SSReopen-<스테이지 접두사>`를 입력하면 XX-1 ~ XX-9 스테이지를 한 번에 클리어할 수 있음 (예: `SSReopen-IC`)
-  :::  
-  ::: field medicine  
-  @type number
-  @default 0
-  @optional
-  이성 회복제 최대 사용 개수  
-  :::  
-  ::: field medicine_expire_days  
-  @type number
-  @default 0
-  @optional
-  지정된 일수 이내에 만료되는 이성 회복제를 사용합니다. `0`은 만료 임박 이성 회복제를 사용하지 않음을 의미합니다.  
-  :::  
-  ::: field expiring_medicine  
-  @type number
-  @default 0
-  @optional
-  @deprecated
-  v6.8.0부터 폐기됨. 대신 `medicine_expire_days`를 사용하세요.  
-  :::  
-  ::: field stone  
-  @type number
-  @default 0
-  @optional
-  오리지늄 최대 사용 개수  
-  :::  
-  ::: field times  
-  @type number
-  @default 2147483647
-  @optional
-  전투 횟수  
-  :::  
-  ::: field series  
-  @type number
-  @default 1
-  @optional
-  연속 전투 횟수, -1~10
-  <br>
+
+:::  
+::: field medicine  
+@type number
+@default 0
+@optional
+이성 회복제 최대 사용 개수  
+:::  
+::: field medicine_expire_days  
+@type number
+@default 0
+@optional
+지정된 일수 이내에 만료되는 이성 회복제를 사용합니다. `0`은 만료 임박 이성 회복제를 사용하지 않음을 의미합니다.  
+:::  
+::: field expiring_medicine  
+@type number
+@default 0
+@optional
+@deprecated
+v6.8.0부터 폐기됨. 대신 `medicine_expire_days`를 사용하세요.  
+:::  
+::: field stone  
+@type number
+@default 0
+@optional
+오리지늄 최대 사용 개수  
+:::  
+::: field times  
+@type number
+@default 2147483647
+@optional
+전투 횟수  
+:::  
+::: field series  
+@type number
+@default 1
+@optional
+연속 전투 횟수, -1~10
+<br>
 
 `-1`: 전환 비활성화
 <br>
@@ -1077,6 +1078,14 @@ Sarkaz 테마, Investment 모드, "연금술 분대" 또는 "지원 분대"일 �
 <br>
 `burn` - 최대한 빨리 3층에 도달하여 도착 즉시 재시작합니다  
 <br>
+`ending1` - 레벨 파밍에서 첫 번째 엔딩을 목표로 진행합니다
+<br>
+`ending2` - 레벨 파밍에서 두 번째 엔딩을 목표로 진행합니다
+<br>
+`ending3` - 레벨 파밍에서 세 번째 엔딩을 목표로 진행합니다
+<br>
+이 값들은 레벨 파밍 모드(mode 0)에서만 사용되며, 엔딩 개방 여부는 게임 내 기준을 따릅니다. 엔딩을 지정하면 시작 시 오퍼레이터를 평소와 같이 모집합니다.
+<br>
 모드 30003에서는 이 항목을 읽지 않습니다. 동물 요구가 있으면 준비 탐험은 `baby_animal` 경로로 육성하고, 없으면 최대한 빨리 3층에 도달하며 `investment_enabled`가 true이면 먼저 1층에서 투자합니다. 준비 탐험의 시작 오퍼레이터가 메커니스트이고 `collectible_mode_squad`가 特勤分队(특근 분대) 또는 堡垒战术分队(방어 전술 분대), `roles`가 稳扎稳打(차근차근) 또는 坚不可摧(파괴 불가)이면 재능을 모두 해금한 메커니스트 시작으로 간주하며 구조적 원리를 지참합니다. 준비 탐험은 메커니스트를 모집한 뒤 나머지 시작 모집을 포기하고 필요할 때 구조적 원리로 이동하며, 동물 요구가 없으면 2층에서 이를 사용해 출구로 바로 비행합니다. (기계 번역)  
 :::  
 ::: field blackflow_cultivation_target  
@@ -1187,77 +1196,80 @@ Sarkaz 테마, Investment 모드, "연금술 분대" 또는 "지원 분대"일 �
   <br>
 - `nav_name_override`: 내비게이션용 스테이지명, 선택 사항; 제공되지 않았거나 `null`인 경우 작업 파일에서 자동으로 추론합니다
 - `is_raid`: 하드 모드 전환 여부, 선택 사항, 기본값 false
-  :::  
-  ::: field loop_times  
-  @type number
-  @default 1
-  @optional
-  반복 횟수. 단일 작전 모드(filename 지정)에서만 유효; 이 파라미터 유효 시 set_params는 1회만 실행 가능  
-  :::  
-  ::: field use_sanity_potion  
-  @type boolean
-  @default false
-  @optional
-  이성 부족 시 이성 회복제 사용 허용 여부  
-  :::  
-  ::: field formation  
-  @type boolean
-  @default false
-  @optional
-  자동 편성 수행 여부  
-  :::  
-  ::: field formation_index  
-  @type number
-  @default 0
-  @optional
-  자동 편성 시 사용할 편성 슬롯 번호. `formation`이 true일 때 유효
-  <br>
-  0–4 정수, 0은 현재 편성 선택, 1-4는 제1, 2, 3, 4 편성  
-  :::  
-  ::: field user_additional  
-  @type array`<object>`
-  @default []
-  @optional
-  사용자 정의 추가 오퍼레이터 목록. `formation`이 true일 때 유효
-  <br>
-  각 객체 포함:
-  <br>
+
+:::  
+::: field loop_times  
+@type number
+@default 1
+@optional
+반복 횟수. 단일 작전 모드(filename 지정)에서만 유효; 이 파라미터 유효 시 set_params는 1회만 실행 가능  
+:::  
+::: field use_sanity_potion  
+@type boolean
+@default false
+@optional
+이성 부족 시 이성 회복제 사용 허용 여부  
+:::  
+::: field formation  
+@type boolean
+@default false
+@optional
+자동 편성 수행 여부  
+:::  
+::: field formation_index  
+@type number
+@default 0
+@optional
+자동 편성 시 사용할 편성 슬롯 번호. `formation`이 true일 때 유효
+<br>
+0–4 정수, 0은 현재 편성 선택, 1-4는 제1, 2, 3, 4 편성  
+:::  
+::: field user_additional  
+@type array`<object>`
+@default []
+@optional
+사용자 정의 추가 오퍼레이터 목록. `formation`이 true일 때 유효
+<br>
+각 객체 포함:
+<br>
+
 - `name`: 오퍼레이터명, 선택 사항, 기본값 "", 비워두면 무시됨
   <br>
-- `skill`: 휴대 스킬, 선택 사항, 기본값 0 (게임 내 기본 스킬 선택 따름); 1–3 정수, 범위 벗어나면 게임 내 기본 스킬 선택 따름  
-  :::  
-  ::: field add_trust  
-  @type boolean
-  @default false
-  @optional
-  자동 편성 시 남은 자리를 신뢰도 낮은 순으로 채울지 여부. `formation`이 true일 때 유효  
-  :::  
-  ::: field ignore_requirements  
-  @type boolean
-  @default false
-  @optional
-  자동 편성 시 오퍼레이터 육성 요구조건 무시 여부. `formation`이 true일 때 유효  
-  :::  
-  ::: field support_unit_usage  
-  @type number
-  @default 0
-  @optional
-  지원 유닛 사용 모드. 0–3 정수. `formation`이 true일 때 유효
-  <br>
-  `0` - 지원 유닛 사용 안 함
-  <br>
-  `1` - 결원이 딱 1명일 때만 지원 유닛으로 보충, 결원 없으면 안 씀
-  <br>
-  `2` - 결원이 딱 1명일 때 지원 유닛 보충 시도, 결원 없으면 지정된 지원 유닛 사용  
-  <br>
-  `3` - 결원이 딱 1명일 때 지원 유닛 보충 시도, 결원 없으면 랜덤 지원 유닛 사용  
-  :::  
-  ::: field support_unit_name  
-  @type string
-  @optional
-  지정 지원 유닛명. `support_unit_usage`가 2일 때 유효  
-  :::  
-  ::::
+- `skill`: 휴대 스킬, 선택 사항, 기본값 0 (게임 내 기본 스킬 선택 따름); 1–3 정수, 범위 벗어나면 게임 내 기본 스킬 선택 따름
+
+:::  
+::: field add_trust  
+@type boolean
+@default false
+@optional
+자동 편성 시 남은 자리를 신뢰도 낮은 순으로 채울지 여부. `formation`이 true일 때 유효  
+:::  
+::: field ignore_requirements  
+@type boolean
+@default false
+@optional
+자동 편성 시 오퍼레이터 육성 요구조건 무시 여부. `formation`이 true일 때 유효  
+:::  
+::: field support_unit_usage  
+@type number
+@default 0
+@optional
+지원 유닛 사용 모드. 0–3 정수. `formation`이 true일 때 유효
+<br>
+`0` - 지원 유닛 사용 안 함
+<br>
+`1` - 결원이 딱 1명일 때만 지원 유닛으로 보충, 결원 없으면 안 씀
+<br>
+`2` - 결원이 딱 1명일 때 지원 유닛 보충 시도, 결원 없으면 지정된 지원 유닛 사용  
+<br>
+`3` - 결원이 딱 1명일 때 지원 유닛 보충 시도, 결원 없으면 랜덤 지원 유닛 사용  
+:::  
+::: field support_unit_name  
+@type string
+@optional
+지정 지원 유닛명. `support_unit_usage`가 2일 때 유효  
+:::  
+::::
 
 작전 JSON은 [자동지휘 프로토콜](./copilot-schema.md)을 참고하세요.
 
