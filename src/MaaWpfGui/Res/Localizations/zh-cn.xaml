@@ -198,6 +198,12 @@
     <system:String x:Key="InfrastFiammettaTargetShamare">巫恋</system:String>
     <system:String x:Key="InfrastFiammettaTargetTequila">龙舌兰</system:String>
     <system:String x:Key="InfrastFiammettaTargetGladiia">歌蕾蒂娅</system:String>
+    <system:String x:Key="InfrastFiammettaTargetSaileach">琴柳</system:String>
+    <system:String x:Key="InfrastFiammettaTargetGreyy2">承曦格雷伊</system:String>
+    <system:String x:Key="InfrastFiammettaTargetWeedy">温蒂</system:String>
+    <system:String x:Key="InfrastFiammettaTargetWaaiFu">槐琥</system:String>
+    <system:String x:Key="InfrastFiammettaTargetMinimalist">至简</system:String>
+    <system:String x:Key="InfrastFiammettaTargetHbound">旅骨</system:String>
     <system:String x:Key="InfrastFiammettaTargetsTips">虽然理论上恢复巫恋和龙舌兰可以 007，但是自动换班情况下难以实现，因此不推荐选择恢复巫恋和龙舌兰</system:String>
     <system:String x:Key="InfrastUsePinusSylvestris">使用红松骑士团跨设施组合</system:String>
     <system:String x:Key="InfrastUsePinusSylvestrisTips" xml:space="preserve">必要干员：焰尾(精二)、薇薇安娜(精二)、野鬃(精二)/灰毫(精二)/远牙(精二)至少一个&#10;参与计算干员：砾</system:String>
@@ -1160,6 +1166,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DepotOnlyFirstInsufficientPlanTip" xml:space="preserve">仅执行第一个库存不足且当日可执行的计划，日志也只显示到该计划为止。&#10;该计划补满后，下次运行自动继续后续计划，当日不可执行的会被跳过。</system:String>
     <system:String x:Key="DepotSortByProgress">按库存达成率排序执行</system:String>
     <system:String x:Key="DepotSortByProgressTip" xml:space="preserve">开启后，每次运行按库存达成率从低到高排序执行，缺口比例最大的计划优先获得理智。&#10;列表显示顺序不变，拖拽排序仅在关闭时生效。&#10;排序使用上次识别的缓存数据，每条计划开始时仍会按最新库存重算缺口。</system:String>
+    <system:String x:Key="DepotCountDualChipAsChipPack">芯片组计入双芯片折算</system:String>
+    <system:String x:Key="DepotCountDualChipAsChipPackTip" xml:space="preserve">统计芯片组库存时，对应职业的双芯片按合成配方折算计入，每个双芯片折算为 2 个芯片组。&#10;计划摘要以 原始 (+折算) 形式显示，达标判定与缺口计算使用折算后数量。&#10;仅改变计数口径，不会自动合成。</system:String>
     <system:String x:Key="DepotPlanSkippedActivity">当前有活动进行中</system:String>
     <system:String x:Key="DepotPlanSkippedResourceCollection">当前处于资源收集限时全天开放期间</system:String>
     <system:String x:Key="DepotPlanUpdateDepotFailed">更新库存数据失败。</system:String>
@@ -1211,10 +1219,18 @@ C:\leidian\LDPlayer9
     <system:String x:Key="CATip">CA-5: 技能</system:String>
     <system:String x:Key="LSTip">LS-6: 经验</system:String>
     <system:String x:Key="SKTip">SK-5: 碳</system:String>
-    <system:String x:Key="PR-ATip">PR-A-1/2: 奶&amp;盾芯片</system:String>
-    <system:String x:Key="PR-BTip">PR-B-1/2: 术&amp;狙芯片</system:String>
-    <system:String x:Key="PR-CTip">PR-C-1/2: 先&amp;辅芯片</system:String>
-    <system:String x:Key="PR-DTip">PR-D-1/2: 近&amp;特芯片</system:String>
+    <system:String x:Key="PR-ATip">PR-A-1/2: {0}&amp;{1}芯片</system:String>
+    <system:String x:Key="PR-BTip">PR-B-1/2: {0}&amp;{1}芯片</system:String>
+    <system:String x:Key="PR-CTip">PR-C-1/2: {0}&amp;{1}芯片</system:String>
+    <system:String x:Key="PR-DTip">PR-D-1/2: {0}&amp;{1}芯片</system:String>
+    <system:String x:Key="ChipShortVanguard">先</system:String>
+    <system:String x:Key="ChipShortGuard">近</system:String>
+    <system:String x:Key="ChipShortDefender">盾</system:String>
+    <system:String x:Key="ChipShortSniper">狙</system:String>
+    <system:String x:Key="ChipShortCaster">术</system:String>
+    <system:String x:Key="ChipShortMedic">奶</system:String>
+    <system:String x:Key="ChipShortSupporter">辅</system:String>
+    <system:String x:Key="ChipShortSpecialist">特</system:String>
     <system:String x:Key="Pormpt1">周一了，可以打剿灭了~</system:String>
     <system:String x:Key="Pormpt2">周日了，记得打剿灭哦~</system:String>
     <!--  !战斗设置  -->

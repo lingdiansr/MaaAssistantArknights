@@ -198,6 +198,11 @@
     <system:String x:Key="InfrastFiammettaTargetShamare">巫戀</system:String>
     <system:String x:Key="InfrastFiammettaTargetTequila">龍舌蘭</system:String>
     <system:String x:Key="InfrastFiammettaTargetGladiia">歌蕾蒂婭</system:String>
+    <system:String x:Key="InfrastFiammettaTargetSaileach">琴柳</system:String>
+    <system:String x:Key="InfrastFiammettaTargetGreyy2">承曦格雷伊</system:String>
+    <system:String x:Key="InfrastFiammettaTargetWeedy">溫蒂</system:String>
+    <system:String x:Key="InfrastFiammettaTargetWaaiFu">槐琥</system:String>
+    <system:String x:Key="InfrastFiammettaTargetMinimalist">至簡</system:String>
     <system:String x:Key="InfrastFiammettaTargetsTips">雖然理論上恢復巫戀和龍舌蘭可以 007，但自動換班情況下難以實現，因此不推薦選擇恢復巫戀和龍舌蘭</system:String>
     <system:String x:Key="InfrastUsePinusSylvestris">使用紅松騎士團跨設施組合</system:String>
     <system:String x:Key="InfrastUsePinusSylvestrisTips" xml:space="preserve">必要幹員：焰尾（精二）、薇薇安娜（精二）、野鬃（精二）/灰毫（精二）/遠牙（精二）至少一個&#10;參與計算幹員：礫</system:String>
@@ -1160,6 +1165,8 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DepotOnlyFirstInsufficientPlanTip" xml:space="preserve">僅執行第一個庫存不足且當日可執行的計劃，日誌也只顯示到該計劃為止。&#10;該計劃補滿後，下次執行會自動接續後續計劃，當日無法執行的會被跳過。</system:String>
     <system:String x:Key="DepotSortByProgress">按庫存達成率排序執行</system:String>
     <system:String x:Key="DepotSortByProgressTip" xml:space="preserve">開啟後，每次執行按庫存達成率從低到高排序執行，缺口比例最大的計劃優先獲得理智。&#10;列表顯示順序不變，拖曳排序僅在關閉時生效。&#10;排序使用上次識別的快取資料，每條計劃開始時仍會按最新庫存重算缺口。</system:String>
+    <system:String x:Key="DepotCountDualChipAsChipPack">晶片組計入雙晶片折算</system:String>
+    <system:String x:Key="DepotCountDualChipAsChipPackTip" xml:space="preserve">統計晶片組庫存時，對應職業的雙晶片按合成配方折算計入，每個雙晶片折算為 2 個晶片組。&#10;計劃摘要以 原始 (+折算) 形式顯示，達標判定與缺口計算使用折算後數量。&#10;僅改變計數口徑，不會自動合成。</system:String>
     <system:String x:Key="DepotPlanSkippedActivity">目前有活動進行中</system:String>
     <system:String x:Key="DepotPlanSkippedResourceCollection">目前處於資源收集限時全天開放期間</system:String>
     <system:String x:Key="DepotPlanUpdateDepotFailed">更新庫存數據失敗。</system:String>
@@ -1211,10 +1218,18 @@ C:\leidian\LDPlayer9
     <system:String x:Key="CATip">CA-5: 技能書</system:String>
     <system:String x:Key="LSTip">LS-6: 經驗</system:String>
     <system:String x:Key="SKTip">SK-5: 碳</system:String>
-    <system:String x:Key="PR-ATip">PR-A-1/2: 奶&amp;盾晶片</system:String>
-    <system:String x:Key="PR-BTip">PR-B-1/2: 術&amp;狙晶片</system:String>
-    <system:String x:Key="PR-CTip">PR-C-1/2: 先&amp;輔晶片</system:String>
-    <system:String x:Key="PR-DTip">PR-D-1/2: 近&amp;特晶片</system:String>
+    <system:String x:Key="PR-ATip">PR-A-1/2: {0}&amp;{1}晶片</system:String>
+    <system:String x:Key="PR-BTip">PR-B-1/2: {0}&amp;{1}晶片</system:String>
+    <system:String x:Key="PR-CTip">PR-C-1/2: {0}&amp;{1}晶片</system:String>
+    <system:String x:Key="PR-DTip">PR-D-1/2: {0}&amp;{1}晶片</system:String>
+    <system:String x:Key="ChipShortVanguard">先</system:String>
+    <system:String x:Key="ChipShortGuard">近</system:String>
+    <system:String x:Key="ChipShortDefender">盾</system:String>
+    <system:String x:Key="ChipShortSniper">狙</system:String>
+    <system:String x:Key="ChipShortCaster">術</system:String>
+    <system:String x:Key="ChipShortMedic">奶</system:String>
+    <system:String x:Key="ChipShortSupporter">輔</system:String>
+    <system:String x:Key="ChipShortSpecialist">特</system:String>
     <system:String x:Key="Pormpt1">週一了，可以打剿滅了 ~</system:String>
     <system:String x:Key="Pormpt2">週日了，記得打剿滅喔 ~</system:String>
     <!--  !戰鬥設定  -->
