@@ -289,6 +289,10 @@
     <system:String x:Key="RoguelikeBlackFlowSerpentRewards">羽蛇奖励</system:String>
     <system:String x:Key="RoguelikeBlackFlowSerpentRewardsInactive">选了襁褓羽蛇才生效</system:String>
     <system:String x:Key="RoguelikeBlackFlowPrepSquad">准备局分队</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartUtopia">凹第一层实托邦</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartUtopiaTip" xml:space="preserve">目标局在支援页出现期望奖励后，按 ｢{key=RoguelikeBlackFlowStartRewardPriority}｣ 选卡并进入第一层。&#10;第一层是实托邦就退出并保留这一局，不是就放弃这一局，重新进行准备局。&#10;目标局用常规设置里的职业组和开局干员开局。&#10;需难度 6 及以上；难度选择不切换时不检查难度。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartRewardPriority">开局奖励选择优先级</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartRewardPriorityTip" xml:space="preserve">拖动调整顺序。&#10;支援页按从上到下的顺序，选在场的卡。&#10;顺序和上面的动物、奖励勾选无关：没要求 ｢{key=RoguelikeBlackFlowCultivationTargetFeatheredSerpent}｣ 时也可能带上它，所以羽蛇奖励也排在里面。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardUnnumberedItem">未编号物</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardSurveyAdvance">调查预付款</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardSpaceLease">空间租赁</system:String>
@@ -630,7 +634,7 @@ D:\
     <system:String x:Key="ShowWindowBeforeForceScheduledStart">强制定时启动前显示窗口</system:String>
     <system:String x:Key="ShowWindowBeforeForceScheduledStartTip">定时启动前显示主窗口，避免最小化时看不到倒计时</system:String>
     <system:String x:Key="TimerCustomConfig">自定义配置选择</system:String>
-    <system:String x:Key="TimerCustomConfigTip">定时启动前两分钟重启游戏并切换配置</system:String>
+    <system:String x:Key="TimerCustomConfigTip">定时启动前两分钟重启 MAA 并切换配置</system:String>
     <system:String x:Key="NotifyBeforeScheduledStart">定时执行前发送系统通知</system:String>
     <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">按提前时间发送系统通知。&#10;外部推送可在 ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣ 中单独开启，两者共用提前时间。</system:String>
     <system:String x:Key="NotifyBeforeScheduledStartSharedTimeTip">外部推送与系统通知共用此提前时间。</system:String>
@@ -767,7 +771,7 @@ D:\
 4. 当前难度 ≥15 时，6★ 干员希望消耗 +1，使用部分分队时可能无法招募开局 6★ 干员，导致出错或失败</system:String>
     <system:String x:Key="RoguelikeThemeTipBlackFlow" xml:space="preserve">{key=RoguelikeThemeBlackFlow}推荐配置：
 
-{key=StartingCoreChar}: 机械师（必须精二并解锁 ｢招募精通 II｣ 天赋的 ｢效果提升 II｣ ）
+{key=StartingCoreChar}: 机械师（必须精二并解锁 ｢招募精通 II｣ 天赋的 ｢效果提升 II｣）
 {key=StartingSquad}: ｢{key=SpecialForceSquad}｣ / ｢{key=TacticalFortificationOperative}｣
 {key=StartingRoles}: ｢{key=SlowAndSteadyWinsTheRace}｣ / ｢{key=Unbreakable}｣
 
@@ -777,7 +781,7 @@ D:\
     招募到机械师后为保证效率不再检查精英化状态，直接按精二执行策略，
     所选机械师未精二会卡住甚至死循环，必须使用精二机械师；
     且通关一次前部分事件的选项会不同，遇到可能卡死；先通关一次 N1 即可同时满足精二与事件选项的前提，相对简单
-2. 必须解锁 ｢招募精通 II｣ 天赋的 ｢效果提升 II｣ ，开局才会携带 ｢结构性原理｣ 零件（全图任意飞 3 次）；
+2. 必须解锁 ｢招募精通 II｣ 天赋的 ｢效果提升 II｣，开局才会携带 ｢结构性原理｣ 零件（全图任意飞 3 次）；
     解锁很简单，精二后累计卖出 10 个零件即可
 3. 刷等级时，机械师（必须精二）+ 上述分队与职业组 + 重装券，可以快速飞完三层
 4. 没有精二机械师就不要选机械师，否则会卡住或死循环；不选机械师可以正常刷钱，但战斗大概率暴毙，其他策略待后续优化
@@ -1128,7 +1132,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DaysLeftOpen" xml:space="preserve">剩余天数: </system:String>
     <system:String x:Key="Inventory">库存</system:String>
     <system:String x:Key="InventoryUpdateTip">可通过 ｢{key=Toolbox}-{key=DepotRecognition}｣ 更新库存数据</system:String>
-    <system:String x:Key="SpecifiedDropsInventoryUnavailable">任务 ｢{0}｣ 启用了 {key=TargetInventory}，但当前没有可用的库存数据，已跳过。可通过 ｢{key=Toolbox}-{key=DepotRecognition}｣ 更新库存。</system:String>
+    <system:String x:Key="SpecifiedDropsInventoryUnavailable">任务 ｢{0}｣ 启用了 {key=TargetInventory}，但当前没有可用的库存数据，已跳过。可通过 ｢{key=UserDataUpdate}｣ 任务或 ｢{key=Toolbox}-{key=DepotRecognition}｣ 更新库存。</system:String>
     <system:String x:Key="SpecifiedDropsInventoryEnough">{0} 已充足 {1}/{2}</system:String>
     <system:String x:Key="UserDataUpdateCannotModifyExistingTask">无法修改已添加的 ｢{key=UserDataUpdate}｣ 任务参数</system:String>
     <system:String x:Key="UserDataUpdateNothingSelected">｢{key=OperBoxRecognition}｣ 和 ｢{key=DepotRecognition}｣ 均未勾选</system:String>
@@ -1171,6 +1175,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DepotPlanSkippedActivity">当前有活动进行中</system:String>
     <system:String x:Key="DepotPlanSkippedResourceCollection">当前处于资源收集限时全天开放期间</system:String>
     <system:String x:Key="DepotPlanUpdateDepotFailed">更新库存数据失败。</system:String>
+    <system:String x:Key="DepotPlanInventoryDataEmpty">#{0}：当前没有可用的库存数据，已跳过刷取。可通过 ｢{key=UserDataUpdate}｣ 任务或 ｢{key=Toolbox}-{key=DepotRecognition}｣ 更新库存。</system:String>
     <system:String x:Key="DepotUseAutoSeries">AUTO 代理倍率</system:String>
     <system:String x:Key="DepotUseAutoSeriesTip" xml:space="preserve">未勾选时按单倍代理；勾选后按当前理智可刷的最大倍率代理，单次刷取可能超过目标库存上限。</system:String>
     <system:String x:Key="DepotEnableUseMedicine">启用 ｢{key=UseSanityPotion}｣ 勾选框</system:String>
@@ -1469,6 +1474,7 @@ C:\leidian\LDPlayer9
     <!--  日志  -->
     <system:String x:Key="Identifying">正在识别……</system:String>
     <system:String x:Key="IdentificationCompleted">识别完成</system:String>
+    <system:String x:Key="DepotRecognitionEmptyResult">识别结果为空，已保留原有库存数据</system:String>
     <!--  !日志  -->
     <!--  自动战斗  -->
     <system:String x:Key="Operator">干员</system:String>
@@ -1693,7 +1699,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="GiveUpUploadingPenguins">放弃上传企鹅物流</system:String>
     <system:String x:Key="ReportSkippedForPcClient">PC 端鼠标为独立渲染，可能遮挡掉落物及数量识别。为避免错误数据污染数据池，已自动跳过本次上报{0}</system:String>
     <system:String x:Key="TheEx">无奖励关卡，已停止</system:String>
-    <system:String x:Key="MissingOperators">以下{key=Operator}组内的{key=Operator}均未拥有（每组只需其一）或未达到作业要求：\n{0}｢特别关注｣ 可能影响{key=Operator}识别，若实际已拥有，可移除 ｢特别关注｣ 后重试，或关闭 ｢{key=AutoSquad}｣ 手动补充；若确实未拥有，仅缺一组时可使用 ｢{key=SupportUnitUsage}｣，缺两组以上请更换作业。</system:String>
+    <system:String x:Key="MissingOperators">以下{key=Operator}组内的{key=Operator}均未拥有（每组只需其一）或未达到作业要求：\n{0} ｢特别关注｣ 可能影响{key=Operator}识别，若实际已拥有，可移除 ｢特别关注｣ 后重试，或关闭 ｢{key=AutoSquad}｣ 手动补充；若确实未拥有，仅缺一组时可使用 ｢{key=SupportUnitUsage}｣，缺两组以上请更换作业。</system:String>
     <system:String x:Key="RecruitSupportOperator">编入助战{key=Operator}：{0}</system:String>
     <system:String x:Key="StageQueue">关卡队列:</system:String>
     <system:String x:Key="UnableToAgent">无法使用代理指挥</system:String>
@@ -1968,7 +1974,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="BattleFormationOperboxMatched">预匹配的{key=Operator}（组）：</system:String>
     <system:String x:Key="CopilotUserAdditionalNameInvalid">追加自定{key=Operator}名称无效: {0}，请检查拼写</system:String>
     <system:String x:Key="CopilotOperboxDataParseFailed">{key=OperBoxRecognition}数据解析失败</system:String>
-    <system:String x:Key="CopilotOperboxAssistRequiresYituliuData">当前没有可用的一图流干员数据，无法辅助编队。请先从一图流获取干员数据，或关闭 ｢{key=Copilot.UseOperBoxAssist}｣ 。</system:String>
+    <system:String x:Key="CopilotOperboxAssistRequiresYituliuData">当前没有可用的一图流干员数据，无法辅助编队。请先从一图流获取干员数据，或关闭 ｢{key=Copilot.UseOperBoxAssist}｣。</system:String>
     <system:String x:Key="CurrentSteps">当前步骤: {0} {1}</system:String>
     <system:String x:Key="ElapsedTime">当前计时器: {0}ms</system:String>
     <system:String x:Key="Deploy">部署</system:String>
@@ -2179,8 +2185,7 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
     <system:String x:Key="AnnouncementNotFinishedConfirm3">还点</system:String>
     <!--  !Announcement  -->
     <!--  Reclamation  -->
-    <system:String x:Key="ReclamationTipRelaunchAnchorRA1" xml:space="preserve">
-收益参考：每把约 159 代币 + 统筹点数，单轮耗时约 2 分 10 秒
+    <system:String x:Key="ReclamationTipRelaunchAnchorRA1" xml:space="preserve">收益参考：每把约 159 代币 + 统筹点数，单轮耗时约 2 分 10 秒
 
 干员要求：无
 
@@ -2190,10 +2195,8 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
 
 注意：如果已解锁开局额外携带物品的相关科技，请将基地内会导致开局额外携带物品的设施拆除，如食品供给站、饮品供给站、兽栏等
 
-任务流程：自动执行精耕细作、建设、交付资源、结算循环
-    </system:String>
-    <system:String x:Key="ReclamationTipRelaunchAnchorRA4" xml:space="preserve">
-收益参考：每把约 417 代币 + 统筹点数，单轮耗时约 1 分 40 秒
+任务流程：自动执行精耕细作、建设、交付资源、结算循环</system:String>
+    <system:String x:Key="ReclamationTipRelaunchAnchorRA4" xml:space="preserve">收益参考：每把约 417 代币 + 统筹点数，单轮耗时约 1 分 40 秒
 
 干员要求：维什戴尔（可以借助战）
 
@@ -2207,10 +2210,8 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
 
 注意：如果已解锁开局额外携带物品的相关科技，请将基地内会导致开局额外携带物品的设施拆除，如食品供给站、饮品供给站、兽栏等
 
-任务流程：使用筹划经营策略给予的赤金解锁区域，使用维什戴尔完成击杀 boss 任务
-    </system:String>
-    <system:String x:Key="ReclamationTipRelaunchAnchorRA15" xml:space="preserve">
-收益参考：每把约 500 代币 + 统筹点数，单轮耗时约 3 分钟
+任务流程：使用筹划经营策略给予的赤金解锁区域，使用维什戴尔完成击杀 boss 任务</system:String>
+    <system:String x:Key="ReclamationTipRelaunchAnchorRA15" xml:space="preserve">收益参考：每把约 500 代币 + 统筹点数，单轮耗时约 3 分钟
 
 干员要求：圣聆初雪（可以借助战）
 
@@ -2223,24 +2224,18 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
 
 注意：如果已解锁开局额外携带物品的相关科技，请将基地内会导致开局额外携带物品的设施拆除，如食品供给站、饮品供给站、兽栏等
 
-任务流程：用圣聆初雪完成 60 杀任务
-    </system:String>
+任务流程：用圣聆初雪完成 60 杀任务</system:String>
     <system:String x:Key="ReclamationTipFire">该活动已关闭，无法使用</system:String>
-    <system:String x:Key="ReclamationTipTales" xml:space="preserve">
-目前生息演算的支持仍处于中期阶段，使用时请注意以下几点：
-
- 通过开局刷点数：(小心已有存档被删除)
+    <system:String x:Key="ReclamationTipTalesNoSave" xml:space="preserve">通过开局刷点数：(小心已有存档被删除)
   1. 点数刷满后会输出 ｢任务完成｣，自动停止任务
   2. 不要在生息演算的编队中有{key=Operator}的情况下使用
   3. 手动确认存档情况并删除，以免 MAA 删除你的珍贵存档
-  4. 导航还没写，不能从生息演算以外的位置开始任务
-  5. 如果任务过程中报错、点数没刷满就任务完成，请前往 GitHub 提交 issue
-
- 有存档通过制造刷点数（高级设置）：
+  4. 需要在主界面右下角有开始演算的界面开始任务
+  5. 如果任务过程中报错、点数没刷满就任务完成，请前往 GitHub 提交 issue</system:String>
+    <system:String x:Key="ReclamationTipTalesInSave" xml:space="preserve">有存档通过制造刷点数：
   1. 要求是结算后的第一天，且后续三天没有敌袭进入驻扎地
   2. 必须在进入大地图后的界面开始（能看到驻扎地的界面）
-  3. 如果能制造的数量刚好是 99 的倍数会卡住，在存档前可以先用掉一点，这个之后再修
-    </system:String>
+  3. 如果能制造的数量刚好是 99 的倍数会卡住，在存档前可以先用掉一点，这个之后再修</system:String>
     <system:String x:Key="ReclamationBePatient">牛牛，我太想进步了！你看，又急</system:String>
     <system:String x:Key="Reclamation2ExEnable">通过制造刷点数</system:String>
     <system:String x:Key="ReclamationToolToCraftTip">支援道具名称</system:String>
@@ -2804,6 +2799,7 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
     <system:String x:Key="BlackFlowStartRunPreparing">正在进行准备局</system:String>
     <system:String x:Key="BlackFlowStartRunTargetRun">已切换到目标局，等待检查开局奖励</system:String>
     <system:String x:Key="BlackFlowStartRunRewardMissed">开局奖励未命中，重新进行准备局</system:String>
+    <system:String x:Key="BlackFlowStartRunRewardPicked">开局奖励已选取，进入第一层检查实托邦</system:String>
     <system:String x:Key="BlackFlowStartRunCompleted">开局目标已满足，已退出并保留这一局</system:String>
     <system:String x:Key="BlackFlowStartRunRewardRecognitionFailed">开局奖励识别失败，已停止任务</system:String>
     <system:String x:Key="BlackFlowStartRunRewardPageMissing">未识别到开局奖励页，已停止任务</system:String>
@@ -2811,4 +2807,6 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
     <system:String x:Key="BlackFlowStartRunRewardsSeen">本次支援页：{0}</system:String>
     <system:String x:Key="BlackFlowStartRunPrepared">开局准备已完成</system:String>
     <system:String x:Key="BlackFlowStartRunPreparedReason">已到达第三层，将按目标难度和分队开启下一局</system:String>
+    <system:String x:Key="BlackFlowStartRunUtopiaMissed">第一层不是实托邦</system:String>
+    <system:String x:Key="BlackFlowStartRunUtopiaMissedReason">将放弃这一局，重新进行准备局</system:String>
 </ResourceDictionary>

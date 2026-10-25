@@ -288,6 +288,10 @@
     <system:String x:Key="RoguelikeBlackFlowSerpentRewards">깃털 뱀 보상</system:String>
     <system:String x:Key="RoguelikeBlackFlowSerpentRewardsInactive">포대기의 깃털 뱀을 선택해야 적용됨</system:String>
     <system:String x:Key="RoguelikeBlackFlowPrepSquad">준비 탐험 분대</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartUtopia">1구역 实托邦(1구역 종류) 노리기</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartUtopiaTip" xml:space="preserve">목표 탐험의 지원 화면에 원하는 보상이 나오면 ｢{key=RoguelikeBlackFlowStartRewardPriority}｣ 순서로 카드를 고르고 1구역에 들어갑니다.&#10;1구역이 实托邦이면 이번 탐험을 유지한 채 나오고, 아니면 이번 탐험을 포기하고 준비 탐험을 다시 진행합니다.&#10;목표 탐험은 일반 설정의 직업 그룹과 시작 오퍼레이터로 시작합니다.&#10;난이도 6 이상이 필요합니다.&#10;난이도를 전환하지 않는 설정에서는 난이도를 확인하지 않습니다.</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartRewardPriority">시작 보상 선택 우선순위</system:String>
+    <system:String x:Key="RoguelikeBlackFlowStartRewardPriorityTip" xml:space="preserve">드래그해 순서를 바꿉니다.&#10;지원 화면에 나온 카드 중 위에 있는 것부터 고릅니다.&#10;순서는 위에서 고른 동물, 보상과 관계없습니다.&#10;｢{key=RoguelikeBlackFlowCultivationTargetFeatheredSerpent}｣ 을(를) 지정하지 않아도 데려갈 수 있으므로 깃털 뱀 보상도 포함됩니다.</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardUnnumberedItem">번호 없는 물건 (未编号物)</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardSurveyAdvance">조사 선급금 (调查预付款)</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardSpaceLease">공간 임대 (空间租赁)</system:String>
@@ -629,7 +633,7 @@ D:\
     <system:String x:Key="ShowWindowBeforeForceScheduledStart">{key=ForceScheduledStart} 전 창 표시</system:String>
     <system:String x:Key="ShowWindowBeforeForceScheduledStartTip">예약 시작 전에 메인 창을 표시하여 최소화 시 카운트다운을 확인할 수 없는 문제를 방지합니다</system:String>
     <system:String x:Key="TimerCustomConfig">커스텀 구성 옵션</system:String>
-    <system:String x:Key="TimerCustomConfigTip">예약 시작 2분 전에 게임을 재실행하고 설정을 전환합니다</system:String>
+    <system:String x:Key="TimerCustomConfigTip">예약 시작 2분 전에 MAA를 재실행하고 설정을 전환합니다</system:String>
     <system:String x:Key="NotifyBeforeScheduledStart">예약 실행 전 시스템 알림 전송</system:String>
     <system:String x:Key="NotifyBeforeScheduledStartTip" xml:space="preserve">설정된 사전 알림 시간에 시스템 알림을 보냅니다.&#10;외부 알림은 ｢{key=Settings} - {key=NotificationSettings} - {key=ExternalNotificationSettings}｣에서 별도로 활성화할 수 있으며 사전 알림 시간을 공유합니다.</system:String>
     <system:String x:Key="NotifyBeforeScheduledStartSharedTimeTip">외부 알림은 이 사전 알림 시간을 공유합니다.</system:String>
@@ -1128,7 +1132,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DaysLeftOpen" xml:space="preserve">남은 오픈일 수: </system:String>
     <system:String x:Key="Inventory">재고</system:String>
     <system:String x:Key="InventoryUpdateTip">재고 데이터는  ｢{key=Toolbox}-{key=DepotRecognition}｣ 을 통해 업데이트 가능</system:String>
-    <system:String x:Key="SpecifiedDropsInventoryUnavailable">작업 "{0}" 에서 {key=TargetInventory} 가 켜져 있지만 현재 사용할 수 있는 재고 데이터가 없어 건너뜁니다. ｢{key=Toolbox}-{key=DepotRecognition}｣ 에서 재고를 업데이트해 주세요.</system:String>
+    <system:String x:Key="SpecifiedDropsInventoryUnavailable">작업 "{0}" 에서 {key=TargetInventory} 가 켜져 있지만 현재 사용할 수 있는 재고 데이터가 없어 건너뜁니다. ｢{key=UserDataUpdate}｣ 작업 또는 ｢{key=Toolbox}-{key=DepotRecognition}｣ 에서 재고를 업데이트해 주세요.</system:String>
     <system:String x:Key="SpecifiedDropsInventoryEnough">{0} 충분 {1}/{2}</system:String>
     <system:String x:Key="UserDataUpdateCannotModifyExistingTask">이미 추가된 ｢{key=UserDataUpdate}｣ 작업의 매개변수는 수정할 수 없습니다</system:String>
     <system:String x:Key="UserDataUpdateNothingSelected">｢{key=OperBoxRecognition}｣, ｢{key=DepotRecognition}｣ 중 어느 것도 선택되지 않았습니다</system:String>
@@ -1171,6 +1175,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="DepotPlanSkippedActivity">이벤트 진행 중</system:String>
     <system:String x:Key="DepotPlanSkippedResourceCollection">｢물자 비축｣ 기간 한정 상시 개방 중</system:String>
     <system:String x:Key="DepotPlanUpdateDepotFailed">재고 데이터 업데이트에 실패했습니다.</system:String>
+    <system:String x:Key="DepotPlanInventoryDataEmpty">#{0}: 현재 사용할 수 있는 재고 데이터가 없어 파밍을 건너뜁니다. ｢{key=UserDataUpdate}｣ 작업 또는 ｢{key=Toolbox}-{key=DepotRecognition}｣ 에서 재고를 업데이트해 주세요.</system:String>
     <system:String x:Key="DepotUseAutoSeries">AUTO 대리 배수</system:String>
     <system:String x:Key="DepotUseAutoSeriesTip" xml:space="preserve">체크 해제 시 1배로 대리; 체크 시 현재 이성으로 가능한 최대 배수로 대리 작전하며, 1회 진행 시 목표 재고 상한을 초과할 수 있습니다.</system:String>
     <system:String x:Key="DepotEnableUseMedicine">｢{key=UseSanityPotion}｣ 체크박스 활성화</system:String>
@@ -1469,6 +1474,7 @@ C:\leidian\LDPlayer9
     <!--  로그  -->
     <system:String x:Key="Identifying">인식 중……</system:String>
     <system:String x:Key="IdentificationCompleted">인식 완료</system:String>
+    <system:String x:Key="DepotRecognitionEmptyResult">인식 결과가 비어 있어 기존 재고 데이터를 유지했습니다</system:String>
     <!--  !로그  -->
     <!--  Copilot  -->
     <system:String x:Key="Operator">오퍼레이터</system:String>
@@ -2180,8 +2186,7 @@ DEBUG 디렉토리에 저장된 이미지는 수량 제한이 있으며 초과 �
     <system:String x:Key="AnnouncementNotFinishedConfirm3">계속 누르네</system:String>
     <!--  !Announcement  -->
     <!--  Reclamation  -->
-    <system:String x:Key="ReclamationTipRelaunchAnchorRA1" xml:space="preserve">
-수익 참고: 회당 약 159토큰 + 통괄 포인트, 소요 시간 약 2분 10초
+    <system:String x:Key="ReclamationTipRelaunchAnchorRA1" xml:space="preserve">수익 참고: 회당 약 159토큰 + 통괄 포인트, 소요 시간 약 2분 10초
 
 오퍼레이터 요구 사항: 없음
 
@@ -2192,8 +2197,7 @@ DEBUG 디렉토리에 저장된 이미지는 수량 제한이 있으며 초과 �
 참고: 초기 추가 아이템 휴대 관련 기술을 해제한 경우, 기지 내에서 초기 추가 아이템을 휴대하게 하는 시설(식품 공급소, 음료 공급소, 축사 등)을 철거하세요
 
 작업 흐름: 정경세작, 건설, 자원 납품, 결제를 자동 실행</system:String>
-    <system:String x:Key="ReclamationTipRelaunchAnchorRA4" xml:space="preserve">
-수익 참고: 회당 약 417 토큰 + 통괄 포인트, 소요 시간 약 1분 40초
+    <system:String x:Key="ReclamationTipRelaunchAnchorRA4" xml:space="preserve">수익 참고: 회당 약 417 토큰 + 통괄 포인트, 소요 시간 약 1분 40초
 
 오퍼레이터 요구 사항: 위셔델 (지원 유닛 사용 가능)
 
@@ -2207,10 +2211,8 @@ DEBUG 디렉토리에 저장된 이미지는 수량 제한이 있으며 초과 �
 
 참고: 초기 추가 아이템 휴대 관련 기술을 해제한 경우, 기지 내에서 초기 추가 아이템을 휴대하게 하는 시설(식품 공급소, 음료 공급소, 축사 등)을 철거하세요
 
-작업 흐름: "경영 계획"으로 얻은 순금을 사용하여 지역을 해금하고, 위셔델로 보스 처치 임무를 완료합니다.
-    </system:String>
-    <system:String x:Key="ReclamationTipRelaunchAnchorRA15" xml:space="preserve">
-수익 참고: 회당 약 500 토큰 + 통괄 포인트, 소요 시간 약 3분
+작업 흐름: "경영 계획"으로 얻은 순금을 사용하여 지역을 해금하고, 위셔델로 보스 처치 임무를 완료합니다.</system:String>
+    <system:String x:Key="ReclamationTipRelaunchAnchorRA15" xml:space="preserve">수익 참고: 회당 약 500 토큰 + 통괄 포인트, 소요 시간 약 3분
 
 오퍼레이터 요구 사항: 프라마닉스 더 프레리타 (지원 유닛 사용 가능)
 
@@ -2223,24 +2225,18 @@ DEBUG 디렉토리에 저장된 이미지는 수량 제한이 있으며 초과 �
 
 참고: 초기 추가 아이템 휴대 관련 기술을 해제한 경우, 기지 내에서 초기 추가 아이템을 휴대하게 하는 시설(식품 공급소, 음료 공급소, 축사 등)을 철거하세요
 
-작업 흐름: 지원 오퍼레이터를 사용하여 60킬 미션을 자동 실행
-    </system:String>
+작업 흐름: 지원 오퍼레이터를 사용하여 60킬 미션을 자동 실행</system:String>
     <system:String x:Key="ReclamationTipFire">이 이벤트는 종료되어 사용할 수 없습니다</system:String>
-    <system:String x:Key="ReclamationTipTales" xml:space="preserve">
-현재 생존 연산 기능은 초기 단계이며, 다음 사항에 주의하세요:
-
- 세이브 X: 스테이지 반복 (주의: 기존 세이브 데이터가 삭제될 수 있습니다)
+    <system:String x:Key="ReclamationTipTalesNoSave" xml:space="preserve">세이브 X: 스테이지 반복 (주의: 기존 세이브 데이터가 삭제될 수 있습니다)
   1. 점수를 모두 채우면 ｢작업 완료｣가 출력되며 자동으로 임무가 정지됩니다
   2. 생존 연산에 {key=Operator}가 편성된 상태에서 사용하지 마세요
   3. MAA가 귀중한 세이브 데이터를 삭제하지 않도록, 직접 세이브 상태를 확인하고 삭제하세요
-  4. 내비게이션 기능이 아직 구현되지 않아, 생존 연산 이외의 위치에서는 임무를 시작할 수 없습니다
-  5. 임무 과정 중 오류가 발생하거나 점수를 다 채우지 못했는데 임무가 완료될 경우, GitHub에 issue를 제출해 주세요
-
- 세이브 O: 도구 제작 (고급 설정)
+  4. 메인 화면 오른쪽 아래에 ｢연산 시작｣ 버튼이 표시된 화면에서 임무를 시작해야 합니다
+  5. 임무 과정 중 오류가 발생하거나 점수를 다 채우지 못했는데 임무가 완료될 경우, GitHub에 issue를 제출해 주세요</system:String>
+    <system:String x:Key="ReclamationTipTalesInSave" xml:space="preserve">세이브 O: 도구 제작
   1. 결산 후 첫 번째 날이어야 하며, 이후 3일 이내에 적의 침입이 없어야 합니다
   2. 지도 화면에 진입한 상태(주둔지가 보이는 지점)에서 시작해야 합니다
-  3. 제조 가능한 수량이 99의 배수일 경우 멈출 수 있습니다. 저장하기 전에 재료를 약간 사용한 후에 다시 시도하세요. 이 문제는 수정될 예정입니다
-    </system:String>
+  3. 제조 가능한 수량이 99의 배수일 경우 멈출 수 있습니다. 저장하기 전에 재료를 약간 사용한 후에 다시 시도하세요. 이 문제는 수정될 예정입니다</system:String>
     <system:String x:Key="ReclamationBePatient">빨리 발전하고 싶어요! 또 급해져버렸네요</system:String>
     <system:String x:Key="Reclamation2ExEnable">제작 점수 획득 모드</system:String>
     <system:String x:Key="ReclamationToolToCraftTip">제작할 도구 이름</system:String>
@@ -2803,6 +2799,7 @@ MAA를 독립된 새 폴더에 압축 해제하거나, MAA에 속하지 않는 D
     <system:String x:Key="BlackFlowStartRunPreparing">준비 탐험 진행 중</system:String>
     <system:String x:Key="BlackFlowStartRunTargetRun">목표 탐험을 시작하고 시작 보상 확인을 기다리는 중</system:String>
     <system:String x:Key="BlackFlowStartRunRewardMissed">원하는 시작 보상이 없어 준비 탐험을 다시 진행합니다</system:String>
+    <system:String x:Key="BlackFlowStartRunRewardPicked">시작 보상을 골랐습니다. 1구역이 实托邦인지 확인합니다</system:String>
     <system:String x:Key="BlackFlowStartRunCompleted">시작 조건을 충족하여 이번 탐험을 유지한 채 나왔습니다</system:String>
     <system:String x:Key="BlackFlowStartRunRewardRecognitionFailed">시작 보상을 인식하지 못하여 작업을 중지했습니다</system:String>
     <system:String x:Key="BlackFlowStartRunRewardPageMissing">시작 보상 화면을 찾지 못하여 작업을 중지했습니다</system:String>
@@ -2810,4 +2807,6 @@ MAA를 독립된 새 폴더에 압축 해제하거나, MAA에 속하지 않는 D
     <system:String x:Key="BlackFlowStartRunRewardsSeen">이번 지원 화면: {0}</system:String>
     <system:String x:Key="BlackFlowStartRunPrepared">탐험 준비 완료</system:String>
     <system:String x:Key="BlackFlowStartRunPreparedReason">3층에 도달했습니다. 다음 탐험은 지정한 난이도와 분대로 시작합니다</system:String>
+    <system:String x:Key="BlackFlowStartRunUtopiaMissed">1구역이 实托邦이 아닙니다</system:String>
+    <system:String x:Key="BlackFlowStartRunUtopiaMissedReason">이번 탐험을 포기하고 준비 탐험을 다시 진행합니다</system:String>
 </ResourceDictionary>
