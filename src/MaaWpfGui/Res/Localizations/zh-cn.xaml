@@ -287,8 +287,6 @@
     <system:String x:Key="RoguelikeBlackFlowStartRewardsAnyHit">任意一项即停</system:String>
     <system:String x:Key="RoguelikeBlackFlowStartRewardsTip" xml:space="preserve">期望奖励和羽蛇奖励里勾选的全部算候选，开局出现任意一项就停下。&#10;鼠标停在选项上可查看效果。</system:String>
     <system:String x:Key="RoguelikeBlackFlowSerpentRewards">羽蛇奖励</system:String>
-    <system:String x:Key="RoguelikeBlackFlowSerpentRewardsInactive">选了襁褓羽蛇才生效</system:String>
-    <system:String x:Key="RoguelikeBlackFlowPrepSquad">准备局分队</system:String>
     <system:String x:Key="RoguelikeBlackFlowStartUtopia">凹第一层实托邦</system:String>
     <system:String x:Key="RoguelikeBlackFlowStartUtopiaTip" xml:space="preserve">目标局在支援页出现期望奖励后，按 ｢{key=RoguelikeBlackFlowStartRewardPriority}｣ 选卡并进入第一层。&#10;第一层是实托邦就退出并保留这一局，不是就放弃这一局，重新进行准备局。&#10;目标局用常规设置里的职业组和开局干员开局。&#10;需难度 6 及以上；难度选择不切换时不检查难度。</system:String>
     <system:String x:Key="RoguelikeBlackFlowStartRewardPriority">开局奖励选择优先级</system:String>
@@ -311,21 +309,21 @@
     <system:String x:Key="RoguelikeBlackFlowCultivationTargetCerberus">襁褓三头犬</system:String>
     <system:String x:Key="RoguelikeBlackFlowCultivationTargetCatTip">下一局开局额外获得 5 源石锭。</system:String>
     <system:String x:Key="RoguelikeBlackFlowCultivationTargetDogTip">下一局开局额外获得 1 希望。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowCultivationTargetCerberusTip">下一局多一次支援选择机会。培育所在的这一局须至少通过两个区域。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowCultivationTargetFeatheredSerpentTip">下一局的支援选项里多一个随机的蓝色襁褓生灵。培育所在的这一局须至少通过两个区域。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowCultivationTargetCerberusTip">下一局多一次支援选择机会。培育所在的这一局须至少通过两层。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowCultivationTargetFeatheredSerpentTip">下一局的支援选项里多一个随机的蓝色襁褓生灵。培育所在的这一局须至少通过两层。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardUnnumberedItemTip">获得 1 件普通收藏品。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardSurveyAdvanceTip">获得 8 源石锭。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardSpaceLeaseTip">消耗 6 源石锭，零件箱容量 +2。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardRegressionCompensationTip">消耗 2 目标生命值上限，获得 1 件随机收藏品。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardForestRideTip">获得 1 件加工品。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardNestParasitismTip">零件箱容量 -1，获得 1 件稀有收藏品。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowRewardPegasusTip">每一区域额外获得 1 行动力。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowRewardHippogriffTip">初始额外获得 1 希望，前 2 个区域初始揭露全部视野。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowRewardDragonTip">前 2 个区域中所有敌人的最大生命值 -50%。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowRewardHydraTip">所有敌人的攻击和生命值 +30%；每次进入新的区域，我方单位攻击力和生命值 +10%。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowRewardPegasusTip">每一层额外获得 1 行动力。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowRewardHippogriffTip">初始额外获得 1 希望，前 2 层初始揭露全部视野。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowRewardDragonTip">前 2 层中所有敌人的最大生命值 -50%。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowRewardHydraTip">所有敌人的攻击和生命值 +30%；每次进入新层，我方单位攻击力和生命值 +10%。</system:String>
     <system:String x:Key="RoguelikeBlackFlowRewardBaiZeTip">临时招募干员的出现概率提升。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowRewardGoldenCrowTip">进入区域血色空脉时获得 3 个随机收藏品。</system:String>
-    <system:String x:Key="RoguelikeBlackFlowPrepFlightTip" xml:space="preserve">准备局固定用特勤分队、稳扎稳打和自己的机械师开局，只招机械师，第二层用自带的结构性原理直接飞到第三层。&#10;勾选后准备局分队显示为特勤分队且不能修改，取消勾选后恢复原来的设置；常规设置里的职业组和开局干员不受影响。&#10;机械师天赋没点满会飞不起来，请不要勾选。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowRewardGoldenCrowTip">进入第三层血色空脉时获得 3 个随机收藏品。</system:String>
+    <system:String x:Key="RoguelikeBlackFlowPrepFlightTip" xml:space="preserve">准备局固定用特勤分队、稳扎稳打和自己的机械师开局，只招机械师，第二层用自带的结构性原理直接飞到第三层。&#10;勾选后 ｢{key=RoguelikeCollectibleModeSquad}｣ 显示为特勤分队且不能修改，取消勾选后恢复原来的设置；常规设置里的职业组和开局干员不受影响。&#10;机械师天赋没点满会飞不起来，请不要勾选。</system:String>
     <system:String x:Key="RoguelikeStrategyLastReward">刷开局，刷取热水壶或精二{key=Operator}开局</system:String>
     <system:String x:Key="RoguelikeStrategyCollapse">刷坍缩范式，遇到非稀有坍缩范式后直接重开</system:String>
     <system:String x:Key="RoguelikeCollectibleModeSquad">刷开局使用分队</system:String>
@@ -776,16 +774,16 @@ D:\
 {key=StartingRoles}: ｢{key=SlowAndSteadyWinsTheRace}｣ / ｢{key=Unbreakable}｣
 
 1. 目前没有专用战斗策略，作战由招募评分自动决策；
-    刷源石锭、刷等级、刷襁褓动物目前全部围绕精二机械师的飞展开。
-    本次肉鸽机制繁多，不按上述配置开局就只能使用默认寻路与战斗，大概率失败，
-    招募到机械师后为保证效率不再检查精英化状态，直接按精二执行策略，
-    所选机械师未精二会卡住甚至死循环，必须使用精二机械师；
+    刷源石锭和快速飞三层目前围绕精二机械师的飞展开，
+    按上述配置开局时，招募到机械师后为保证效率不再检查精英化状态，直接按精二执行策略，
+    快速飞三层时机械师未满天赋会飞不起来，必须使用满天赋精二机械师；
     且通关一次前部分事件的选项会不同，遇到可能卡死；先通关一次 N1 即可同时满足精二与事件选项的前提，相对简单
 2. 必须解锁 ｢招募精通 II｣ 天赋的 ｢效果提升 II｣，开局才会携带 ｢结构性原理｣ 零件（全图任意飞 3 次）；
     解锁很简单，精二后累计卖出 10 个零件即可
-3. 刷等级时，机械师（必须精二）+ 上述分队与职业组 + 重装券，可以快速飞完三层
-4. 没有精二机械师就不要选机械师，否则会卡住或死循环；不选机械师可以正常刷钱，但战斗大概率暴毙，其他策略待后续优化
-5. 刷等级 + 不勾选 ｢{key=InvestmentEnabled}｣，即可跳过商店</system:String>
+3. 刷等级只有勾选 ｢{key=RoguelikeBlackFlowFastFlight}｣ 才会飞，勾选后分队、职业组和开局干员自动换成上述配置；
+    不勾选时按目标结局打，按上述配置开局也不会飞。刷开局时，准备局也可以勾选 ｢{key=RoguelikeBlackFlowFastFlight}｣
+4. 没有满天赋精二机械师可以正常刷钱，但战斗大概率暴毙
+5. 刷等级勾选 ｢{key=RoguelikeBlackFlowFastFlight}｣ + 不勾选 ｢{key=InvestmentEnabled}｣，即可跳过商店</system:String>
     <system:String x:Key="RoguelikeDifficulty">难度</system:String>
     <system:String x:Key="RoguelikeJieGardenDifficultyTip" xml:space="preserve">解锁 ｢{key=RoguelikeThemeJieGarden}｣ 相关科技后，{key=LeaderSquad}在进行 N3 及以上难度的探索时，会额外携带一个 ｢时光之末｣，可以利用其进行 ｢一战一跳｣ 的存钱策略。
 若尚未解锁该科技，请不要选择 N3 及以上难度（包括 ｢MAX｣）进行探索；
@@ -1447,7 +1445,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="MiniGame@PixelPaint@PaintWhite">也画白色</system:String>
     <system:String x:Key="MiniGame@PixelPaint@Swipe">启用滑动绘制</system:String>
     <system:String x:Key="MiniGame@PixelPaint@SwipeTip">同色同行的连续格用拖动一次画完，可显著加快画图速度。部分触控模式下可能异常，如遇问题请关闭。</system:String>
-    <system:String x:Key="MiniGame@PixelPaint@GridDelay">绘制间隔(ms)</system:String>
+    <system:String x:Key="MiniGame@PixelPaint@GridDelay">绘制间隔 (ms)</system:String>
     <system:String x:Key="MiniGame@PixelPaint@GridDelayTip">每格额外等待时长：点击后 sleep，拖动时长按格累加。各触控方式自带基础间隔，默认 0 即可；某些低性能设备可能遇到问题，可按需调整。</system:String>
     <system:String x:Key="MiniGame@PixelPaint@LoadFailed">图片加载失败</system:String>
     <system:String x:Key="MiniGame@PixelPaint@ConvertFailed">转换失败</system:String>
@@ -1639,6 +1637,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="ResourceIntegrityRepairNo">暂不处理，继续启动</system:String>
     <system:String x:Key="CoreLoadingTip">MAA 内核尚未加载完成，请稍后再试。</system:String>
     <system:String x:Key="ResourceBrokenTaskBlocked">资源损坏，无法开始任务。请按启动时的提示修复资源，或重新下载完整安装包后重启 MAA。</system:String>
+    <system:String x:Key="UnknownTaskInChain">任务链引用了未定义的任务（{0}），资源可能损坏或与程序版本不匹配，已停止任务。</system:String>
     <system:String x:Key="ResourceIntegrityRepairDownloading">正在下载完整包以修复安装…</system:String>
     <system:String x:Key="ResourceIntegrityRepairFailed">自动修复失败，请按提示手动处理。\n\n{key=FullPackageUpgradeTips}</system:String>
     <system:String x:Key="ResourceIntegrityRepairCanceled">已取消自动修复，下次启动时仍会提醒</system:String>
@@ -1675,6 +1674,7 @@ C:\leidian\LDPlayer9
     <system:String x:Key="TaskError" xml:space="preserve">任务出错: </system:String>
     <system:String x:Key="TaskErrorSummaryTitle">本轮任务出现以下错误：</system:String>
     <system:String x:Key="OutOfMemoryError">{0}任务因内存不足停止，请关闭部分程序或重启 MAA 后重试</system:String>
+    <system:String x:Key="GpuDeviceRemovedRestartRequired">{0}任务因 GPU 推理设备失效而停止，可能是显卡驱动更新或 GPU 重置所致。{key=RestartRecommendation}</system:String>
     <system:String x:Key="CombatError">战斗出错</system:String>
     <system:String x:Key="StartTask" xml:space="preserve">开始任务: </system:String>
     <system:String x:Key="CompleteTask" xml:space="preserve">完成任务: </system:String>
@@ -2236,8 +2236,6 @@ DEBUG 目录下保存的图片有数量限制，超出后会自动清理旧图�
   1. 要求是结算后的第一天，且后续三天没有敌袭进入驻扎地
   2. 必须在进入大地图后的界面开始（能看到驻扎地的界面）
   3. 如果能制造的数量刚好是 99 的倍数会卡住，在存档前可以先用掉一点，这个之后再修</system:String>
-    <system:String x:Key="ReclamationBePatient">牛牛，我太想进步了！你看，又急</system:String>
-    <system:String x:Key="Reclamation2ExEnable">通过制造刷点数</system:String>
     <system:String x:Key="ReclamationToolToCraftTip">支援道具名称</system:String>
     <system:String x:Key="ReclamationToolToCraftPlaceholder">荧光棒</system:String>
     <!--  !Reclamation  -->
